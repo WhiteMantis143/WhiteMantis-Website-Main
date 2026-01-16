@@ -1,0 +1,167 @@
+
+.MainConatiner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+
+.Top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Top h3 {
+  font-family: var(--lexend);
+  font-size: 22px;
+  font-weight: 500;
+  color: #2f362a;
+  text-transform: uppercase;
+}
+
+
+.formBox {
+  border: 1px solid #7a7a7a;
+}
+
+.formBox input,
+.formBox select,
+.formBox textarea {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #7a7a7a;
+  padding: 18px 20px;
+  font-size: 15px;
+  font-family: var(--lato);
+  color: #6C7A5FB2;
+  font-weight: 400;
+  outline: none;
+}
+
+.formBox input::placeholder,
+.formBox textarea::placeholder,
+.formBox select {
+  color: #9aa08f;
+}
+
+.row {
+  display: flex;
+}
+
+.row input {
+  width: 50%;
+}
+
+.row input:first-child {
+  border-right: 1px solid #7a7a7a;
+}
+
+
+.selectWrap {
+  position: relative;
+}
+
+.selectWrap::after {
+  content: "";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid #9aa08f;
+  pointer-events: none;
+}
+
+.formBox select {
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+
+.formBox textarea {
+  height: 160px;
+  resize: none;
+  border-bottom: none;
+}
+
+
+.Bottom {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn {
+  background-color: #ffffff;
+  color: #525252;
+  padding: 13.5px 35px;
+  border: 1px solid #525252;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+  .MainConatiner {
+    gap: 20px;
+  }
+
+  .Top h3 {
+    font-size: 18px;
+  }
+
+  .formBox input,
+  .formBox select,
+  .formBox textarea {
+    padding: 14px 12px;
+    font-size: 15px;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .row input {
+    width: 100%;
+    border-right: none;
+  }
+
+  .formBox textarea {
+    height: 120px;
+  }
+
+  .selectWrap::after {
+    right: 12px;
+  }
+
+  .btn {
+    padding: 12px 28px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .Top h3 {
+    font-size: 16px;
+  }
+
+  .formBox input,
+  .formBox select,
+  .formBox textarea {
+    padding: 12px 10px;
+    font-size: 14px;
+  }
+
+  .formBox textarea {
+    height: 100px;
+  }
+
+  .btn {
+    padding: 10px 22px;
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "White-Mantis",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@react-pdf/renderer": "^4.3.2",
+    "@stripe/react-stripe-js": "^5.4.1",
+    "@stripe/stripe-js": "^8.6.0",
+    "@types/node": "24.10.0",
+    "@types/react": "19.2.2",
+    "cookie": "^0.5.0",
+    "embla-carousel-react": "^8.6.0",
+    "google-auth-library": "^10.5.0",
+    "googleapis": "^169.0.0",
+    "gsap": "^3.13.0",
+    "next": "^16.0.10",
+    "next-auth": "^4.24.13",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-hot-toast": "^2.6.0",
+    "react-icons": "^5.5.0",
+    "stripe": "^20.1.0",
+    "typescript": "5.9.3"
+  },
+  "devDependencies": {
+    "@types/pdfmake": "^0.2.12"
+  }
+}

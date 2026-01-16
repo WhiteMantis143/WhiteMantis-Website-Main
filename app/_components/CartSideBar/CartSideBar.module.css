@@ -1,0 +1,545 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 998;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -30%;
+  overflow-y: auto;
+  width: 30%;
+  height: 100vh;
+  background: #ffffff;
+  z-index: 999;
+  transition: right 0.35s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.open {
+  right: 0;
+}
+.Main {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  width: 100%;
+  min-height: 100%;
+  padding: 100px 40px 22px 40px;
+}
+.MainContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+}
+.Top {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 32px;
+}
+.TopOne {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 24px;
+}
+.TopOneTop {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+.TopOneLeft {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: 8.12px;
+  align-items: center;
+}
+.TopOneLeft h4 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 400;
+  color: #2f362a;
+}
+.TopOneLeft p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #6e736a;
+}
+.TopOneBottom {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 30px;
+}
+.Card {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: 49px;
+  align-items: center;
+}
+.CardLeft {
+  display: flex;
+  justify-content: left;
+
+  flex-direction: row;
+  gap: 15px;
+}
+.ProdImage img {
+  width: 100%;
+  max-width: 100px;
+  height: 100%;
+  max-height: 100px;
+  object-fit: cover;
+}
+.ProdDetails {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 15px;
+}
+.ProdDetails h5 {
+  font-family: var(--lato);
+  font-weight: 400;
+  font-size: 15px;
+  color: #6e736a;
+}
+.ProdDetails h4 {
+  font-family: var(--lato);
+  font-weight: 400;
+  font-size: 15px;
+  color: #6e736a;
+}
+.CardRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  /* gap: 12px; */
+}
+
+.QuantitySelector {
+  display: flex;
+  align-items: center;
+  border: 1px solid #cfcfcf;
+  height: 34px;
+}
+
+.qtyBtn {
+  width: 32px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  font-family: var(--lato);
+  font-weight: 400;
+  color: #6c7a5f;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qtyValue {
+  width: 38px;
+  height: 100%;
+  border-left: 1px solid #2f362a4d;
+  border-right: 1px solid #2f362a4d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: #6c7a5f;
+}
+
+.RemoveItem button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 13px;
+  color: #6e736a;
+  font-family: var(--lato);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.TopTwo {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 24px;
+}
+.TopTwoTop {
+  display: flex;
+  justify-content: left;
+}
+.TopTwoTop h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2f362a;
+}
+.TopTwoBottom {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+}
+.CouponInput {
+  display: flex;
+  width: 100%;
+  height: 48px;
+  border: 1px solid #2f362a4d;
+}
+
+.CouponInput input {
+  flex: 1;
+  border: none;
+  padding: 13px 14px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+}
+
+.CouponInput input::placeholder {
+  color: #a8a8a8;
+}
+
+.Apply {
+  width: 120px;
+  border: none;
+
+  background-color: #6c7a5f;
+  color: #ffffff;
+  font-size: 15px;
+  font-family: var(--lato);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.Apply:focus,
+.CouponInput input:focus {
+  outline: none;
+}
+
+.AppliedCoupon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 48px;
+  border: 1px solid #6c7a5f;
+  background-color: #f0f4ed;
+  padding: 13px 14px;
+}
+
+.AppliedCouponLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.AppliedCouponLeft p {
+  font-family: var(--lato);
+  font-size: 14px;
+  font-weight: 500;
+  color: #6c7a5f;
+}
+
+.RemoveCoupon {
+  background-color: transparent;
+  border: 1px solid #6c7a5f;
+  color: #6c7a5f;
+  font-size: 13px;
+  font-family: var(--lato);
+  font-weight: 500;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.RemoveCoupon:hover {
+  background-color: #6c7a5f;
+  color: #ffffff;
+}
+.AvailableCoupons {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  padding: 13px 15px;
+  border-left: 1px solid #2f362a4d;
+  border-right: 1px solid #2f362a4d;
+  border-bottom: 1px solid #2f362a4d;
+}
+.AvailableCouponsLeft {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+}
+.AvailableCouponsLeft p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #6e736a;
+}
+.AvailableCouponsRight {
+  display: flex;
+  justify-content: right;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+.AvailableCouponsRight p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #6e736a;
+}
+.Bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  gap: 24px;
+  padding-bottom: 20px;
+}
+.BottomOne {
+  display: flex;
+  justify-content: left;
+}
+.BottomOne h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2f362a;
+}
+.BottomTwo {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 16px;
+}
+.BottomDetails {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 8px;
+}
+.BottomDetailsTop,
+.BottomDetailsBottom {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.BottomDetailsLeft,
+.BottomDetailsLeft {
+  display: flex;
+  justify-content: left;
+}
+.BottomDetailsLeft h5,
+.BottomDetailsLeft h5 {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #6e736a;
+}
+.BottomDetailsRight,
+.BottomDetailsRight {
+  display: flex;
+  justify-content: right;
+}
+.BottomDetailsRight h4,
+.BottomDetailsRight h4 {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #6e736a;
+  text-transform: uppercase;
+}
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: #2f362a4d;
+}
+.PriceDetails {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.PriceDetailLeft {
+  display: flex;
+  justify-content: left;
+}
+.PriceDetailLeft h5 {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 700;
+  color: #6e736a;
+}
+.PriceDetailRight {
+  display: flex;
+  justify-content: right;
+}
+.PriceDetailRight h4 {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 700;
+  color: #6e736a;
+}
+.CheckOutCta {
+  width: 100%;
+  height: 48px;
+  border: none;
+  background-color: #6c7a5f;
+  color: #ffffff;
+  font-size: 15px;
+  font-family: var(--lato);
+  font-weight: 500;
+  cursor: pointer;
+}
+@media (max-width: 640px) {
+  .sidebar {
+    width: 100%;
+    right: -100%;
+    height: 100svh;
+    overflow-y: auto;
+  }
+
+  .open {
+    right: 0;
+  }
+
+  .Main {
+    padding: 150px 24px 50px 24px;
+  }
+
+  .Card {
+    justify-content: space-between;
+  }
+  .qtyValue {
+    font-size: 14px;
+  }
+  .CardLeft {
+    width: 100%;
+  }
+
+  .CardRight {
+    width: 100%;
+    /* align-items: flex-start; */
+  }
+
+  .QuantitySelector {
+    height: 36px;
+  }
+
+  .CouponInput {
+    height: 46px;
+  }
+
+  .Apply {
+    width: 100px;
+  }
+  .ProdImage img {
+    max-width: 75px;
+    max-height: 75px;
+  }
+  .CheckOutCta {
+    height: 46px;
+  }
+  .TopOneLeft h4,
+  .TopTwoTop h3,
+  .BottomOne h3 {
+    font-size: 20px;
+  }
+  .TopOneLeft p,
+  .BottomDetailsLeft h5,
+  .BottomDetailsRight h4,
+  .PriceDetailLeft h5,
+  .PriceDetailRight h4 {
+    font-size: 14px;
+  }
+  .ProdDetails h5,
+  .ProdDetails h4 {
+    font-size: 14px;
+    max-width: 147px;
+  }
+  .AvailableCouponsLeft p,
+  .AvailableCouponsRight p,
+  .CheckOutCta {
+    font-size: 14px;
+  }
+}
+@media (min-width: 641px) and (max-width: 1200px) {
+  .sidebar {
+    width: 60%;
+    right: -60%;
+    height: 100svh;
+    overflow-y: auto;
+  }
+
+  .open {
+    right: 0;
+  }
+
+  .Main {
+    padding: 150px 28px 30px 28px;
+  }
+
+  .Card {
+    justify-content: space-between;
+  }
+
+  .ProdImage img {
+    max-width: 90px;
+    max-height: 90px;
+  }
+
+  .Apply {
+    width: 110px;
+  }
+}
+@media (min-width: 1201px) and (max-width: 1640px) {
+  .sidebar {
+    width: 30%;
+    right: -30%;
+  }
+
+  .open {
+    right: 0;
+  }
+
+  .Main {
+    padding: 150px 36px 30px 36px;
+  }
+}
+@media (min-width: 1641px) and (max-width: 1890px) {
+  .sidebar {
+    width: 28%;
+    right: -28%;
+  }
+
+  .open {
+    right: 0;
+  }
+
+  .Main {
+    padding:150px 40px 34px 40px;
+  }
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+}

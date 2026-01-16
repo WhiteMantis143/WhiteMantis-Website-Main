@@ -1,0 +1,311 @@
+.Main {
+  width: 100%;
+  height: auto;
+  background-color: #ffffff;
+  padding: clamp(6px, calc(6px + (0 * ((100vw - 320px) / 1120))), 6px)
+    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
+    clamp(6px, calc(6px + (0 * ((100vw - 320px) / 1120))), 6px)
+    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+
+  position: fixed;
+  top: 0;
+  z-index: 10000;
+  transform: translateY(0);
+  transition: transform 0.4s ease-in-out;
+}
+.hide {
+  transform: translateY(-100%);
+}
+.MainCoantiner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.Left {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: clamp(12px, calc(12px + (18 * ((100vw - 320px) / 1120))), 30px);
+
+  flex-direction: row;
+}
+.LogoContainer {
+  display: flex;
+  justify-content: left;
+}
+.LogoContainer img {
+  width: 100%;
+  height: 100%;
+  max-width: 170px;
+  max-height: 78px;
+}
+.PageslInks {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: clamp(12px, calc(12px + (18 * ((100vw - 320px) / 1120))), 30px);
+
+  flex-direction: row;
+}
+.OurShops {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 4px;
+  flex-direction: row;
+  cursor: pointer;
+}
+.OurShops p,
+.AboutUspg p,
+.Workshopspg p,
+.Subscriptionpg p,
+.Right p {
+  font-family: var(--lexend);
+  font-size: 16px;
+  font-weight: 400;
+  color: #2f362a;
+  /* color: #2f362a; */
+  cursor: pointer;
+}
+.Right {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: clamp(12px, calc(12px + (18 * ((100vw - 320px) / 1120))), 30px);
+
+  flex-direction: row;
+  cursor: pointer;
+}
+.DummyMain {
+  position: absolute;
+  top: 100%;
+  left: 0%;
+  /* transform: translateX(-50%); */
+  width: 100%;
+  border-bottom: 1px solid #2f362a66;
+  background-color: #ffffff;
+  border-top: 0.5px solid #2f362a66;
+  z-index: 99;
+  pointer-events: auto;
+}
+.OurShopWrapper {
+  position: static;
+}
+
+.active p {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  font-weight: 500;
+  color: #6e736a;
+}
+.Right a,
+.Left a {
+  text-decoration: none;
+}
+
+.Arrow {
+  transition: transform 0.3s ease;
+  transform: rotate(180deg);
+}
+
+.ArrowOpen {
+  transform: rotate(0deg);
+}
+.DummyMainCoantiner {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: clamp(24px, calc(24px + (39 * ((100vw - 320px) / 1120))), 63px);
+
+  width: 100%;
+  height: 100%;
+}
+.DummyLeft {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: clamp(20px, calc(20px + (12 * ((100vw - 320px) / 1120))), 32px);
+  width: 50%;
+  padding-left: clamp(
+    40px,
+    calc(40px + (167 * ((100vw - 320px) / 1120))),
+    207px
+  );
+
+  padding-top: 46px;
+}
+.DummyLeftOne {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 8px;
+}
+.DummyLeftOne h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2f362a;
+}
+.DummyLeftOne p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #6e736a;
+}
+.DummyLine {
+  width: 100%;
+  height: 0.5px;
+  background-color: #2f362a4d;
+}
+.DummyLeftTwo {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: clamp(24px, calc(24px + (96 * ((100vw - 320px) / 1120))), 120px);
+}
+.DummyLeftTwoLeft,
+.DummyLeftTwoRight {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 20px;
+}
+.DummyLeftTwoLeftTop,
+.DummyLeftTwoRightTop {
+  display: flex;
+  justify-content: left;
+}
+.DummyLeftTwoLeftTop h4,
+.DummyLeftTwoRightTop h4 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #6e736a;
+}
+.DummyLeftTwoLeftBottom,
+.DummyLeftTwoRightBottom {
+  display: flex;
+  justify-content: left;
+  gap: 20px;
+  flex-direction: column;
+}
+.DummyLeftTwoLeftBottom p,
+.DummyLeftTwoRightBottom p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #6e736a;
+  cursor: pointer;
+}
+.DummyRight {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: 3px;
+  padding-right: 2px;
+  width: 50%;
+}
+.DummyRightOne {
+  display: flex;
+  justify-content: end;
+  flex-direction: column;
+  gap: 20px;
+  background: url("./1.png");
+  padding-bottom: 32px;
+  height: 432px;
+  padding-left: 29px;
+  max-width: 501px;
+  width: 100%;
+}
+.DummyRightOneTop,
+.DummyRightTwoTop {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 200px;
+}
+.DummyRightOneTop h4 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #ffffff;
+}
+.DummyRightOneTop p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.DummyRightOneBottom,
+.DummyRightTwoBottom {
+  display: flex;
+  justify-content: left;
+}
+.DummyExplore {
+  padding: 6px 25px;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+}
+.DummyRightTwo {
+  display: flex;
+  justify-content: end;
+  flex-direction: column;
+  gap: 20px;
+  background: url("./2.png");
+  padding-bottom: 32px;
+  padding-left: 29px;
+  height: 432px;
+  width: 100%;
+  max-width: 501px;
+}
+.DummyRightTwoTop h4 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2f362a;
+}
+.DummyRightTwoTop p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #6e736a;
+}
+.DummyTwoExplore {
+  padding: 6px 25px;
+  background-color: transparent;
+  border: 1px solid #525252;
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 500;
+  color: #525252;
+  cursor: pointer;
+}
+@media (max-width: 1300px) {
+  .Main {
+    display: none;
+  }
+}
+
+@media (min-width: 1301px) and (max-width: 1440px) {
+  .Main {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .DummyLeft {
+    padding-left: 100px;
+  }
+  .DummyRightTwo,
+  .DummyRightOne {
+    width: 350px;
+    object-fit: cover;
+    object-position: center;
+  }
+}

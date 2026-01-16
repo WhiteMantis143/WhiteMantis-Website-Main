@@ -1,0 +1,118 @@
+.Navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #fff;
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10000;
+}
+
+.Line {
+  width: 100%;
+  height: 1px;
+  margin: 16px 0px;
+  background-color: rgba(47, 54, 42, 0.3);
+}
+.MenuWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;             
+  height: 100vh;
+  width: 70vw;         
+  background: #fff;
+  z-index: 100000;
+  overflow-y: auto;
+  transition: transform 0.3s ease-out;
+}
+
+
+.MenuHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  /* border-bottom: 1px solid #dcdcdc; */
+}
+
+.MenuContent {
+  padding: 24px;
+
+  margin: 0 auto;
+}
+
+.Section {
+  /* border-bottom: 1px solid #dcdcdc; */
+  /* padding-bottom: 16px; */
+  margin-bottom: 16px;
+  /* padding-top: 16px; */
+}
+
+.SectionHeader {
+  width: 100%;
+  background: none;
+  border: none;
+  font-family: var(--lato);
+  font-size: 14px;
+  font-weight: 700;
+  color: #2f362a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.Rotate {
+  transform: rotate(180deg);
+}
+
+.TwoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  /* padding-top: 12px; */
+}
+
+.Column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* padding-top: 12px; */
+}
+
+.subLinks {
+  text-decoration: none;
+  color: #6e736a;
+  font-size: 14px;
+}
+
+.Item {
+  display: block;
+  /* padding: 14px 0; */
+  /* border-bottom: 1px solid #dcdcdc; */
+  font-family: var(--lato);
+  font-size: 14px;
+  font-weight: 400;
+  color: #6e736a;
+}
+
+.IconBtn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+.Columnvee {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+@media (min-width: 1300px) {
+  .Navbar,
+  .MenuWrapper {
+    display: none;
+  }
+}

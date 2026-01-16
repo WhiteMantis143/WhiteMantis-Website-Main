@@ -1,0 +1,250 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -30%;
+  width: 30%;
+  height: 100vh;
+  background: #ffffff;
+  pointer-events: auto;
+  z-index: 1001; 
+  transition: right 0.35s ease;
+  overflow-y: auto;
+}
+
+
+.open {
+  right: 0;
+}
+
+.Main {
+  padding: 100px 40px 80px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.Header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.Back {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.Header h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2F362A;
+}
+
+.Header p {
+  font-size: 15px;
+  color: #6E736A;
+  font-family: var(--lato);
+  font-weight: 400;
+}
+
+.InputWrap {
+  display: flex;
+  height: 48px;
+  flex-direction: row;
+  gap: 15px;
+}
+
+
+.InputWrap input {
+  flex: 1;
+  border: none;
+    border: 1px solid #2F362A4D;
+  padding: 13.5px 14px;
+  /* max-width:    255px; */
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #6E736A; 
+  outline: none;
+}
+
+
+.InputWrap input::placeholder {
+  color: #A8A8A8;     
+  font-size: 14px;
+  font-weight: 400;
+  font-family: var(--lato);
+}
+
+
+.InputWrap input:focus {
+  color: #2F362A; 
+}
+
+
+.InputWrap:focus-within {
+  border-color: #6C7A5F;
+}
+
+
+.InputWrap button {
+  width: 120px;
+  border: none;
+  background: #6c7a5f;
+  color: #ffffff;
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.CouponsList{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 15px;
+}
+.CouponsHeader{
+    display: flex;
+    justify-content: left;
+
+}
+.CouponsHeader h4{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.CuponsCard{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px 20px;
+    border: 1px solid #2F362A4D;
+    background-color: #ffffff;
+}
+.CuponsCardTop{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.CuponsCardLeft{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 5px;
+}
+.CuponsCode{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    gap: 5px;
+}
+.CuponsCode h4{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 700;
+    color: #2F362A;
+}
+.CuponsSave, .CuponsDesc{
+    display: flex;
+    justify-content: left;
+}
+.CuponsSave h5{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #227336;
+}
+.CuponsDesc p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    max-width: 80%;
+    color: #6E736A;
+}
+.CuponsCardRight{
+    display: flex;
+    justify-content: right;
+    cursor: pointer;
+    
+}
+.CuponsCardRight h5{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #6E736A;
+    text-decoration: underline;
+}
+.CuponsCardBottom{
+    display: flex;
+    justify-content: left;
+}
+.CuponsCardBottom p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    cursor: pointer;
+    color: #6E736A;
+}
+
+
+@media (max-width: 640px) {
+  .sidebar {
+    width: 100%;
+    right: -100%;
+    height: 100svh;
+    overflow-y: auto;
+  }
+  .open {
+    right: 0;
+  }
+  .Main {
+    padding: 150px 24px 50px 24px;
+  }
+  .Header h3 {
+    font-size: 20px;
+  }
+  .Header p, .CouponsHeader h4, .CuponsCode h4, .CuponsSave h5, .CuponsDesc p, .CuponsCardBottom p {
+    font-size: 14px;
+    max-width: 70%;
+  }
+  .InputWrap input {
+    font-size: 14px;
+    padding: 10.5px 14px;
+  }
+  .CuponsCardRight h5{
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .InputWrap{
+    gap: 0px;
+  }
+  .CuponsCard{
+    gap: 8px;
+    padding: 12px 12px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1200px) {
+  .sidebar {
+    width: 60%;
+    right: -60%;
+    height: 100svh;
+  }
+
+  .open {
+    right: 0;
+  }
+  .Main{
+    padding-top: 150px;
+    padding-bottom: 50px;
+  }
+}
+@media (min-width: 1201px) and (max-width:1900px) {
+  .Main{
+    padding-top: 150px;
+    padding-bottom: 50px;
+  }
+}

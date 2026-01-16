@@ -1,0 +1,408 @@
+.Main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #6c7a5f;
+  padding: clamp(40px, calc(40px + (51 * ((100vw - 320px) / 1120))), 91px)
+    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
+    clamp(23px, calc(48px + (-25 * ((100vw - 320px) / 1120))), 48px)
+    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+}
+.LogoImage {
+  height: 300px;
+  width: auto;
+  object-fit: contain;
+}
+.MainConatiner {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: clamp(40px, calc(40px + (88 * ((100vw - 320px) / 1120))), 128px);
+
+  width: 100%;
+  height: 100%;
+}
+.Top {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.TopLeft {
+  display: flex;
+  justify-content: left;
+}
+.TopLeft img {
+  width: 100%;
+  height: 100%;
+  max-width: 157px;
+  max-height: 97px;
+}
+.TopMiddle {
+  display: flex;
+  justify-content: left;
+  gap: clamp(65px, calc(65px + (55 * ((100vw - 320px) / 1120))), 120px);
+
+  flex-direction: row;
+}
+.MobOne,
+.MobTwo {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: clamp(65px, calc(65px + (55 * ((100vw - 320px) / 1120))), 120px);
+}
+.TopMiddleOne,
+.TopMiddleTwo,
+.TopMiddleThree,
+.TopMiddleFour {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 32px;
+}
+.TopMiddleOneTop h4,
+.TopMiddleTwoTop h4,
+.TopMiddleThreeTop h4,
+.TopMiddleFourTop h4 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+.TopMiddleOneBottom,
+.TopMiddleTwoBottom,
+.TopMiddleThreeBottom,
+.TopMiddleFourBottom {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: clamp(16px, calc(16px + (4 * ((100vw - 320px) / 1120))), 20px);
+}
+.TopMiddleOneBottom p,
+.TopMiddleTwoBottom p,
+.TopMiddleThreeBottom p,
+.TopMiddleFourBottom p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #ffffff;
+  cursor: pointer;
+}
+.TopRight {
+  display: flex;
+  justify-content: right;
+  flex-direction: column;
+  gap: clamp(16px, calc(16px + (24 * ((100vw - 320px) / 1120))), 40px);
+}
+.TopRightTop {
+  display: flex;
+  justify-content: left;
+  gap: 12px;
+  flex-direction: column;
+}
+.NewslHeading h4 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+.NewsLetter {
+  display: flex;
+  justify-content: left;
+   flex-direction: column; /* STACK items vertically */
+  gap: 8px;
+}
+.NewsLetterRow {
+  display: flex;
+  flex-direction: row; 
+  align-items: stretch;
+}
+
+
+.NewsletterSuccess {
+  font-family: var(--lato);
+  font-size: 14px;
+  color: #ffffff;
+}
+
+/* Error message */
+.NewsletterError {
+  font-family: var(--lato);
+  font-size: 14px;
+  color: #d32f2f; 
+}
+.NewsLetterInput {
+  padding: 13px 12px 13px 18px;
+  border: none;
+  width: 240px;
+  padding: 10px;
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  background-color: transparent;
+}
+.NewsLetterInput::placeholder {
+  color: #ffffff;
+  opacity: 1;
+}
+.TopRightMiddle {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: 80px;
+}
+.Phone,
+.Email,
+.Address {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 6px;
+}
+.TopRightBottom {
+  display: flex;
+  justify-content: left;
+}
+.TopRightBottom p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.Phone p,
+.Email p,
+.Address p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.SubscribeButton {
+  padding: 13px 33px;
+  border: 1px solid #ffffff;
+  font-family: var(--lato);
+  color: #6c7a5f;
+  font-size: 15px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+.Bottom {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 20px;
+}
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: #ffffff;
+}
+.BottomBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.BottomBottomLeft p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.BottomBottomLeft {
+  display: flex;
+  justify-content: left;
+}
+.BottomBottomMiddle {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+.TandC,
+.PrivacyPolicy {
+  display: flex;
+  justify-content: left;
+  cursor: pointer;
+}
+.TandC p,
+.PrivacyPolicy p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.Socials {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.Socials p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.BottomBottomRight {
+  display: flex;
+  justify-content: right;
+}
+.BottomBottomRight p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.IM {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.TandC a,
+.PrivacyPolicy a,
+.BottomBottomRight a,
+.BottomBottomLeft a,
+.Socials a,
+.Email a,
+.Phone a,
+.TopRightBottom a,
+.TopMiddleOneBottom a,
+.TopMiddleTwoBottom a,
+.TopMiddleThreeBottom a,
+.TopMiddleFourBottom a {
+  color: inherit;
+  text-decoration: none;
+}
+.TopRightBottomMobile a {
+  text-decoration: none;
+  color: inherit;
+}
+.TopRightBottomMobile {
+  display: none;
+}
+@media (max-width: 640px) {
+  .Main {
+    padding: 40px 24px 48px 24px;
+  }
+  .MainConatiner {
+    gap: 40px;
+  }
+  .BottomBottomMiddle {
+    display: none;
+  }
+  .BottomBottomLeft p,
+  .BottomBottomRight p {
+    font-size: 14px;
+  }
+  .TopRightBottomMobile {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .TopRightBottomMobile p {
+    font-family: var(--lato);
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  .TopLeft img {
+    max-width: 120px;
+    max-height: 74px;
+    width: 100%;
+    height: 100%;
+  }
+  .Top {
+    flex-direction: column;
+    gap: 72px;
+  }
+  .TopMiddle {
+    flex-direction: column;
+    gap: 72px;
+  }
+  .TopMiddleOneTop h4,
+  .TopMiddleTwoTop h4,
+  .TopMiddleThreeTop h4,
+  .TopMiddleFourTop h4,
+  .NewslHeading h4 {
+    font-size: 20px;
+  }
+  .TopMiddleOneBottom p,
+  .TopMiddleTwoBottom p,
+  .TopMiddleThreeBottom p,
+  .TopMiddleFourBottom p,
+  .SubscribeButton,
+  .Phone p,
+  .Email p,
+  .NewsLetterInput,
+  .TopRightBottom p {
+    font-size: 14px;
+  }
+  .SubscribeButton {
+    padding: 10px 25px;
+    font-size: 14px;
+  }
+}
+@media (min-width: 641px) and (max-width: 1024px) {
+  .BottomBottomMiddle {
+    display: none;
+  }
+  .BottomBottomLeft p,
+  .BottomBottomRight p {
+    font-size: 14px;
+  }
+  .TopRightBottomMobile {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .TopRightBottomMobile p {
+    font-family: var(--lato);
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  .TopLeft img {
+    max-width: 120px;
+    max-height: 74px;
+    width: 100%;
+    height: 100%;
+  }
+  .Top {
+    flex-direction: column;
+    gap: 72px;
+  }
+  .TopMiddle {
+    /* flex-direction: column; */
+    gap: 72px;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1640px) {
+  .NewsLetterInput {
+    width: 140px;
+  }
+  .Main {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+  .MobOne,
+  .MobTwo {
+    gap: 40px;
+  }
+  .TopMiddle {
+    gap: 40px;
+  }
+  .TopRightMiddle {
+    gap: 20px;
+  }
+}

@@ -1,0 +1,118 @@
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+    padding: 200px 125px 200px 125px;
+}
+.MainConatiner{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    flex-direction: row;
+}
+.left{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    width: 100%;
+    gap: 30px;
+}
+.LeftTop{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 10px;
+    width: 60%;
+}
+.LeftTop h3{
+    font-family: var(--lexend);
+    font-weight: 500;
+    font-size: 22px;
+    color: #525252;
+   
+    text-transform: uppercase;
+}
+.LeftTop p{
+    font-family: var(--lato);
+    font-weight: 400;
+    font-size: 15px;
+    color: #525252;
+   
+}
+.LeftBottom{
+    display: flex;
+    justify-content: left;
+    padding: 8.2px 20px;
+    background-color:#6C7A5F;
+    border-radius: 6px;
+    width: fit-content;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    flex-direction: row;
+}
+.LeftBottom p{
+    font-family: var(--lato);
+    font-weight: 500;
+    font-size: 15px;
+    color: #FFFFFF;
+}
+.LeftBottom svg{
+    width: 100%;
+    height: 100%;
+    max-width: 25.6px;
+    max-height: 25.6px;
+}
+.right{
+    display: flex;
+    justify-content: left;
+   flex-direction: row;
+   gap: 10px;
+    width: 100%;
+}
+.RightOne, .RightTwo, .RightThree{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+}
+.RightOne img, .RightTwo img, .RightThree img{
+    width: 100%;
+    height: 100%;
+    max-width: 278px;
+    max-height: 479px;
+
+}
+
+
+.imageContainer{
+    position: relative;
+    width: 100%;
+    max-width: 278px;
+    max-height: 479px;
+    overflow: hidden;
+}
+
+.image{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.caption{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 13px 10.9px;
+    color: #FFFFFF;
+    font-family: var(--lato);
+    font-weight: 400;
+    font-size: 15px;
+
+    box-sizing: border-box;
+}

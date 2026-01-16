@@ -1,0 +1,103 @@
+import React from "react";
+import styles from "./page.module.css";
+// import packet from "./image (16).png";
+import Image from "next/image";
+import Link from "next/link";
+
+export default function Progress({ order }) {
+  if (!order) return null;
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("en-AE", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      timeZone: "Asia/Dubai",
+    });
+  };
+
+  const visibleItems = order.line_items?.slice(0, 2) || [];
+  const remainingCount = Math.max(0, (order.line_items?.length || 0) - 2);
+
+  return (
+    <div className={styles.main}>
+      <div className={styles.container}>
+        <div className={styles.top}>
+          <div className={styles.topLeft}>
+            <span>
+              <svg
+                width="21"
+                height="15"
+                viewBox="0 0 21 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.43284 15C3.66344 15 3.01025 14.728 2.47328 14.1841C1.93631 13.6402 1.66783 12.9799 1.66783 12.203H0V1.80082C0 1.29759 0.172475 0.871644 0.517423 0.522987C0.862372 0.174329 1.2837 0 1.78141 0H15.2004V3.79315H17.8159L21 8.10355V12.203H19.2186C19.2186 12.9799 18.9493 13.6402 18.4107 14.1841C17.8722 14.728 17.2184 15 16.4491 15C15.6799 15 15.0267 14.728 14.4896 14.1841C13.9526 13.6402 13.6841 12.9799 13.6841 12.203H7.20204C7.20204 12.982 6.93282 13.6429 6.39437 14.1856C5.85592 14.7285 5.20208 15 4.43284 15ZM4.43506 13.5058C4.79643 13.5058 5.10155 13.3799 5.3504 13.1282C5.59926 12.8767 5.72369 12.5683 5.72369 12.203C5.72369 11.8378 5.59926 11.5293 5.3504 11.2776C5.10155 11.0261 4.79643 11.0261 4.43506 10.9003C4.07368 10.9003 3.76848 11.0261 3.51946 11.2776C3.27061 11.5293 3.14618 11.8378 3.14618 12.203C3.14618 12.5683 3.27061 12.8767 3.51946 13.1282C3.76848 13.3799 4.07368 13.5058 4.43506 13.5058ZM1.47835 10.7088H2.19092C2.40068 10.3397 2.70358 10.0303 3.09961 9.7806C3.49581 9.53089 3.94096 9.40604 4.43506 9.40604C4.91634 9.40604 5.35821 9.52931 5.76065 9.77586C6.16309 10.0224 6.46919 10.3334 6.67895 10.7088H13.7221V1.49425H1.78141C1.70569 1.49425 1.63621 1.52621 1.57297 1.59013C1.50989 1.65388 1.47835 1.72411 1.47835 1.80082V10.7088ZM16.4514 13.5058C16.8127 13.5058 17.1178 13.3799 17.3667 13.1282C17.6157 12.8767 17.7402 12.5683 17.7402 12.203C17.7402 11.8378 17.6157 11.5293 17.3667 11.2776C17.1178 11.0261 16.8127 11.0261 16.4514 10.9003C16.09 10.9003 15.7848 11.0261 15.5358 11.2776C15.2869 11.5293 15.1625 11.8378 15.1625 12.203C15.1625 12.5683 15.2869 12.8767 15.5358 13.1282C15.7848 13.3799 16.09 13.5058 16.4514 13.5058ZM15.2004 8.71644H19.6165L17.0577 5.28739H15.2004V8.71644Z"
+                  fill="#C66311"
+                />
+              </svg>
+            </span>
+            <div>
+              <p>In Progress</p>
+              <p>Status: {order.status}</p>
+            </div>
+          </div>
+
+          <div className={styles.topRight}>
+            <p>
+              Order Date: <span>{formatDate(order.date_created)}</span>
+            </p>
+            <p>
+              Order ID: <span>#{order.id}</span>
+            </p>
+          </div>
+        </div>
+
+        <div className={styles.middle}>
+          <div className={styles.middleLeft}>
+            <p>{order.line_items?.length || 0} Items</p>
+
+            {visibleItems.map((item, idx) => (
+              <div className={styles.item} key={idx}>
+                <Image
+                  src={item.image?.src || "https://placehold.co/100x100"}
+                  alt={item.name}
+                  width={50}
+                  height={50}
+                  style={{ objectFit: "cover" }}
+                />
+                <div>
+                  <p>{item.name}</p>
+                  <p>{item.meta_data?.find(m => m.key === "pa_weight")?.value || ""}</p>
+                </div>
+              </div>
+            ))}
+
+            {remainingCount > 0 && (
+              <p className={styles.more}>+ {remainingCount} more</p>
+            )}
+          </div>
+
+          <div className={styles.middleRight}>
+            <Link
+              href={`/account/orders/${order.id}`}
+              className={styles.orderDetails}
+            >
+              Order Details
+            </Link>
+          </div>
+        </div>
+
+        <div className={styles.bottom}>
+          <p>
+            Order Date: <span>{formatDate(order.date_created)}</span>
+          </p>
+          <p>
+            Order ID: <span>#{order.id}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}

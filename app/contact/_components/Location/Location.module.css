@@ -1,0 +1,114 @@
+.sectionWrapper {
+  width: 100%;
+  padding: clamp(70px, calc(70px + (130 * ((100vw - 320px) / 1120))), 200px)
+    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px) 100px
+    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+
+  box-sizing: border-box;
+  background: #ffffff;
+}
+
+.title {
+  color: #2f362a;
+  font-size: var(--fs-22);
+  font-weight: 500;
+  font-family: var(--lexend);
+  margin: clamp(0px, calc(0px + (6 * ((100vw - 320px) / 1120))), 6px) 0
+    clamp(30px, calc(30px + (50 * ((100vw - 320px) / 1120))), 80px)
+    clamp(0px, calc(0px + (8 * ((100vw - 320px) / 1120))), 8px);
+
+  text-transform: uppercase;
+}
+
+.mapWrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  min-height: 220px;
+
+  height: 360px;
+}
+
+.mapIframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  filter: none;
+}
+
+.infoCard {
+  position: absolute;
+  right: 36px;
+  top: 65%;
+  transform: translateY(-50%);
+  background: #ffffff;
+  padding: 18px 42px;
+  box-shadow: 0 6px 20px rgba(25, 31, 16, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.infoTitle {
+  font-size: var(--fs-15);
+  color: #6c7a5f;
+  font-family: var(--lato);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.directionsBtn {
+  display: inline-block;
+  text-decoration: none;
+  font-size: var(--fs-15);
+  padding: 7px 30px;
+  border-radius: 6px;
+  background: #6c7a5f;
+  color: #ffffff;
+  font-family: var(--lato);
+  font-weight: 600;
+
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+
+@media (max-width: 900px) {
+  .mapWrapper {
+    height: 300px;
+  }
+  .infoCard {
+    right: 18px;
+    width: 190px;
+    padding: 12px 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sectionWrapper {
+    padding: 12px;
+  }
+  .title {
+    margin-left: 4px;
+  }
+  .mapWrapper {
+    height: 220px;
+  }
+  .infoCard {
+    right: 12px;
+    width: 160px;
+    top: auto;
+    bottom: 12px;
+    transform: none;
+    flex-direction: column;
+  }
+  .infoTitle {
+    font-size: 12px;
+  }
+  .directionsBtn {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+}

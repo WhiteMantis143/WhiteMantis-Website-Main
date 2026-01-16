@@ -1,0 +1,374 @@
+"use client";
+
+import React, { useState, useRef, useEffect, useMemo } from "react";
+import styles from "./Lisiting.module.css";
+import Image from "next/image";
+import Link from "next/link";
+import Wishlist from "../../../../_components/Whishlist";
+import AddToCart from "../../../../_components/AddToCart";
+
+const Lisiting = () => {
+  const PARENT_ID = 134;
+  const ITEMS_PER_LOAD = 9;
+
+  // 1. Data State (Functionality)
+  const [allProducts, setAllProducts] = useState([]);
+  const [productsCategories, setProductsCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // 2. UI/Filter State
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_LOAD);
+  const [sortType, setSortType] = useState("Recommended");
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [openMenus, setOpenMenus] = useState({});
+  const [sortOpen, setSortOpen] = useState(false);
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+
+  // UI Ref for Mobile Filters
+  const mobileFiltersRef = useRef(null);
+
+  // 3. Fetch Data Once on Mount (Functionality)
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true);
+      try {
+        const [catRes, prodRes] = await Promise.all([
+          fetch(`/api/website/products/categories?parent_id=${PARENT_ID}`),
+          fetch(`/api/website/products?category_id=${PARENT_ID}`),
+        ]);
+
+        if (catRes.ok && prodRes.ok) {
+          const catJson = await catRes.json();
+          const prodJson = await prodRes.json();
+          setProductsCategories(catJson.data || []);
+          setAllProducts(prodJson || []);
+
+          // Initialize openMenus state for UI
+          const initOpen = {};
+          if (catJson.data) {
+            catJson.data.forEach((cat) => {
+              initOpen[cat.slug] = false;
+            });
+          }
+          setOpenMenus(initOpen);
+        }
+      } catch (err) {
+        console.error("Error fetching shop data:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+  // 4. FRONTEND ONLY: Filter & Sort logic (Functionality)
+  const filteredProducts = useMemo(() => {
+    let result = [...allProducts];
+
+    // Category Filter
+    if (selectedCategories.length > 0) {
+      result = result.filter((product) =>
+        product.categories?.some((cat) => selectedCategories.includes(cat.id))
+      );
+    }
+
+    // Sorting
+    const sortMap = {
+      "Latest to Oldest": (a, b) => b.id - a.id,
+      "Oldest to Latest": (a, b) => a.id - b.id,
+      Recommended: (a, b) => 0, // Default or specific logic
+    };
+
+    if (sortType === "Latest to Oldest") {
+      result.sort((a, b) => b.id - a.id);
+    } else if (sortType === "Oldest to Latest") {
+      result.sort((a, b) => a.id - b.id);
+    }
+
+    return result;
+  }, [allProducts, selectedCategories, sortType]);
+
+  // 5. Handlers
+  const handleToggleCategory = (id) => {
+    setSelectedCategories((prev) => {
+      const newSelection = prev.includes(id)
+        ? prev.filter((item) => item !== id)
+        : [...prev, id];
+      return newSelection;
+    });
+    setVisibleCount(ITEMS_PER_LOAD); // Reset scroll position on filter
+  };
+
+  const toggleMenu = (slug) => {
+    setOpenMenus((prev) => ({ ...prev, [slug]: !prev[slug] }));
+  };
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + ITEMS_PER_LOAD);
+  };
+
+  // Helper to get variation data (Functionality)
+  const getDisplayData = (product) => {
+    let targetVariation = null;
+    if (product.children) {
+      const children = Object.values(product.children);
+      for (const child of children) {
+        const v250 = child.variation_options?.find(
+          (v) => v.attributes?.attribute_pa_weight === "250g"
+        );
+        if (v250) {
+          targetVariation = v250;
+          break;
+        }
+      }
+    }
+    return {
+      price: targetVariation?.price || product.price || product.regular_price,
+      regular_price: targetVariation?.regular_price || product.regular_price,
+      sale_price: targetVariation?.sale_price || product.sale_price,
+      image:
+        targetVariation?.image ||
+        product.image ||
+        product.images?.[0]?.src ||
+        product.images?.[0],
+    };
+  };
+
+  // Render Categories Recursive Helper (UI - Preserved from Listing.jsx)
+  function renderCategories(categories) {
+    if (!categories || !Array.isArray(categories) || categories.length === 0)
+      return null;
+
+    return categories.map((cat) => {
+      const hasChildren = cat.children && cat.children.length > 0;
+
+      if (hasChildren) {
+        return (
+          <div key={cat.id} className={styles.FilterBox}>
+            <div
+              className={styles.FilterHeader}
+              onClick={() => toggleMenu(cat.slug)}
+            >
+              <h5>{cat.name}</h5>
+              {openMenus[cat.slug] ? <span>✕</span> : <span>▾</span>}
+            </div>
+            <div
+              className={`${styles.AnimatedBox} ${
+                openMenus[cat.slug] ? styles.open : ""
+              }`}
+            >
+              <div className={styles.FilterOptions}>
+                {renderCategories(cat.children)}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <label key={cat.id}>
+          <input
+            type="checkbox"
+            checked={selectedCategories.includes(cat.id)}
+            onChange={() => handleToggleCategory(cat.id)}
+          />
+          {cat.name}
+        </label>
+      );
+    });
+  }
+
+  // Outside click for mobile filters (UI - Preserved)
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        mobileFiltersRef.current &&
+        !mobileFiltersRef.current.contains(e.target)
+      ) {
+        setIsMobileFiltersOpen(false);
+      }
+    };
+    if (isMobileFiltersOpen)
+      document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isMobileFiltersOpen]);
+
+  if (isLoading) return <div>Loading products...</div>;
+
+  return (
+    <div className={styles.main}>
+      <div className={styles.MainContainer}>
+        {/* Sidebar Filters */}
+        <div className={styles.LeftConatiner}>
+          <div className={styles.LeftTop}>
+            <p>Filter</p>
+          </div>
+          <div className={styles.LeftBottom}>
+            {renderCategories(productsCategories)}
+          </div>
+        </div>
+
+        {/* Right Product Section */}
+        <div className={styles.RightConatiner}>
+          <div className={styles.RightTop}>
+            <div className={styles.RightTopLeft}>
+              <div className={styles.CatName}>
+                <h3>Coffee Beans</h3>
+              </div>
+              <div className={styles.CatCount}>
+                <p>({filteredProducts.length} items)</p>
+              </div>
+            </div>
+
+            <div className={styles.RightTopRight}>
+              <div className={styles.SortBy}>
+                <p>Sort by:</p>
+              </div>
+              <div className={styles.SortWrapper}>
+                <div
+                  className={styles.SortOptions}
+                  onClick={() => setSortOpen(!sortOpen)}
+                >
+                  <p>{sortType}</p>
+                </div>
+                {sortOpen && (
+                  <div className={styles.SortDropdown}>
+                    {[
+                      "Recommended",
+                      "Latest to Oldest",
+                      "Oldest to Latest",
+                    ].map((item) => (
+                      <p
+                        key={item}
+                        onClick={() => {
+                          setSortType(item);
+                          setSortOpen(false);
+                        }}
+                      >
+                        {item}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.RightBottom}>
+            <div className={styles.ProductsGrid}>
+              {filteredProducts.slice(0, visibleCount).map((product) => {
+                const displayData = getDisplayData(product);
+
+                // Get the 250g variation ID if it exists (Functionality)
+                let variation_id = null;
+                if (product.children) {
+                  const children = Object.values(product.children);
+                  for (const child of children) {
+                    const v250 = child.variation_options?.find(
+                      (v) => v.attributes?.attribute_pa_weight === "250g"
+                    );
+                    if (v250) {
+                      variation_id = v250.id;
+                      break;
+                    }
+                  }
+                }
+
+                // Format product data for AddToCart (Functionality)
+                const cartProduct = {
+                  product_id: product.id,
+                  variation_id: variation_id,
+                  name: product.name,
+                  image: displayData.image,
+                  description: product.description || product.short_description,
+                  quantity: 1,
+                };
+
+                return (
+                  <div className={styles.ProductCard} key={product.id}>
+                    <div className={styles.ProductTop}>
+                      <div className={styles.WishlistIcon}>
+                        <Wishlist product={product} />
+                      </div>
+                      <Link
+                        href={`/products/${product.id}`}
+                        className={styles.ProductImage}
+                      >
+                        {displayData.image ? (
+                          <Image
+                            src={displayData.image}
+                            alt={product.name}
+                            width={300}
+                            height={300}
+                          />
+                        ) : (
+                          <div className={styles.NoImage}>No Image</div>
+                        )}
+                      </Link>
+                    </div>
+
+                    <div className={styles.ProductBottom}>
+                      <Link
+                        href={`/products/${product.id}`}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <div className={styles.ProductInfo}>
+                          <div className={styles.ProductPrice}>
+                            <h4>AED {displayData.price}</h4>
+                            {displayData.sale_price &&
+                              displayData.sale_price !==
+                                displayData.regular_price && (
+                                <p className={styles.OldPrice}>
+                                  AED {displayData.regular_price}
+                                </p>
+                              )}
+                          </div>
+                          <div className={styles.Line}></div>
+                          <div className={styles.ProductName}>
+                            <h3>{product.name}</h3>
+                            <p>
+                              {product.tasting_notes_description ||
+                                product.slug}
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                      <div className={styles.ProductActions}>
+                        <AddToCart product={cartProduct} />
+                        {/* Preserving Subscribe button from UI */}
+                        {/* <button className={styles.Subscribe}>Subscribe</button> */}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {visibleCount < filteredProducts.length && (
+              <div className={styles.LoadMore}>
+                <button className={styles.LoadMoreCta} onClick={handleLoadMore}>
+                  Load More
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Mobile Filters UI (Preserved) */}
+        {isMobileFiltersOpen && (
+          <div className={styles.MobileFilters} ref={mobileFiltersRef}>
+            <div className={styles.MobileFilterHeader}>
+              <p>Filters</p>
+              <span onClick={() => setIsMobileFiltersOpen(false)}>✕</span>
+            </div>
+            <div className={styles.LeftBottom}>
+              {renderCategories(productsCategories)}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Lisiting;

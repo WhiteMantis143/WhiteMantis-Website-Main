@@ -1,0 +1,131 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  padding: clamp(70px, calc(70px + (80 * ((100vw - 320px) / 1120))), 150px)
+    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
+    clamp(24px, calc(24px + (126 * ((100vw - 320px) / 1120))), 150px)
+    clamp(70px, calc(70px + (55 * ((100vw - 320px) / 1120))), 125px);
+}
+.MainConatiner {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: clamp(30px, calc(30px + (246 * ((100vw - 320px) / 1120))), 276px);
+
+  width: 100%;
+  height: 100%;
+  align-items: center;
+}
+.Left {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 30px;
+}
+.LeftTop {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 15px;
+}
+.LeftTop h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  color: #2f362a;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.LeftTop p {
+  font-family: var(--lato);
+  font-size: 15px;
+  color: #6e736a;
+  font-weight: 400;
+}
+
+.LeftBottom {
+  display: flex;
+  width: 100%;
+}
+.JoinBtn {
+  padding: 13px 25px;
+  background-color: #6c7a5f;
+  border: none;
+  font-family: var(--lato);
+  font-weight: 400;
+  font-size: 15px;
+  color: #ffffff;
+  cursor: pointer;
+}
+.Right {
+  display: flex;
+  gap: 10px;
+  height: clamp(200px, calc(200px + (300 * ((100vw - 320px) / 1120))), 500px);
+}
+
+.imageWrap {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  transition: width 0.6s ease-in-out;
+}
+
+.active {
+  width: clamp(266px, calc(266px + (402 * ((100vw - 320px) / 1120))), 668px);
+}
+
+.inactive {
+  width: clamp(40px, calc(40px + (50 * ((100vw - 320px) / 1120))), 90px);
+}
+
+.imageWrap img {
+  object-fit: cover;
+}
+@media (max-width: 640px) {
+  .main {
+    padding: 70px 24px 70px 24px;
+  }
+  .MainConatiner {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .Left {
+    gap: 30px;
+  }
+  .Left h3 {
+    font-size: 20px;
+  }
+  .Left p {
+    font-size: 15px;
+  }
+  .active {
+    width: 266px;
+  }
+  .inactive {
+    width: 40px;
+  }
+  .JoinBtn {
+    font-size: 14px;
+  }
+  .Right{
+    width: 100%;
+  }
+}
+@media (min-width: 641px) and (max-width: 1440px) {
+  .MainConatiner {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .Left {
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (min-width: 1441px) and (max-width: 1720px) {
+  .MainConatiner {
+    gap: 30px;
+  }
+}

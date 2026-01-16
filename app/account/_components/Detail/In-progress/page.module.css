@@ -1,0 +1,140 @@
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    border: 1px solid rgba(47, 54, 42, 0.3);
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 28px;
+    border-bottom: 1px solid rgba(47, 54, 42, 0.3);
+}
+
+.top {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.icon {
+    margin-top: 2px;
+}
+
+.top .left p:first-child {
+    font-family: var(--lato);
+    font-weight: 700;
+    font-size: 15px;
+    color: #C66311;
+    margin: 0;
+}
+
+.top .left p:last-child {
+    font-family: var(--lato);
+    font-weight: 400;
+    font-size: 15px;
+    color: #2F362A;
+    margin-top: 5px;
+}
+
+.top .right {
+    text-align: right;
+}
+
+.top .right p {
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #2f362a;
+    margin: 0 0 6px;
+}
+
+.top .right span {
+    color: #6E736A;
+}
+
+.items {
+    padding: 20px 0 10px 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.item img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.item p:first-child {
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #6e736a;
+    margin: 0;
+}
+
+.item p:last-child {
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #6e736a;
+    margin-top: 14px;
+}
+
+.item span {
+    margin: 0 15px;
+}
+
+.rate {
+    background: #6C7A5F;
+    padding: 16px 31.5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.rate span {
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+/* STARS */
+.stars {
+    display: flex;
+    gap: 8px;
+}
+
+.star {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.starActive {
+    font-size: 20px;
+    color: #ffffff;
+    cursor: pointer;
+    transform: scale(1.1);
+}

@@ -1,0 +1,545 @@
+.main {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: auto;
+  width: 100%;
+  padding-left: clamp(24px, calc(24px + (226 * ((100vw - 320px) / 1120))), 250px);
+
+  padding-bottom: 100px;
+  background-color: #ffffff;
+}
+
+.MainContainer {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  width: 100%;
+  gap: clamp(32px, calc(32px + (28 * ((100vw - 320px) / 1120))), 60px);
+
+  max-width: 501px;
+}
+
+.Top {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(24px, calc(24px + (16 * ((100vw - 320px) / 1120))), 40px);
+
+}
+
+.TopLeft {
+  display: flex;
+  justify-content: left;
+  position: sticky;
+}
+
+.TopLeft img {
+  width: 100%;
+  height: 100%;
+  max-width: 230px;
+  max-height: 230px;
+  border-radius: 50%;
+}
+
+.TopRight {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.UploadPicButton,
+.RemovePicButton {
+  display: flex;
+  justify-content: left;
+
+}
+
+.pfbtn {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 500;
+  color: #FFFFFF;
+  width: 230px;
+  padding: 13px 2px;
+  border: none;
+  cursor: pointer;
+  background-color: #6C7A5F;
+
+}
+
+.pfrembtn {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 500;
+  color: #6E736A;
+  width: 230px;
+  padding: 13px 2px;
+  border: 1px solid #6C7A5F;
+  cursor: pointer;
+  background-color: #FFFFFF;
+}
+
+.Bottom {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.Field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #E2E4DF;
+  padding: 14px 16px;
+  font-family: var(--lato);
+  font-size: 14px;
+  color: #6E736A;
+}
+
+.Field input,
+.Field select {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-family: var(--lato);
+  font-size: 14px;
+  background: transparent;
+  color: #6E736A;
+}
+
+.Field span {
+  cursor: pointer;
+  margin-left: 12px;
+  color: #6C7A5F;
+}
+
+.Row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  /* gap: 14px; */
+}
+
+.ActionRow {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.SaveBtn {
+  background-color: #6C7A5F;
+  color: #ffffff;
+  border: none;
+  padding: 12px 26px;
+  font-family: var(--lato);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.CancelBtn {
+  background-color: #ffffff;
+  color: #6C7A5F;
+  border: 1px solid #6C7A5F;
+  padding: 12px 26px;
+  font-family: var(--lato);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.AddressSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.AddressSection p {
+  font-family: var(--lato);
+  font-size: 15px;
+  margin: 0px;
+  font-weight: 400;
+  max-width: 60%;
+  color: #2F362A;
+}
+
+.other {
+  font-family: var(--lato);
+  font-size: 15px;
+  margin: 0px;
+  /* margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 15px; */
+  font-weight: 400;
+
+  color: #2F362A;
+}
+
+.AddressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.AddressHeader h4 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2F362A;
+}
+
+.AddressHeader button {
+  border: 1px solid #6C7A5F;
+  background: #ffffff;
+  padding: 13px 25px;
+  font-family: var(--lato);
+  font-size: 15px;
+  color: #6C7A5F;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.AddressCard {
+  border: 1px solid #E2E4DF;
+  padding: 16px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: left;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #6E736A;
+}
+
+
+.AddressText {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.AddressActions {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+  justify-content: right;
+  cursor: pointer;
+}
+
+
+/* .other {
+  margin-top: 24px;
+} */
+
+.DeleteAccount {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.DeleteAccount h4 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2F362A;
+}
+
+.fixerOne,
+.fixerTwo {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.fixerOne p,
+.fixerTwo p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+
+  color: #2F362A;
+}
+
+.DeleteAccount button {
+  width: fit-content;
+  padding: 12px 26px;
+  border: 1px solid #6C7A5F;
+  background: #ffffff;
+  font-family: var(--lato);
+  font-size: 15px;
+  color: #6C7A5F;
+  cursor: pointer;
+}
+
+.PopupOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.DeletePopupOverlay,
+.PopupOverlayDeleteAddress {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.Popup {
+  background: #ffffff;
+  width: 100%;
+  max-width: 520px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  /* gap: 18px; */
+}
+
+.PopupDeleteAddress,
+.DeletePopup {
+  background: #ffffff;
+  width: 100%;
+  max-width: 520px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.Popup h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2F362A;
+  margin-bottom: 28px;
+}
+
+.DeletePopup h3,
+.PopupDeleteAddress h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2F362A;
+  margin-bottom: 10px;
+}
+
+.Popup p {
+  font-family: var(--lato);
+  font-size: 14px;
+  color: #6E736A;
+}
+
+.DeletePopup p,
+.PopupDeleteAddress p {
+  font-family: var(--lato);
+  font-size: 14px;
+  color: #6E736A;
+}
+
+.Popup input,
+.Popup select {
+  /* width: 100%; */
+  padding: 19px 22px;
+  border: 1px solid #2F362A4D;
+  font-family: var(--lato);
+  color: #6E736A;
+  opacity: 90%;
+  font-size: 15px;
+}
+
+.PopupActions {
+  display: flex;
+  justify-content: left;
+  gap: 30px;
+  margin-top: 32px;
+}
+
+.DeletePopupActions,
+.PopupActionsDeleteAddress {
+  display: flex;
+  justify-content: left;
+  gap: 30px;
+  margin-top: 32px;
+}
+
+.PopupActions button {
+  padding: 13.5px 6px;
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 235px;
+}
+
+.DeletePopupActions button,
+.PopupActionsDeleteAddress button {
+  padding: 13.5px 6px;
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 235px;
+}
+
+.PersonalInfoSection h4 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2F362A;
+  margin-bottom: 30px;
+}
+
+.DeleteDanger,
+.Danger {
+  background: #6C7A5F;
+  color: #ffffff;
+  border: none;
+}
+
+.DeleteAddressSaveBtn {
+  background: #6C7A5F;
+  color: #ffffff;
+  border: none;
+}
+
+.PopupActions .Danger {
+  background: #6C7A5F;
+  color: #ffffff;
+  border: none;
+}
+
+.CheckRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--lato);
+  font-size: 14px;
+  color: #6E736A;
+  padding-top: 32px;
+}
+
+.CheckRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--lato);
+  font-size: 15px;
+  color: #6E736A;
+  font-weight: 400;
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 40px;
+    padding-bottom: 80px;
+  }
+
+  .TopLeft img {
+    max-width: 100px;
+    max-height: 100px;
+  }
+
+  .Top {
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .TopRight {
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .pfbtn,
+  .pfrembtn {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .Row {
+    grid-template-columns: 1fr;
+    /* gap: 14px; */
+  }
+
+  .PersonalInfoSection h4 {
+    margin-bottom: 16px;
+    font-size: 20px;
+  }
+
+  .other {
+    /* margin-bottom: 16px; */
+    margin-top: 0px;
+    font-size: 14px;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .fixerOne p,
+  .fixerTwo p {
+    font-size: 14px;
+  }
+
+  .AddressHeader {
+    flex-direction: column;
+    gap: 16px;
+    justify-content: left;
+    align-items: baseline;
+  }
+
+  .AddressHeader h4 {
+    font-size: 20px;
+  }
+
+  .DeleteAccount {
+    gap: 16px;
+  }
+
+  .DeleteAccount h4 {
+    font-size: 20px;
+  }
+
+  .DeleteAccount button {
+
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1440px) {
+  .main {
+    padding-left: 40px;
+    padding-right: 40px;
+
+    padding-bottom: 100px;
+  }
+
+  .TopLeft img {
+    max-width: 150px;
+    max-height: 150px;
+  }
+
+  .pfbtn,
+  .pfrembtn {
+    width: 100%;
+    padding: 10px 10px;
+    font-size: 14px;
+  }
+
+  .Row {
+    grid-template-columns: 1fr;
+    /* gap: 14px; */
+  }
+}

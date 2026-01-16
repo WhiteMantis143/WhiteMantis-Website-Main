@@ -1,0 +1,122 @@
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #6C7A5F;
+
+}
+.MainConatiner{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    width: 100%;
+    position: relative;
+    align-items: center;
+
+}
+.LeftConatiner{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 30px;
+    width: 50%;
+}
+.LeftConatinerTop{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 124px;
+    width: 80%;
+}
+.LeftConatinerTop h3{
+    font-family: var(--lexend);
+    font-weight: 600;
+    font-size: 60px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+}
+.line{
+    width: 85%;
+    height: 1px;
+    background-color: #FFFFFF;
+}
+.LeftConatinerBottom{
+    display: flex;
+    justify-content: left;
+   
+    padding-left: 16px;
+}
+.LeftConatinerBottom img{
+    width: 100%;
+    height: 100%;
+    max-width: 940px;
+    max-height: 300px;
+}
+.MiddleConatiner{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   background-color: #FFFFFF;
+   padding: 33.5px 34px;
+   border: none;
+   max-width: 466px;
+   gap: 30px;
+   flex-direction: column;
+    border-radius: 6px;
+    position: absolute;
+    top: 74%;
+    left: 38%;
+
+}
+.MiddleConatinerTop p{
+    font-family: var(--lato);
+    font-weight: 500;
+    font-size: 15px;
+    color: #6C7A5F;
+    text-align: left;
+
+}
+.MiddleConatinerBottom{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+}
+.MiddleConatinerBottomLeft h5{
+    font-family: var(--lexend);
+    font-weight: 600;
+    font-size: 22px;
+    color: #6C7A5F;
+    text-transform: uppercase;
+}
+.MiddleConatinerBottomRight{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid #6C7A5F;
+    padding: 8px 9px;
+    cursor: pointer;
+}
+.MiddleConatinerBottomRight svg{
+    width: 100%;
+    height: 100%;
+    max-width: 13px;
+    max-height: 13px;
+}
+.RightConatiner{
+    display: flex;
+    justify-content: left;
+    width: 50%;
+
+}
+.RightConatiner img{
+    width: 100%;
+    height: 100%;
+    max-width: 960px;
+    max-height: 854px;
+}

@@ -1,0 +1,71 @@
+.Main {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  width: 100%;
+  min-height: 428px;
+  background: url("./1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  padding-top: 70px;
+}
+
+.MainContainer {
+  width: 100%;
+  pointer-events: none;
+}
+
+
+.Marquee {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+
+.Track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+
+.Track h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-120);
+  font-weight: 500;
+  color: #ffffff;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.95;
+}
+
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 640px) {
+  .Track h3 {
+    font-size: 48px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .Track h3 {
+    font-size: 72px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .Track h3 {
+    font-size: 100px;
+  }
+}

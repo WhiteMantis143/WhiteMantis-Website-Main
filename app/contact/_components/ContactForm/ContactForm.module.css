@@ -1,0 +1,94 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: clamp(70px, calc(70px + (130 * ((100vw - 320px) / 1120))), 200px)
+    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px) 100px
+    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+
+  background-color: #ffffff;
+}
+
+.MainContainer {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  width: 100%;
+  gap: clamp(30px, calc(30px + (50 * ((100vw - 320px) / 1120))), 80px);
+
+  align-items: center;
+}
+.LeftConatiner {
+  display: flex;
+  justify-content: left;
+  width: 50%;
+}
+.LeftConatiner img {
+  width: 100%;
+  height: 100%;
+  max-width: 890px;
+  max-height: 800px;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.RightContainer {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 50px;
+}
+
+@media (max-width: 640px) {
+  .MainContainer {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .main {
+    padding: 50px 24px 0px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .MainContainer {
+    gap: clamp(20px, 5vw, 60px);
+  }
+
+  .LeftConatiner,
+  .RightContainer {
+    width: 100%;
+  }
+
+  .LeftConatiner img {
+    max-width: 100%;
+    max-height: 500px;
+  }
+
+  .RightContainer {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 40px 16px 24px;
+  }
+
+  .LeftConatiner img {
+    max-height: 320px;
+  }
+
+  .RightContainer {
+    gap: 18px;
+  }
+
+  .MainContainer {
+    gap: 18px;
+  }
+}

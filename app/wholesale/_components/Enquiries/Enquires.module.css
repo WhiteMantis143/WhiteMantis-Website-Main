@@ -1,0 +1,273 @@
+.Main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  padding: clamp(0px, calc(0px + (0 * ((100vw - 320px) / 1120))), 0px)
+    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
+    clamp(80px, calc(80px + (40 * ((100vw - 320px) / 1120))), 120px)
+    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+}
+.MainContainer {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: clamp(32px, calc(32px + (148 * ((100vw - 320px) / 1120))), 180px);
+
+  width: 100%;
+  align-items: center;
+  height: 100%;
+}
+.Left {
+  display: flex;
+  justify-content: left;
+}
+.Left img {
+  width: auto;
+  height: 100%;
+  object-fit: cover;
+  /* max-width: 890px; */
+  max-height: 800px;
+}
+.Right {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: clamp(24px, calc(24px + (8 * ((100vw - 320px) / 1120))), 32px);
+}
+.RightTop {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 4px;
+}
+.RightTop h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2f362a;
+  text-transform: uppercase;
+}
+.RightTop h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  color: #2f362a;
+  font-weight: 500;
+}
+.RightTop p {
+  font-family: var(--lato);
+  font-size: 15px;
+  color: #6e736a;
+  font-weight: 400;
+}
+.RightBottom {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 23px;
+}
+.SubButton {
+  display: flex;
+  justify-content: right;
+}
+.SubmitButton {
+  background-color: #ffffff;
+  color: #2f362a;
+  font-family: var(--lexend);
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+  border: 1px solid #2f362a;
+  padding: 13px 47px;
+  cursor: pointer;
+}
+.Form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #2f362a;
+}
+
+.Form input {
+  border: none;
+  border-bottom: 1px solid #2f362a;
+  padding: 16px;
+  font-family: var(--lato);
+  font-size: 14px;
+  color: #2f362a;
+}
+.Form textarea {
+  border: none;
+  /* border-bottom: 1px solid #2f362a; */
+  padding: 16px;
+  font-family: var(--lato);
+  font-size: 14px;
+  color: #2f362a;
+}
+
+.Form input::placeholder,
+.Form textarea::placeholder {
+  color: #9a9a9a;
+}
+
+.Form input:last-of-type {
+  border-bottom: 1px solid #2f362a;
+}
+
+.TwoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.TwoCol input {
+  border-right: 1px solid #2f362a;
+}
+
+.TwoCol input:last-child {
+  border-right: none;
+}
+
+.CheckboxBlock {
+  padding: 16px;
+  border-bottom: 1px solid #2f362a;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.CheckboxBlock p {
+  font-family: var(--lato);
+  font-size: 14px;
+  color: #6e736a;
+  margin-bottom: 8px;
+}
+
+.CheckboxBlock label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--lato);
+  font-size: 14px;
+  color: #6e736a;
+}
+
+.CheckboxBlock input {
+  width: 14px;
+  height: 14px;
+}
+
+.Textarea {
+  resize: none;
+  border: none;
+  padding: 16px;
+  font-family: var(--lato);
+  font-size: 14px;
+  color: #2f362a;
+}
+
+textarea::placeholder {
+  color: #9a9a9a;
+}
+@media (max-width: 640px) {
+  .Main {
+    padding: 0px 24px 80px 24px;
+  }
+  .MainContainer {
+    flex-direction: column;
+    gap: 32px;
+    justify-content: left;
+    align-items: baseline;
+    overflow: hidden;
+  }
+  .LeftContainer {
+    max-width: 100%;
+  }
+  .LeftContainer img {
+    height: auto;
+    width: 100%;
+    max-width: 100%;
+    object-fit: cover;
+  }
+
+  .RightBottom .Form {
+    width: 100%;
+    max-width: 350px;
+  }
+  .Form input {
+    padding: 12px;
+  }
+  .SubButton {
+    justify-content: center;
+  }
+  .TwoCol {
+    grid-template-columns: 1fr;
+  }
+
+  .TwoCol input {
+    border-right: none;
+    border-bottom: 1px solid #2f362a;
+  }
+}
+@media (min-width: 641px) and (max-width: 1024px) {
+  .MainContainer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 64px;
+  }
+
+  .Left {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    /* overflow: hidden; */
+  }
+
+  .Left img {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .Right {
+    flex: 1;
+    max-width: 420px;
+  }
+
+  .RightBottom .Form {
+    width: 100%;
+    max-width: 420px;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .MainContainer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 120px;
+  }
+
+  .Left {
+    flex: 1;
+  }
+
+  .Left img {
+    max-width: 890px;
+    max-height: 800px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .Right {
+    flex: 1;
+    max-width: 460px;
+  }
+
+  .RightBottom .Form {
+    width: 100%;
+    max-width: 460px;
+  }
+}
