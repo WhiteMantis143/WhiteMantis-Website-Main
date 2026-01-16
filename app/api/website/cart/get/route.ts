@@ -10,7 +10,7 @@ import {
 const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
 
 export async function GET(req: NextRequest) {
-  const session: any = await getServerSession(authOptions);
+  let session: any = await getServerSession(authOptions);
 
   // if (!session) {
   //   session = {

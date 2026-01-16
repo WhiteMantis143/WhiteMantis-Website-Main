@@ -33,7 +33,17 @@ const TheRoster = () => {
             </p>
           </div>
           <div className={styles.LeftBottom}>
-            <button className={styles.JoinBtn}>Join Our Community</button>
+            <button
+              className={styles.JoinBtn}
+              onClick={() => {
+                const el = document.getElementById("join-community");
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+            >
+              Join Our Community
+            </button>
           </div>
         </div>
 

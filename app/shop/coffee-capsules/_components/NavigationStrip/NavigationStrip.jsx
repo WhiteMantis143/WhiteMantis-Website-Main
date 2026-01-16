@@ -41,7 +41,7 @@ const NavigationStrip = () => {
             </svg>
           </div>
           <div className={styles.ActiveName}>
-            <p>Coffee Beans</p>
+            <p>Coffee Capsules</p>
           </div>
         </div>
         <div className={styles.BottomLine}></div>
