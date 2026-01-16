@@ -194,7 +194,19 @@ const Lisiting = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMobileFiltersOpen]);
 
-  if (isLoading) return <div>Loading products...</div>;
+  if (isLoading) {
+    return (
+      <div className={styles.LoaderWrapper}>
+        <Image
+          src="/White-mantis-green-loader.gif"
+          alt="Loading products"
+          width={120}
+          height={120}
+          unoptimized
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.main}>
