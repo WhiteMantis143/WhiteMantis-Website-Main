@@ -416,11 +416,13 @@
     right: -100%;
     height: 100svh;
     overflow-y: auto;
+    z-index: 100;
   }
 
   .open {
     right: 0;
   }
+  
 
   .Main {
     padding: 150px 24px 50px 24px;
