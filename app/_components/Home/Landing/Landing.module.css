@@ -1,7 +1,7 @@
 .Main {
   width: 100%;
   height: 100vh;
- padding-top: clamp(80px, calc(80px + (70 * ((100vw - 320px) / 1120))), 150px);
+ padding-top: clamp(80px, calc(80px + (70 * ((100vw - 320px) / 1120))), 180px);
 
 padding-bottom: clamp(30px, calc(30px + (98 * ((100vw - 320px) / 1120))), 128px);
 
@@ -127,7 +127,7 @@ padding-right: clamp(24px, calc(24px + (102 * ((100vw - 320px) / 1120))), 125px)
   padding-left: 24px;
  }
  .Main {
-  padding-top:120px;
+  padding-top:150px;
   padding-bottom: 30px;
   height: 100svh;
  }

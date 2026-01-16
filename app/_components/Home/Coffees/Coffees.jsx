@@ -36,28 +36,42 @@ const coffeeData = [
 ];
 
 const Coffees = () => {
+  const [canScrollPrev, setCanScrollPrev] = React.useState(false);
+const [canScrollNext, setCanScrollNext] = React.useState(false);
+
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     align: "start",
   });
 
-  React.useEffect(() => {
-    if (!emblaApi) return;
+React.useEffect(() => {
+  if (!emblaApi) return;
 
-    return () => {
-      if (emblaApi) {
-        emblaApi.destroy();
-      }
-    };
-  }, [emblaApi]);
+  const updateButtons = () => {
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
+  };
 
-  const scrollPrev = useCallback(() => {
-    emblaApi && emblaApi.scrollPrev();
-  }, [emblaApi]);
+  updateButtons();
 
-  const scrollNext = useCallback(() => {
-    emblaApi && emblaApi.scrollNext();
-  }, [emblaApi]);
+  emblaApi.on("select", updateButtons);
+  emblaApi.on("reInit", updateButtons);
+
+  return () => {
+    emblaApi.off("select", updateButtons);
+    emblaApi.off("reInit", updateButtons);
+  };
+}, [emblaApi]);
+
+const scrollPrev = useCallback(() => {
+  if (!emblaApi || !canScrollPrev) return;
+  emblaApi.scrollPrev();
+}, [emblaApi, canScrollPrev]);
+
+ const scrollNext = useCallback(() => {
+  if (!emblaApi || !canScrollNext) return;
+  emblaApi.scrollNext();
+}, [emblaApi, canScrollNext]);
 
   return (
     <div className={styles.Main}>
@@ -76,6 +90,10 @@ const Coffees = () => {
        
             <svg
               onClick={scrollPrev}
+               style={{
+    opacity: canScrollPrev ? 1 : 0.4,
+    cursor: canScrollPrev ? "pointer" : "not-allowed",
+  }}
               width="47"
               height="47"
               viewBox="0 0 47 47"
@@ -94,6 +112,10 @@ const Coffees = () => {
 
             <svg
               onClick={scrollNext}
+                style={{
+    opacity: canScrollNext ? 1 : 0.4,
+    cursor: canScrollNext ? "pointer" : "not-allowed",
+                }}
               width="47"
               height="47"
               viewBox="0 0 47 47"
@@ -156,7 +178,55 @@ const Coffees = () => {
               ))}
             </div>
           </div>
+          
         </div>
+   
+<div className={styles.MobileArrows}>
+  <svg
+    onClick={scrollPrev}
+     style={{
+    opacity: canScrollPrev ? 1 : 0.4,
+    cursor: canScrollPrev ? "pointer" : "not-allowed",
+  }}
+    width="47"
+    height="47"
+    viewBox="0 0 47 47"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="23.0469" cy="23.0469" r="23.0469" fill="#6C7A5F" />
+    <path
+      d="M27.9023 32.7578L18.1914 23.0469L27.9023 13.3359"
+      stroke="white"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+
+  <svg
+    onClick={scrollNext}
+     style={{
+    opacity: canScrollNext ? 1 : 0.4,
+    cursor: canScrollNext ? "pointer" : "not-allowed",
+  }}
+    width="47"
+    height="47"
+    viewBox="0 0 47 47"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="23.0469" cy="23.0469" r="23.0469" fill="#6C7A5F" />
+    <path
+      d="M18.1914 13.3359L27.9023 23.0469L18.1914 32.7578"
+      stroke="white"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+</div>
+
       </div>
     </div>
   );

@@ -114,10 +114,10 @@ const Navbar = () => {
                           <Link href="/shop/coffee-beans">
                             <p>Coffee Beans</p>
                           </Link>
-                          <Link href="/shop/drip-bags">
+                          <Link href="/shop/coffee-dripbags">
                             <p>Coffee Drip bags</p>
                           </Link>
-                          <Link href="/shop/capsules">
+                          <Link href="/shop/coffee-capsules">
                             <p>Coffee Capsules</p>
                           </Link>
                         </div>
