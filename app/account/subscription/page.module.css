@@ -1,0 +1,504 @@
+.Main{
+    display: flex;
+    justify-content: left;
+    background-color: #ffffff;
+    width: 100%;
+    height: 100%;
+  padding-left: clamp(24px, calc(24px + (26 * ((100vw - 320px) / 1120))), 50px);
+padding-right: clamp(24px, calc(24px + (76 * ((100vw - 320px) / 1120))), 100px);
+padding-bottom: clamp(80px, calc(80px + (120 * ((100vw - 320px) / 1120))), 200px);
+
+
+}
+.MainContainer{
+    display: flex;
+    justify-content: left;
+    width: 100%;
+    height: 100%;
+    gap: 32px;
+    max-width: 700px;
+    flex-direction: column;
+}
+.ActiveSubscriptions{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+   gap: 32px;
+
+}
+.ActiveTop h3{
+    font-family: var(--lexend);
+    font-size: var(--fs-22);
+    font-weight: 500;
+    color: #2F362A;
+    text-transform: uppercase;
+}
+.ActiveList{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    border: 1px solid #2F362A;
+}
+.ActiveListTop{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 28px 11px 28px;
+    width: 100%;
+    background-color: #6C7A5F;
+}
+.ActiveListTopLeft{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 11px;
+}
+.ActiveListTopLeftTop{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+}
+.ActiveListTopLeftTop p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+.ActiveListTopNextDevelivery{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+.ActiveListTopNextDevelivery p, .ActiveListTopNextDevelivery h4{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #FFFFFF;
+}
+.ActiveListTopRight{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 10px;
+   
+}
+.ActiveOrderDate, .ActiveSubId{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    gap: 8px;
+}
+.ActiveOrderDate p, .ActiveSubId p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #FFFFFF;
+}
+.ActiveListBottom{
+    display: flex;
+    justify-content: left;
+    padding: 30px 58px 30px 75px;
+    gap: 10px;
+    flex-direction: column;
+}
+.ActiveListBottomtOP{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.ActiveSubLeft{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 16px;
+   
+}
+.ActiveSubLeftTop{
+    display: flex;
+    justify-content: left;
+}
+.ActiveSubLeftTop p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.ActiveSubLeftBottom{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+}
+.ProdImge img{
+    width: 100%;
+    max-width: 82px;
+    height: 100%;
+    max-height: 80px;
+}
+.ProdDetails{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 8px;
+}
+.ProdTitle h3{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #6E736A;
+}
+.ProdTooDetails{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+.prodweight p, .prodQty p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #6E736A;
+}
+.ActiveSubRight{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    max-width: 131px;
+    gap: 6px;
+}
+.ViewCta{
+    display: flex;
+    justify-content: right;
+    
+}
+.AtciveSubDeliveryTiming p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.view{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 500;
+    color: #6C7A5F;
+    background-color: transparent;
+    border: 1px solid #6C7A5F;
+    text-decoration: none;
+    padding: 13px 23px ;
+
+    cursor: pointer;
+}
+.PastSubscriptions{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 24px;
+}
+.PastSubscriptionsTop{
+    display: flex;
+    justify-content: left;
+}
+.PastSubscriptionsTop h3{
+    font-family: var(--lexend);
+    font-size: var(--fs-22);
+    font-weight: 500;
+    color: #2F362A;
+    text-transform: uppercase;
+}
+
+
+.PastSubscriptions {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 24px;
+}
+
+
+.PastList {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #E0E0E0;
+  background-color: #ffffff;
+}
+
+
+.pastListTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 28px;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+
+.pastTopLeft {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.pastTopLeft svg {
+  margin-top: 2px;
+}
+
+.pastTopLeft p:first-child {
+  font-family: var(--lato);
+  font-size: 14px;
+  font-weight: 500;
+  color: #2F362A;
+}
+
+.pastTopLeft p:last-child {
+  font-family: var(--lato);
+  font-size: 13px;
+  font-weight: 400;
+  color: #6E736A;
+}
+
+
+.pastTopRight {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: right;
+}
+
+.pastTopRight p {
+  font-family: var(--lato);
+  font-size: 13px;
+  font-weight: 400;
+  color: #6E736A;
+}
+
+
+.PastListBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 28px;
+}
+
+.PastListBottomLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pastProdImage img {
+  width: 82px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.pastProdDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pastProdTitle h4 {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 500;
+  color: #2F362A;
+}
+
+
+.pastProdSubTitledetails {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pastprodTag p,
+.pastprodQty p {
+  font-family: var(--lato);
+  font-size: 14px;
+  font-weight: 400;
+  color: #6E736A;
+}
+
+.smallLine {
+  font-family: var(--lato);
+  font-size: 14px;
+  color: #6E736A;
+}
+
+
+.PastListBottomRight a {
+  font-family: var(--lato);
+  font-size: 14px;
+  font-weight: 400;
+  color: #2F362A;
+  text-decoration: underline;
+  cursor: pointer;
+}
+/* =========================
+   EMPTY STATE (ACTIVE / PAST)
+========================= */
+
+.EmptyState {
+  border: 1px solid #E0E0E0;
+  padding: 40px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #ffffff;
+}
+
+.EmptyTitle {
+  font-family: var(--lato);
+  font-size: 16px;
+  font-weight: 500;
+  color: #2F362A;
+}
+
+.EmptySubText {
+  font-family: var(--lato);
+  font-size: 14px;
+  font-weight: 400;
+  color: #6E736A;
+}
+
+.EmptyCTA {
+  margin-top: 10px;
+  width: fit-content;
+  font-family: var(--lato);
+  font-size: 14px;
+  font-weight: 500;
+  color: #6C7A5F;
+  border: 1px solid #6C7A5F;
+  padding: 10px 18px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.DesktopOnly {
+  display: flex;
+}
+
+.MobileOnly {
+  display: none;
+}
+
+.ActiveMobileMeta,
+.PastMobileMeta {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 20px 0 20px;
+}
+
+.MobileMetaRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.MobileMetaRow span {
+  font-family: var(--lato);
+  font-size: 13px;
+  font-weight: 400;
+  color: #6E736A;
+}
+
+.MobileDivider {
+  height: 1px;
+  width: 100%;
+  background-color: #E0E0E0;
+  margin-bottom: 10px;
+}
+
+
+@media (max-width: 640px) {
+
+
+  .DesktopOnly {
+    display: none;
+  }
+
+  .MobileOnly {
+    display: flex;
+  }
+
+
+  .ActiveListTop {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .ActiveListBottom {
+    padding: 20px;
+  }
+
+  .ActiveListBottomtOP {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .ActiveSubRight {
+    justify-content: flex-start;
+  }
+
+  .ViewCta {
+    justify-content: flex-start;
+  }
+
+ 
+  .pastListTop {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .PastListBottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .PastListBottomRight {
+    align-self: flex-start;
+  }
+   .ActiveMobileMeta,
+  .PastMobileMeta {
+    display: flex;
+    padding-bottom: 10px;
+  }
+  .ActiveTop h3, .PastSubscriptionsTop h3 {
+    font-size: 20px;
+  }
+}
+
+
+@media (min-width: 641px) and (max-width: 1024px) {
+
+  .MainContainer {
+    max-width: 100%;
+  }
+
+  .ActiveListBottom {
+    padding: 24px 32px;
+  }
+
+  .PastListBottom {
+    padding: 20px 24px;
+  }
+}
+
+
+@media (min-width: 1024px) and (max-width: 1440px) {
+
+  .MainContainer {
+    max-width: 700px;
+  }
+}

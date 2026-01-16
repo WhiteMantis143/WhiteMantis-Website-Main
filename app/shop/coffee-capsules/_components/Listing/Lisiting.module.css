@@ -1,0 +1,636 @@
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    padding: 0px 125px 250px 125px;
+}
+.MainContainer{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    gap: 88.5px;
+}
+.LeftConatiner{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 31px;
+}
+.LeftTop{
+    display: flex;
+    justify-content: left;
+}
+.RightConatiner{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 59px;
+    width: 100%;
+}
+.RightTop{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.RightTopLeft{
+    display: flex;
+    justify-content: left;
+    gap: 2px;
+    flex-direction: column;
+}
+.CatName , .CatCount{
+    display: flex;
+    justify-content: left;
+}
+.CatName h3{
+    font-family: var(--lexend);
+    font-size: 22px;
+    font-weight: 500;
+    color: #2F362A;
+    text-transform: uppercase;
+
+}
+.CatCount p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 500;
+    color: #6E736A;
+}
+.RightTopRight{
+    display: flex;
+    justify-content: right;
+    gap: 15px;
+    align-items: center;
+}
+.SortBy p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.SortOptions{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-direction: row;
+    padding: 18px 31px;
+    background-color: #FFFFFF;  
+    cursor: pointer;
+    border: 1px solid #6E736A;
+}
+.SortOptions p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 500;
+    color: #6E736A;
+
+}
+.RightBottom {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 80px;
+}
+.ProductsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+.ProductCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ProductTop {
+    display: flex;
+    justify-content: left;
+    cursor: pointer;
+    flex-direction: column;
+    position: relative;
+}
+.ProductImage {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background-color: #f8f8f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ProductImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* .ProductTop img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+} */
+.WishlistIcon{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
+}
+.ProductBottom{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    flex-grow: 1;
+}
+
+.ProductInfo{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 12px;
+}
+.ProductPrice{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+.ProductPrice h4{
+    font-family: var(--lexend);
+    font-size: 15px;
+    font-weight: 400;
+    color: #2F362A;
+
+}
+.ProductPrice p{
+    font-family: var(--lato);
+    font-size: 11px;
+    font-weight: 400;
+    color: #BA0E0E;
+    text-decoration: line-through;
+    
+}
+.Line{
+    width: 100%;
+    height: 0.5px;
+    background-color: #2F362A4D;
+}
+.ProductName{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 4px;
+
+}
+.ProductName h3{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.ProductName p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #6E736A;
+}
+.ProductActions{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+}
+.Subscribe {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 67px;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 15px;
+    color: #464646;
+    font-family: var(--lato);
+    border: 0.75px solid #6C7A5F;
+}
+.LoadMore{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.LoadMoreCta{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 13px 46.5px;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    border: 1px solid #2F362A;
+    font-size: 15px;
+    color: #2F362A;
+    font-family: var(--lato);
+}
+.LeftBottom{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    max-width: 300px;
+}
+.One{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #2F362A4D;
+}
+.leftCatName{
+    display: flex;
+    justify-content: space-between;
+    
+}
+.leftCatName h5{
+    font-family: var(--lato);
+    font-size: 18=5px;
+    font-weight: 500;
+    color: #6E736A;
+    
+
+}
+.FilterBox {
+  border: 1px solid #2F362A4D;
+  padding: 20px;
+  min-width: 300px;
+}
+
+.FilterHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.FilterHeader h5 {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 500;
+  color: #6E736A;
+}
+
+.FilterHeader span {
+  font-size: 15px;
+  font-family: var(--lato);
+  font-weight: 500;
+  color: #6E736A;
+}
+
+.FilterOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.FilterOptions label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--lato);
+  font-size: 15px;
+  color: #6E736A;
+}
+
+.PriceBox {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.PriceInputs {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.PriceInputs input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #6E736A;
+}
+
+.PriceInputs p {
+  font-size: 12px;
+  color: #6E736A;
+  margin-top: 4px;
+}
+
+
+.AnimatedBox {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    max-height 0.35s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.open {
+  max-height: 500px; 
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+.SortWrapper {
+  position: relative;
+}
+
+.SortDropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #6E736A;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.SortDropdown p {
+  padding: 14px 31px;
+  font-family: var(--lato);
+  font-size: 15px;
+  color: #6E736A;
+  cursor: pointer;
+}
+
+.SortDropdown p:hover {
+  background-color: #F5F5F5;
+}
+.MobileFilterOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 50;
+}
+
+.MobileFilterDrawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 85%;
+  max-width: 340px;
+  background: #fff;
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 60;
+  animation: slideIn 0.3s ease;
+}
+
+.MobileFilterHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.MobileFilterHeader p {
+  font-family: var(--lato);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.MobileFilterHeader span {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+
+.MobileFilterDrawer .LeftBottom {
+  max-width: 100%;
+}
+
+.MobileFilterDrawer .FilterBox {
+  min-width: unset;
+  width: 100%;
+}
+.MobileFilterBtn {
+  display: none;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+
+.MobileFilters {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #ffffff;
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 20px 16px;
+}
+
+@media (max-width: 640px) {
+
+  .main {
+    padding: 0px 24px 80px 24px;
+  }
+
+  .MainContainer {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+
+  .LeftConatiner {
+    display: none;
+  }
+
+
+  .ProductsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+
+  .ProductTop {
+    width: 100%;
+  }
+
+  .ProductActions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  
+  .ProductActions button {
+    width: 100%;
+    padding: 12px 0;
+   
+  }
+  .Subscribe {
+   display: none;
+  }
+
+
+  .MobileFilterBtn {
+    display: flex;
+    align-items: center;
+    padding: 11.5px 54px;
+    border: 1px solid #6E736A;
+    background: #fff;
+    font-size: 14px;
+    flex-direction: row;
+      max-width: 169px;
+    gap: 5px;
+  }
+  .SortOptions{
+   padding: 11.5px 54px;
+   max-width: 169px;
+  }
+ .SortBy p{
+    display: none;
+ }
+  .RightTopLeft {
+    display: none;
+  }
+  .ProductCard{
+    width: 100%;
+    max-width: 170px;
+  }
+  .RightConatiner{
+    gap: 32px;
+  }
+
+}
+@media (min-width: 641px) and (max-width: 940px) {
+
+  .main {
+    padding: 32px 24px 80px;
+  }
+
+  .MainContainer {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+
+  .LeftConatiner {
+    display: none;
+  }
+
+  .ProductsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .ProductTop {
+    width: 100%;
+  }
+
+  .ProductActions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .Subscribe,
+  .ProductActions button {
+    width: 100%;
+  }
+
+
+  .MobileFilterBtn {
+    display: flex;
+    align-items: center;
+    padding: 12px 18px;
+    border: 1px solid #6E736A;
+    background: #fff;
+    font-size: 15px;
+  }
+
+  .RightTopLeft {
+    display: none;
+  }
+  .ProductCard{
+    max-width: 350px;
+  }
+}
+@media (min-width: 941px) and (max-width: 1440px) {
+
+  .main {
+    padding: 40px 60px 160px;
+  }
+
+  .MainContainer {
+    gap: 40px;
+  }
+
+
+  .LeftConatiner {
+    display: flex;
+  }
+
+
+  .ProductsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+
+
+  .MobileFilterBtn {
+    display: none;
+  }
+  .ProductCard{
+    max-width: 300px;
+  }
+  .Subscribe{
+    display: none;
+  }
+}
+
+@media (min-width: 1441px) and (max-width: 1720px) {
+
+  .main {
+    padding: 0px 125px 250px;
+  }
+
+  .MainContainer {
+    gap: 88.5px;
+  }
+
+
+  .LeftConatiner {
+    display: flex;
+  }
+
+
+  .ProductsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .MobileFilterBtn {
+    display: none;
+  }
+}

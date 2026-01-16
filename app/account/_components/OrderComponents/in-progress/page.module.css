@@ -1,0 +1,150 @@
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    border: 1px solid rgba(47, 54, 42, 0.3);
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 28px;
+}
+
+.topLeft {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.topLeft p:first-child {
+    font-family: var(--lato);
+    font-weight: 700;
+    font-size: 15px;
+    color: #c66311;
+    margin: 0;
+}
+
+.topLeft p:last-child {
+    font-family: var(--lato);
+    font-size: 15px;
+    color: #2f362a;
+    margin-top: 6px;
+}
+
+.topRight {
+    text-align: right;
+}
+
+.topRight p {
+    font-family: var(--lato);
+    font-size: 15px;
+    margin: 0 0 6px;
+}
+
+.topRight span {
+    color: #6e736a;
+}
+
+.middle {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 66px;
+    border-top: 1px solid rgba(47, 54, 42, 0.3);
+
+}
+
+.middleLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+}
+
+.middleLeft>div {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    color: #6E736A;
+}
+
+.middleLeft img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.orderMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.orderMeta p {
+    font-family: var(--lato);
+    font-size: 14px;
+    margin: 0;
+}
+
+.orderMeta span {
+    color: #6e736a;
+}
+
+.middleRight {
+    display: flex;
+    align-items: flex-start;
+}
+
+.orderDetails {
+    font-family: var(--lato);
+    font-size: 15px;
+    color: #2f362a;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.bottom {
+    border-top: 1px solid rgba(47, 54, 42, 0.3);
+    padding: 16px 30px;
+}
+
+.bottom p {
+    font-family: var(--lato);
+    font-size: 15px;
+    color: #6e736a;
+    margin: 0;
+}
+
+.OrderMeta {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .topRight {
+        display: none;
+    }
+
+    .middle {
+        padding: 20px 16px;
+    }
+
+    .OrderMeta {
+        display: block;
+        text-align: left;
+        padding: 0 16px 16px 16px;
+    }
+
+    .OrderMeta p {
+        font-family: var(--lato);
+        font-size: 15px;
+        margin: 0 0 6px;
+    }
+
+    .OrderMeta span {
+        color: #6e736a;
+    }
+}

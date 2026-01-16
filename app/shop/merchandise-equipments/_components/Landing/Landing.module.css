@@ -1,0 +1,10 @@
+.Main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    min-height: 428px;
+    background: url('./1.png');
+    overflow: hidden;
+}

@@ -1,0 +1,204 @@
+.Main {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  padding: 100px;
+}
+
+.BgBase,
+.BgNext {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.BgBase {
+  background-image: url("./2.jpg");
+  z-index: 0;
+}
+
+.BgNext {
+  background-image: url("./1.jpg");
+  opacity: 0;
+  z-index: 1;
+}
+
+.Grid {
+  /* position: absolute; */
+  /* top: -100vh; */
+  /* left: -100vw; */
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  will-change: transform;
+  /* padding: 100px; */
+}
+
+.hTop,
+.hBottom {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300vw;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+
+.hTop {
+  top: 0;
+}
+
+.hBottom {
+  bottom: 0;
+}
+
+.vLeft,
+.vRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 300vh;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+
+.vLeft {
+  left: 0;
+}
+
+.vRight {
+  right: 0;
+}
+
+.CardBase {
+  /* position: absolute; */
+  /* top: calc(100vh + 107px); */
+  /* left: calc(100vw + 124px); */
+  /* max-width: 544px; */
+  /* min-height: 350px; */
+  background: #ffffff;
+  width: 100%;
+  height: 100%;
+
+  padding: clamp(30px, calc(30px + (35 * ((100vw - 320px) / 1120))), 65px)
+    clamp(30px, calc(30px + (56 * ((100vw - 320px) / 1120))), 86px)
+    clamp(30px, calc(30px + (135 * ((100vw - 320px) / 1120))), 150px)
+    clamp(30px, calc(30px + (37 * ((100vw - 320px) / 1120))), 67px);
+
+  display: flex;
+  flex-direction: column;
+  /* transition: all 0.5s ease-in-out; */
+  gap: clamp(10px, calc(10px + (20 * ((100vw - 320px) / 1120))), 30px);
+  position: relative;
+}
+.ContentWrapper {
+  display: grid;
+  grid-template-areas: "stack";
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.ValuesContent,
+.VisionContent {
+  grid-area: stack;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, calc(10px + (20 * ((100vw - 320px) / 1120))), 30px);
+}
+.VisionContent {
+  opacity: 0;
+}
+.CardInitial {
+  grid-area: 1 / 1;
+}
+.CardNew {
+  grid-area: 3 / 3;
+}
+
+@media (max-width: 640px) {
+  .vRight,
+  .hBottom,
+  .hTop,
+  .vLeft {
+    /* display: none; */
+  }
+  .Main {
+    padding: 26px;
+  }
+  .Grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+  .CardInitial {
+    grid-area: 1 / 1;
+  }
+  .CardNew {
+    grid-area: 3 / 1;
+  }
+
+  .ContentWrapper {
+    height: fit-content;
+  }
+  .CardBase {
+    height: fit-content;
+  }
+
+  .Card {
+    top: calc(100vh + 40px);
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 350px;
+    min-height: 163px;
+  }
+
+  .hTop {
+    /* top: calc(100vh + 38px); */
+  }
+
+  .hBottom {
+    /* top: calc(100vh + 24px + 250px); */
+  }
+
+  .vLeft,
+  .vRight {
+    /* top: calc(100vh + 24px); */
+    /* height: 260px; */
+  }
+
+  .vLeft {
+    /* left: calc(50vw - 44vw); */
+  }
+
+  .vRight {
+    /* left: calc(50vw + 44vw); */
+  }
+}
+
+@media (min-width: 641px) and (max-width: 940px) {
+  .Card {
+    max-width: 350px;
+    max-height: 163px;
+  }
+
+  .vRight {
+    /* left: calc(100vw + 124px + 460px); */
+  }
+}
+
+@media (min-width: 941px) and (max-width: 1400px) {
+  .Card {
+    max-width: 520px;
+  }
+
+  .vRight {
+    /* left: calc(100vw + 124px + 520px); */
+  }
+}

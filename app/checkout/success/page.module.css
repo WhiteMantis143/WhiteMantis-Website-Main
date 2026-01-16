@@ -1,0 +1,416 @@
+.Main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+  padding-left: clamp(24px, calc(24px + (386 * ((100vw - 320px) / 1120))), 410px);
+padding-right: clamp(24px, calc(24px + (386 * ((100vw - 320px) / 1120))), 410px);
+padding-bottom: clamp(80px, calc(80px + (120 * ((100vw - 320px) / 1120))), 200px);
+
+}
+.MainConatiner{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  gap: clamp(16px, calc(16px + (34 * ((100vw - 320px) / 1120))), 50px);
+
+    flex-direction: row;
+}
+.Left{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    gap: 24px;
+}
+.LeftTop{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    gap: 8px;
+    padding-top: 150px;
+
+}
+.LeftTop h3{
+    font-family: var(--lexend);
+    font-size: var(--fs-22);
+    font-weight: 500;
+    color: #428B54;
+    text-transform: uppercase;
+}
+.LeftMiddle{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    max-width: 500px;
+   
+}
+.LeftMiddleTop{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 8px;
+    border: 1px solid #2F362A4D;
+    padding: 10px 15px;
+}
+.LeftMiddleTop h4{
+    font-family: var(--lexend);
+    font-size: var(--fs-22);
+    font-weight: 500;
+    color: #2F362A;
+    text-transform: uppercase;
+}
+.LeftMiddleTop p{
+    font-family: var(--lato);
+    font-size: 15px;
+    color: #6E736A; 
+    font-weight: 400;
+    max-width: 470px;
+}
+.LeftMiddleBottom{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 30px;
+    border: 1px solid #2F362A4D;
+    padding: 20px 25px;
+}
+.One{
+    display: flex;
+    justify-content: left;
+   flex-direction: column;
+   gap:10px;
+}
+.OneTop{display: flex;
+    justify-content: left;
+    
+}
+.OneTop p{
+    font-family: var(--lato);
+    font-size:15px;
+    font-weight: 700;
+    color: #2F362A;
+
+}
+.OneBottom{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.OneBottomLeft{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 10px;
+}
+.OrderText, .OrderIdNumber{
+    display: flex;
+    justify-content: left;
+    
+}
+.OrderText p{
+    font-family: var(--lato);
+    font-size:15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.OrderIdNumber h4{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color:#6E736A;
+}
+.OneBottomRight{
+    display: flex;
+    justify-content: right;
+    flex-direction: column;
+    gap: 10px;
+    
+}
+.PaymentText{
+    display: flex;
+    justify-content: left;
+}
+.PaymentText p{
+    font-family: var(--lato);
+    font-size:15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.PaymentMethodCard{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+.PaymentMethodCard h4{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color:#6E736A;
+}
+.Two{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+     
+}
+.TwoLeft{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 206px;
+}
+.TwoLeftHeading, .BillingAddress{
+    display: flex;
+    justify-content: left;
+
+}
+.TwoLeftHeading p{
+    font-family: var(--lato);
+    font-size:15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.BillingAddress p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color:#6E736A;
+
+}
+.TwoRight{
+    display: flex;
+    justify-content: right;
+    max-width: 206px;
+    flex-direction: column;
+    gap: 10px;
+   
+}
+.TwoRightHeading, .ShippingAddress{
+    display: flex;
+    justify-content: left;
+
+}
+.TwoRightHeading p{
+    font-family: var(--lato);
+    font-size:15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.ShippingAddress p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color:#6E736A;
+}
+.Three{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 10px;
+}
+.ThreeTop, .ContactEmail{
+    display: flex;
+    justify-content: left;
+}
+.ThreeTop p{
+    font-family: var(--lato);
+    font-size:15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.ContactEmail p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color:#6E736A;
+}
+.LeftBottom{
+    display: flex;
+    justify-content: left;
+}
+.cont{
+    padding: 13px 19px;
+ 
+    border: none;
+    display: flex;
+    background-color: #6C7A5F;
+    color: #FFFFFF;
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.Line{
+    width: 1px;
+    align-self: stretch;
+    background-color: #2F362A4D;
+
+}
+.Right{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+   gap: clamp(24px, calc(24px + (8 * ((100vw - 320px) / 1120))), 32px);
+
+    padding-top: 150px;
+    width: 100%;
+}
+.RightOne{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    gap: 13px;
+}
+.RightOne h3{
+    font-family: var(--lexend);
+    font-size: var(--fs-22);
+    font-weight: 400;
+    color: #2F362A;
+    text-transform: uppercase;
+}
+.RightOne p{
+    font-family: var(--lato);
+    font-size: 15px;
+    color: #2F362A; 
+    font-weight: 400;
+}
+.RightTwo{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 24px;
+}
+.ProdOne{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
+.ProdImage img{
+    width: 100%;
+    max-width: 81px;
+    height: 100%;
+    max-height: 80px;
+    object-fit: cover;
+}
+.ProdNameAndweight h4{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.ProdQnty p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.ProdPrice h4{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.RightThree{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 15px;
+}
+.Subtotal, .Shipping, .Total, .CuponDiscount, .EstimatedTax{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.RightLine{
+    width: 100%;
+    height: 1px;
+    background-color: #2F362A4D;
+}
+.Subtotal p, .Shipping p,  .CuponDiscount p, .EstimatedTax p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.Subtotal h4, .Shipping h4, .CuponDiscount h4, .EstimatedTax h4{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.Total p , .Total h4{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 700;
+    color: #2F362A;
+}
+@media (max-width: 640px){
+    .Main{
+        padding: 80px 24px;
+    }
+    .MainConatiner{
+        flex-direction: column;
+        align-items: center;
+    }
+    .Left, .Right{
+        width: 100%;
+        padding-top: 0px;
+    }
+    .Right{
+        align-items: baseline;
+    }
+    .LeftTop{
+        max-width: 100%;
+        padding-top: 80px;
+    }
+    .RightTwo, .RightThree{
+        width: 100%;
+    }
+    .Line{
+        width: 100%;
+        height: 1px;
+    }
+    .LeftTop h3{
+        font-size: 20px;
+    }
+    .Left{
+        gap: 32px;
+        padding-bottom: 80px;
+    }
+    .LeftMiddleTop h4, .RightOne h3{
+        font-size: 20px;
+    }
+    .LeftMiddleTop p, .OneTop p, .OrderText p, .OrderIdNumber h4, .PaymentText p, .PaymentMethodCard h4, .TwoLeftHeading p, .BillingAddress p, .TwoRightHeading p,.cont, .ShippingAddress p, .ThreeTop p, .ContactEmail p{
+        font-size: 14px;
+    }
+    .ProdNameAndweight h4, .ProdQnty p, .ProdPrice h4, .Subtotal p, .Shipping p,  .CuponDiscount p, .EstimatedTax p, .Subtotal h4, .Shipping h4, .CuponDiscount h4, .EstimatedTax h4, .Total p , .Total h4{
+        font-size: 14px;
+    }
+}
+@media(min-width: 641px) and (max-width: 1024px){
+    .Main{
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+@media(min-width: 1025px) and (max-width: 1480px){
+    .Main{
+        padding-left: 80px;
+        padding-right: 80px;
+    }
+}
+@media(min-width: 1481px) and (max-width: 1820px){
+    .Main{
+        padding-left: 150px;
+        padding-right: 150px;
+    }
+}

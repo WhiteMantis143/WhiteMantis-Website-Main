@@ -1,0 +1,162 @@
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    border: 1px solid rgba(47, 54, 42, 0.3);
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 28px;
+}
+
+.top .left {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.top .left p:first-child {
+    font-family: var(--lato);
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 100%;
+    color: #428b54;
+    margin: 0;
+}
+
+.top .left p:last-child {
+    font-family: var(--lato);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 100%;
+    color: #2f362a;
+    margin-top: 6px;
+}
+
+.top .right {
+    text-align: right;
+}
+
+.top .right p {
+    font-family: var(--lato);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 100%;
+    color: #2f362a;
+    margin: 0 0 6px 0;
+}
+
+.top .right span {
+    color: #6e736a;
+}
+
+.middle {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 66.5px;
+    border-top: 1px solid rgba(47, 54, 42, 0.3);
+}
+
+.middle .left {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.middle .left p:first-child {
+    font-family: var(--lato);
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 100%;
+    color: #2f362a;
+}
+
+.middle .left>div {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+
+}
+
+.middle .left>div p:first-child,
+.middle .left>div p:last-child {
+    font-family: var(--lato);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 100%;
+    color: #6e736a;
+    margin-top: 8px;
+
+}
+
+.middle .left p:last-child {
+    font-family: var(--lato);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 100%;
+    color: #6e736a;
+}
+
+.middle img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.middle .right {
+    display: flex;
+    align-items: flex-start;
+}
+
+.middle .right a {
+    font-family: var(--lato);
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 100%;
+    color: #2f362a;
+    text-decoration: underline;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.bottom {
+    height: 1px;
+}
+
+.OrderMeta {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .right {
+        display: none;
+    }
+
+    .middle {
+
+        padding: 20px 30px;
+    }
+
+    .OrderMeta {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 16px;
+    }
+
+    .OrderMeta p {
+        font-family: var(--lato);
+        font-size: 14px;
+        margin: 0;
+    }
+
+    .OrderMeta span {
+        color: #6e736a;
+    }
+}

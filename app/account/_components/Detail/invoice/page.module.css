@@ -1,0 +1,40 @@
+.main {
+    width: 100%;
+}
+
+.main h1 {
+    font-size: 22px;
+    font-family: var(--lexend);
+    font-weight: 500;
+    color: #2F362A;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container button {
+    padding: 13px 23px;
+    background-color: transparent;
+    border: 1px solid #6C7A5F;
+    font-family: var(--lato);
+    font-weight: 400;
+    font-size: 15px;
+    color: #6C7A5F;
+}
+
+@media (max-width: 675px) {
+    .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .main h1 {
+        font-size: 20px;
+    }
+}

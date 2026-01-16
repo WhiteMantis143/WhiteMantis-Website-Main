@@ -1,0 +1,122 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  padding: 0px 125px 200px 125px;
+}
+.MainConatiner {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  width: 100%;
+  gap: 100px;
+  height: 100%;
+}
+.Heading {
+  display: flex;
+  justify-content: left;
+}
+.Heading h3 {
+  font-family: var(--lexend);
+  font-weight: 500;
+  font-size: 22px;
+  color: #525252;
+}
+.BottomContainer {
+  display: grid;
+
+  grid-template-columns: minmax(200px, 719px) 1fr;
+  gap: 24px;
+  align-items: start;
+  justify-items: start;
+}
+.Left {
+  display: flex;
+  justify-content: left;
+  height: 100%;
+}
+.Left img {
+  width: 100%;
+  height: 100%;
+  max-width: 719px;
+  border-radius: 6px;
+  max-height: 800px;
+}
+.Right {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 24px;
+  height: 100%;
+}
+.RightTop {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: 24px;
+}
+.RightTop img {
+  width: 100%;
+  height: 100%;
+  max-width: 451px;
+  border-radius: 6px;
+  max-height: 388px;
+}
+.RightBottom {
+  display: flex;
+  justify-content: left;
+}
+.RightBottom img {
+  width: 100%;
+  height: 100%;
+  max-width: 927px;
+  border-radius: 6px;
+  max-height: 388px;
+}
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 20px 50px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  /* background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 40%,
+    rgba(0, 0, 0, 0.8) 100%
+  ); */
+  border-radius: 6px;
+}
+
+.imageWrapper:hover .overlay {
+  opacity: 1;
+}
+
+.overlay h4 {
+  font-family: var(--lexend);
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+}
+
+.overlay p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #ffffff;
+  margin-top: 4px;
+}

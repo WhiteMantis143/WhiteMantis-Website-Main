@@ -1,0 +1,128 @@
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding:
+  clamp(70px, calc(70px + (130 * ((100vw - 320px) / 1120))), 200px)
+  clamp(51px, calc(51px + (199 * ((100vw - 320px) / 1120))), 250px)
+  0px
+  clamp(24px, calc(24px + (226 * ((100vw - 320px) / 1120))), 250px);
+
+    background-color: #ffffff;
+}
+.MainContainer{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    width: 100%;
+   gap: clamp(30px, calc(30px + (50 * ((100vw - 320px) / 1120))), 80px);
+
+}
+.Top{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.Top h3{
+    font-family: var(--lexend);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    color: #2F362A;
+    text-transform: uppercase;
+}
+.Bottom{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 38px;
+}
+.line{
+    width: 100%;
+    height: 0.5px;
+    background-color: #6C7A5F;
+}
+.BottomTop{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 30px;
+}
+.One, .Two, .Three{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 11px;
+}
+.oneTop , .TwoTop, .ThreeTop{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+.Apply{
+    display: flex;
+    justify-content: right;
+    flex-direction: row;
+    gap: 5px;
+    cursor: pointer;
+    align-items: center;
+    width: 33%;
+    text-decoration: none;
+}
+.Apply p{
+    font-family: var(--lato);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    color: #6E736A;
+}
+.Role{
+    display: flex;
+    justify-content: left;
+    width: 33%;
+}
+.Desc{
+    display: flex;
+    justify-content: center;
+    width: 33%;
+}
+.Role h3{
+    font-family: var(--lato);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    color: #2F362A;
+}
+.Desc p{
+    font-family: var(--lato);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    color: #6E736A;
+    line-height: 140%;
+}
+.BottomBottom{
+    display: flex;
+    justify-content: right;
+    align-items: self-start;
+    flex-direction: row;
+    gap: 5px;
+}
+.BottomBottomText p{
+    font-family: var(--lato);
+    font-style: medium;
+    font-weight: 500;
+    font-size: 15px;
+    color: #525252;
+    cursor: pointer;
+}
+.BottomBottomArrow svg{
+    width: 100%;
+    height: 100%;
+    max-width: 19px;
+    max-height: 19px;
+}

@@ -1,0 +1,175 @@
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    padding: 200px 125px;
+}
+.MainConatiner{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    width: 100%;
+    gap: 49px;
+}
+.TopHeading{
+    display: flex;
+    justify-content: left;
+
+}
+.TopHeading h3{
+    font-family: var(--lexend);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    color: #6C7A5F;
+}
+.WorkShopContainer{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 100px;
+}
+.WorkShopContainerTop, .WorkShopContainerBottom{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+   gap: 32px;
+    flex-wrap: wrap; 
+}
+.WorkShopCard{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 450px;
+    flex: 1 1 calc(33.333% - 21.333px);
+    min-width: 260px; 
+}
+
+
+@media (min-width: 1200px) {
+    .WorkShopContainerTop, .WorkShopContainerBottom{
+        gap: 160px;
+    }
+    .WorkShopCard{
+        flex: 0 0 calc((100% - 320px) / 3); 
+        max-width: none;
+        min-width: 0;
+    }
+}
+.WorkShopCardTop{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 14px;
+}
+.WorkShopImage{
+    display: flex;
+    justify-content: left;
+}
+.WorkShopImage img{
+    width: 100%;
+    height: 100%;
+    max-width: 450px;
+    max-height: 275px;
+}
+.WorkShopTimeLine{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
+.WorkShopTimeLineLeft, .WorkShopTimeLineRight{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+.WorkShopTimeLineLeft svg, .WorkShopTimeLineRight svg{
+    width: 100%;
+    height: 100%;
+    max-width: 15px;
+    max-height: 16px;
+}
+.WorkShopTimeLineLeft p, .WorkShopTimeLineRight p{
+    font-family: var(--lato);
+    font-style: normal;
+    font-weight: 400;
+    white-space: nowrap;
+    font-size: 15px;
+    color: #525252;
+}
+.line{
+    width: 100%;
+    height: 1px;
+    opacity: 12%;
+    background-color: #000000;
+}
+.WorkShopCardBottom{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 28px;
+}
+.WorkShopCardBottomTop{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
+.WorkShopCardBottomTop h2{
+    font-family: var(--lexend);
+    font-style: medium;
+    font-weight: 500;
+    font-size: 22px;
+    color: #525252;
+    text-transform: uppercase;
+    
+}
+.Button{
+    padding: 12px 21px;
+    background-color: #6C7A5F;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #FFFFFF;
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    border: none;
+}
+.WorkShopCardBottom{
+    display: flex;
+    justify-content: left;
+   
+}
+.WorkShopCardBottom p{
+    font-family: var(--lato);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    color: #525252;
+}
+.BottomContainer{
+    display: flex;
+    justify-content: right;
+    flex-direction: row;
+    gap: 8px;
+    cursor: pointer;
+}
+.BottomContainer p{
+    font-family: var(--lato);
+
+    font-weight: 500;
+    font-size: 15px;
+    color: #6C7A5F;
+}
+.BottomContainersvg{
+    width: 100%;
+    height: 100%;
+    max-width: 19px;
+    max-height: 19px;
+}

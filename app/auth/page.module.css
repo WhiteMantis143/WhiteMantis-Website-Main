@@ -1,0 +1,318 @@
+.Main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-right: clamp(24px, calc(24px + (122 * ((100vw - 320px) / 1120))), 146px);
+
+    height: 100svh;
+    overflow-y: auto;
+    background-color: #ffffff;
+}
+
+.MainCoantiner {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    gap: clamp(30px, calc(30px + (120 * ((100vw - 320px) / 1120))), 150px);
+
+}
+
+.LeftCoantiner {
+    display: flex;
+    justify-content: end;
+    background: url('./1.png') no-repeat;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+
+    object-position: cover;
+    object-position: center;
+    height: 960px;
+
+    width: 100%;
+    max-width: clamp(400px, calc(400px + (800 * ((100vw - 320px) / 1120))), 1200px);
+
+    height: 100%;
+    padding-bottom: clamp(40px, calc(40px + (84 * ((100vw - 320px) / 1120))), 124px);
+
+}
+
+.LeftCoantiner h4 {
+    font-family: var(--lexend);
+    font-size: var(--fs-22);
+    font-weight: 500;
+    color: #FFFFFF;
+    text-transform: uppercase;
+}
+
+.LeftCoantiner p {
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #FFFFFF;
+    max-width: 455px;
+
+}
+
+.RightCoantiner {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 56px;
+}
+
+.RightTop {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: clamp(28px, calc(28px + (12 * ((100vw - 320px) / 1120))), 40px);
+
+}
+
+.RightTopOne {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.RightTopOneTop {
+    display: flex;
+    justify-content: left;
+}
+
+.RightTopOneTop img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-width: 38px;
+    max-height: 38px;
+}
+
+.RightTopOneBottom {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.RightTopOneBottomTop {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.RightTopOneBottomTop h3 {
+    font-family: var(--lexend);
+    font-size: var(--fs-22);
+    font-weight: 500;
+    color: #2F362A;
+}
+
+.RightTopOneBottomTop p {
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #6E736A;
+    max-width: 405px;
+}
+
+.RightTopOneBottomBottom {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.errorMessage {
+    font-family: var(--lato);
+    font-size: 13px;
+    font-weight: 400;
+    color: #D32F2F;
+    padding: 8px 12px;
+    background-color: #FFEBEE;
+    border-left: 3px solid #D32F2F;
+    border-radius: 2px;
+    max-width: 420px;
+}
+
+.inputemail {
+    width: 100%;
+    height: 48px;
+    max-width: 420px;
+    border: 1px solid #2F362A4D;
+    padding: 19px 20px;
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #6E736A;
+}
+
+.RightTopTwo {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.RightTopTwo p {
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #6E736A;
+
+}
+
+.Tnc {
+    text-decoration: underline;
+}
+
+.ctacontinue {
+    width: 100%;
+    max-width: 420px;
+    height: 44px;
+    background-color: #6C7A5F;
+    border: none;
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 13px 20px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.RightBottom {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.RightBottomOne {
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: #2F362A4D;
+}
+
+.textor p {
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    white-space: nowrap;
+    color: #6E736A;
+}
+
+.socials {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    border: 1px solid #2F362A4D;
+    background-color: #ffffff;
+    padding: 16px 26px;
+    cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+    .Main {
+        height: 100svh;
+        padding-right: 0px;
+    }
+
+    .MainCoantiner {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .LeftCoantiner {
+        max-width: 100%;
+
+        background-size: cover;
+        padding-left: 0px;
+        height: 400px;
+    }
+
+    .LeftCoantiner p {
+        display: none;
+    }
+
+    .LeftCoantiner h4 {
+        display: none;
+    }
+
+    .RightCoantiner {
+        width: 100%;
+        gap: 80px;
+        padding-left: 24px;
+        padding-right: 24px;
+        padding-bottom: 100px;
+    }
+
+    .RightTop {
+        gap: 28px;
+    }
+
+    .RightTopOneBottomTop h3 {
+        font-size: 20px;
+    }
+
+    .inputemail {
+        max-width: 100%;
+    }
+
+    .ctacontinue {
+        max-width: 100%;
+    }
+
+    .errorMessage {
+        max-width: 100%;
+    }
+
+    .RightTopOne {
+        gap: 22px;
+    }
+
+    .RightTopOneTop img {
+        max-width: 44px;
+        max-height: 48px;
+    }
+
+    .RightTopOneBottomTop {
+        gap: 4px;
+    }
+
+    .RightTopOneBottomTop p,
+    .RightTopTwo p,
+    .textor p {
+        max-width: 100%;
+        font-size: 14px;
+    }
+
+    .RightBottom {
+        gap: 32px;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+    .LeftCoantiner {
+        max-width: 600px;
+        height: 700px;
+    }
+
+    .RightCoantiner {
+        padding-top: 100px;
+    }
+}

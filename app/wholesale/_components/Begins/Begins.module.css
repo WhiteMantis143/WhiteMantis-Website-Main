@@ -1,0 +1,85 @@
+.Main {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: #ffffff;
+ padding:
+  clamp(0px, calc(0px + (0 * ((100vw - 320px) / 1120))), 0px)
+  clamp(0px, calc(0px + (0 * ((100vw - 320px) / 1120))), 0px)
+  clamp(80px, calc(80px + (20 * ((100vw - 320px) / 1120))), 100px)
+  clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+
+}
+
+.MainContainer {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, calc(24px + (48 * ((100vw - 320px) / 1120))), 72px);
+
+  width: 100%;
+}
+
+.Top h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2F362A;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+
+.viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.track {
+  display: flex;
+  gap: 44px;
+}
+
+.cardWrap {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.card {
+  position: relative;
+  width: 530px;
+  height: 468px;
+  overflow: hidden;
+  background: #f4f4f4;
+}
+
+.caption {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #2F362A;
+  margin: 0;
+}
+@media (max-width: 640px) {
+  .Main {
+    padding: 0px 24px 80px 24px;
+  }
+
+  .MainContainer {
+    gap: 40px;
+  }
+.track{
+    gap: 16px;
+}
+  .card {
+    width: 354px;
+    height: 313px;
+  }
+  .Top h3 {
+    font-size: 20px;
+  }
+  .caption {
+    font-size: 14px;
+  }
+}
