@@ -7,7 +7,7 @@ import { calculateSimpleProductPrice, calculateVariableProductPrice } from "../.
 const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
 
 export async function POST(req: NextRequest) {
-    const session: any = await getServerSession(authOptions);
+    let session: any = await getServerSession(authOptions);
 
     // if (!session) {
     //     session = {

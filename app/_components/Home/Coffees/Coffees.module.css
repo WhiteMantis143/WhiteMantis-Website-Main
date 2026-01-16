@@ -127,6 +127,9 @@ gap: clamp(24px, calc(24px + (97 * ((100vw - 320px) / 1120))), 121px);
 .EmblaSlide {
   flex: 0 0 auto;
 }
+.MobileArrows{
+  display: none;
+}
 @media (max-width: 640px) {
   .Main {
     padding: 80px 24px;
@@ -146,10 +149,21 @@ gap: clamp(24px, calc(24px + (97 * ((100vw - 320px) / 1120))), 121px);
     max-width: 100%;
   }
 
-  .LeftBottom {
+   .LeftBottom {
+    display: none;
+  }
+ .MobileArrows {
+    display: flex;
+    justify-content: center;
     gap: 8px;
+    margin-top: 16px;
   }
 
+  .MobileArrows svg {
+    max-width: 25px;
+    max-height: 25px;
+    cursor: pointer;
+  }
   .Right {
     width: 100%;
   }

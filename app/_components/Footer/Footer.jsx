@@ -126,7 +126,7 @@ const Footer = () => {
             </div>
 
             <div className={styles.TopRight}>
-              <div className={styles.TopRightTop}>
+            <div className={styles.TopRightTop} id="join-community">
                 <div className={styles.NewslHeading}>
                   <h4>Join Our Community</h4>
                 </div>
@@ -260,7 +260,7 @@ const Footer = () => {
                 </div>
                 <div className={styles.Socials}>
                   <a
-                    href="https://instagram.com/whitemantis"
+                    href="https://instagram.com/whitemantis.ae"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

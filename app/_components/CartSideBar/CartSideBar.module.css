@@ -13,7 +13,7 @@
   width: 30%;
   height: 100vh;
   background: #ffffff;
-  z-index: 999;
+  z-index: 100000;
   transition: right 0.35s ease;
   display: flex;
   flex-direction: column;

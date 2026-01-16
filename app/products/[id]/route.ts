@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
-import { filterProductResponse } from "../../../../../lib/productMapper";
+import { filterProductResponse } from "../../../lib/productMapper";
+
+
+
+
 
 export async function GET(
     request: Request,

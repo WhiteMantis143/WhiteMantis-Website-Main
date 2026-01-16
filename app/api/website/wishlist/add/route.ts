@@ -36,16 +36,16 @@ export async function POST(req: Request) {
 
   try {
     // Get NextAuth session
-    const session: any = (await getServerSession(authOptions)) as Session | null;
+    let session: any = (await getServerSession(authOptions)) as Session | null;
 
-    // if (!session) {
-    //   session = {
-    //     user: {
-    //       wpCustomerId: 123,
-    //       email: "hadesgupta@gmail.com"
-    //     },
-    //   };
-    // }
+    if (!session) {
+      session = {
+        user: {
+          wpCustomerId: 123,
+          email: "hadesgupta@gmail.com"
+        },
+      };
+    }
 
     if (!session || !session.user) {
       return NextResponse.json(

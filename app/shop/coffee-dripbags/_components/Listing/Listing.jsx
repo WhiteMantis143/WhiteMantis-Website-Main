@@ -147,11 +147,20 @@ const Lisiting = () => {
         <div className={styles.RightConatiner}>
           <div className={styles.RightTop}>
             <div className={styles.RightTopLeft}>
-              <div className={styles.CatName}><h3>Coffee Beans</h3></div>
+              <div className={styles.CatName}><h3>Coffee Dripbags</h3></div>
               <div className={styles.CatCount}><p>({PRODUCTS?.length || 0} items)</p></div>
             </div>
 
             <div className={styles.RightTopRight}>
+              <button
+    className={styles.MobileFilterBtn}
+    onClick={() => setIsMobileFiltersOpen(true)}
+  >
+    <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.66667 8V6.66667H7.33333V8H4.66667ZM2 4.66667V3.33333H10V4.66667H2ZM0 1.33333V0H12V1.33333H0Z" fill="#6E736A"/>
+</svg>
+Filter
+  </button>
               <div className={styles.SortBy}><p>Sort by:</p></div>
               <div className={styles.SortWrapper}>
                 <div className={styles.SortOptions} onClick={() => setSortOpen((p) => !p)}>

@@ -5,9 +5,11 @@ import Landing from "./_components/Landing/Landing";
 export default function ShopCoffeeBeans() {
   return (
     <>
+   
       <Landing />
+       <NavigationStrip />
       <Listing />
-      <NavigationStrip />
+      
 
     </>
   );
