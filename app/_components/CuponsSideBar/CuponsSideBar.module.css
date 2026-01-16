@@ -233,6 +233,7 @@
     width: 60%;
     right: -60%;
     height: 100svh;
+     z-index: 100;
   }
 
   .open {
