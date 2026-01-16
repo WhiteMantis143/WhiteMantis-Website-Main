@@ -1,0 +1,193 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+ padding:
+  clamp(80px, calc(80px + (80 * ((100vw - 320px) / 1120))), 160px)
+  clamp(24px, calc(24px + (16 * ((100vw - 320px) / 1120))), 40px)
+  0px
+  clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+  padding-bottom: 80px;
+
+}
+
+.MainConatiner {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  gap: clamp(40px, calc(40px + (20 * ((100vw - 320px) / 1120))), 60px);
+
+}
+.Top {
+  display: flex;
+}
+.Top h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2f362a;
+  text-transform: uppercase;
+}
+.Bottom {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+gap: clamp(56px, calc(56px + (24 * ((100vw - 320px) / 1120))), 80px);
+
+}
+.BottomTop {
+  display: flex;
+  justify-content: left;
+ gap: clamp(10px, calc(10px + (110 * ((100vw - 320px) / 1120))), 120px);
+
+  flex-direction: row;
+}
+.RCardOne, .RCardTwo, .RCardThree {
+  display: flex;
+  width: 100%;
+  justify-content: left;
+  flex-direction: column;
+gap: clamp(16px, calc(16px + (8 * ((100vw - 320px) / 1120))), 24px);
+
+  max-width: 400px;
+}
+.RCardTop {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  border: 1.5px solid #6C7A5F12;
+  padding-top: 15px;
+  padding-right: 15px;
+}
+.WishlistIcon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+}
+
+.ProductImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.RCardInfo{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 12px;
+}
+.RCardPricing{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 8px;
+    flex-direction: row;
+}
+.RCardPricing h4{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.RCardPricing p{
+    font-family: var(--lato);
+    font-size: 11px;
+    font-weight: 400;
+    color: #BA0E0E;
+    text-decoration: line-through;
+}
+.Line{
+    width: 100%;
+    height: 0.5px;
+    background-color: #2F362A4D;
+}
+.RCardTitle{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 4px;
+
+}
+.RCardTitle h4{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #2F362A;
+}
+.RCardTitle p{
+    font-family: var(--lato);
+    font-size: 15px;
+    font-weight: 400;
+    color: #6E736A;
+}
+.RCardBottom{
+    display: flex;
+    justify-content: left;
+    max-width: 200px;
+}
+.BottomBottom{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+.Exploremore{
+    font-size: 15px;
+    font-family: var(--lato);
+    color: #6C7A5F;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 13px 38.5px;
+    background: transparent;
+    border: none;
+    border: 1px solid #6C7A5F;
+}
+@media (max-width: 640px) {
+  .main{
+    padding: 80px 24px 0px 24px;
+  }
+  .Top h3 {
+    font-size: 20px;
+  }
+  .MainConatiner {
+    gap: 40px;
+  }
+  .Bottom{
+    gap: 56px;
+  }
+.BottomTop {
+    flex-direction: row;
+    gap: 10px;
+  }
+  .RCardOne, .RCardTwo {
+    max-width: 100%;
+  }
+  .RCardThree {
+    display: none;
+  }
+  .RCardBottom{
+    max-width: 124px;
+  }
+  .RCardPricing h4{
+    font-size: 14px;
+  }
+    .RCardPricing p{
+        font-size: 12px;
+    }
+    .RCardTitle h4{
+        font-size: 14px;
+    }
+    .RCardTitle p{
+        font-size: 14px;
+    }
+    .WishlistIcon {
+        top: 8px;
+        right: 2px;
+    }
+}

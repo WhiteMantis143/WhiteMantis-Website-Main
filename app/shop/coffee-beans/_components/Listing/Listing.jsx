@@ -43,6 +43,8 @@ const Lisiting = () => {
           setProductsCategories(catJson.data || []);
           setAllProducts(prodJson || []);
 
+          console.log(prodJson);
+
           // Initialize openMenus state for UI
           const initOpen = {};
           if (catJson.data) {
@@ -153,9 +155,8 @@ const Lisiting = () => {
               {openMenus[cat.slug] ? <span>✕</span> : <span>▾</span>}
             </div>
             <div
-              className={`${styles.AnimatedBox} ${
-                openMenus[cat.slug] ? styles.open : ""
-              }`}
+              className={`${styles.AnimatedBox} ${openMenus[cat.slug] ? styles.open : ""
+                }`}
             >
               <div className={styles.FilterOptions}>
                 {renderCategories(cat.children)}
@@ -278,8 +279,9 @@ const Lisiting = () => {
               {filteredProducts.slice(0, visibleCount).map((product) => {
                 const displayData = getDisplayData(product);
 
-                // Get the 250g variation ID if it exists (Functionality)
+                // Get the 250g variation ID and child product ID (Functionality)
                 let variation_id = null;
+                let child_product_id = null;
                 if (product.children) {
                   const children = Object.values(product.children);
                   for (const child of children) {
@@ -288,6 +290,7 @@ const Lisiting = () => {
                     );
                     if (v250) {
                       variation_id = v250.id;
+                      child_product_id = child.id; // Get the child product ID
                       break;
                     }
                   }
@@ -295,7 +298,7 @@ const Lisiting = () => {
 
                 // Format product data for AddToCart (Functionality)
                 const cartProduct = {
-                  product_id: product.id,
+                  product_id: child_product_id || product.id, // Use child ID if available
                   variation_id: variation_id,
                   name: product.name,
                   image: displayData.image,
@@ -306,9 +309,9 @@ const Lisiting = () => {
                 return (
                   <div className={styles.ProductCard} key={product.id}>
                     <div className={styles.ProductTop}>
-                      <div className={styles.WishlistIcon}>
+                      {/* <div className={styles.WishlistIcon}>
                         <Wishlist product={product} />
-                      </div>
+                      </div> */}
                       <Link
                         href={`/products/${product.id}`}
                         className={styles.ProductImage}
@@ -336,7 +339,7 @@ const Lisiting = () => {
                             <h4>AED {displayData.price}</h4>
                             {displayData.sale_price &&
                               displayData.sale_price !==
-                                displayData.regular_price && (
+                              displayData.regular_price && (
                                 <p className={styles.OldPrice}>
                                   AED {displayData.regular_price}
                                 </p>
@@ -344,10 +347,9 @@ const Lisiting = () => {
                           </div>
                           <div className={styles.Line}></div>
                           <div className={styles.ProductName}>
-                            <h3>{product.name}</h3>
+                            <h3>{`${product.name} ${product.tagline}`}</h3>
                             <p>
-                              {product.tasting_notes_description ||
-                                product.slug}
+                              {product.tasting_notes_description}
                             </p>
                           </div>
                         </div>

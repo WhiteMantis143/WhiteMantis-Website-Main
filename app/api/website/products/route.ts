@@ -66,11 +66,13 @@ export async function GET(request: Request) {
           // Extract tasting_notes_description from meta_data
           const metaData = parent.meta_data || [];
           const tastingNotes = metaData.find((m: any) => m.key === 'tasting_notes_description' || m.key === 'tasting_notes')?.value || "";
+          const tagline = metaData.find((m: any) => m.key === 'tagline')?.value || "";
 
           return {
             id: parent.id,
             name: parent.name,
             slug: parent.slug,
+            tagline,
             categories: parent.categories,
             tasting_notes_description: tastingNotes,
             children: childrenMap
