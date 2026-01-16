@@ -17,7 +17,7 @@ export default function Home() {
             <Landing />
             <Coffees />
             <Shop />
-            <Subscribe />
+            {/* <Subscribe /> */}
             <Community />
             <TheRoster />
         </>
