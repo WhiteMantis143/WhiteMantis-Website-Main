@@ -1,0 +1,160 @@
+.banner {
+  position: relative;
+  width: 100%;
+  height: 670px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.bgWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bgImage {
+  /* background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; */
+  overflow: hidden;
+  object-fit: cover;
+  transform: scale(1.02);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+      rgba(0, 0, 0, 0.08) 0%,
+      rgba(0, 0, 0, 0.12) 30%,
+      rgba(0, 0, 0, 0.02) 100%);
+  z-index: 1;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-right: 125px;
+  padding-bottom: 61px;
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.card {
+  background-color: #FFFFFF;
+  width: 100%;
+  max-width: 660px;
+  padding: 49px 91.5px 49px 91.5px;
+  box-shadow: 0 8px 30px rgba(23, 23, 23, 0.12);
+  border-radius: 2px;
+  transform: translateY(0);
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: end;
+}
+
+.title {
+  font-family: var(--lexend);
+  font-weight: 500;
+  font-size: var(--fs-22);
+  color: #2F362A;
+}
+
+.text {
+  font-family: var(--lato);
+  font-weight: 400;
+  font-size: 15px;
+  color: #6E736A;
+}
+
+@media (max-width: 640px) {
+  .banner {
+    height: 420px;
+  }
+
+  .content {
+    padding-right: 24px;
+    padding-bottom: 20px;
+    padding-left: 24px;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .card {
+    max-width: 100%;
+    padding: 30px;
+    gap: 15px;
+    text-align: left;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .text {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .banner {
+    height: 520px;
+  }
+
+  .content {
+    padding-right: 40px;
+    padding-bottom: 40px;
+  }
+
+  .card {
+    max-width: 520px;
+    padding: 32px 48px 36px 36px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .text {
+    font-size: 14.5px;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .banner {
+    height: 600px;
+  }
+
+  .content {
+    padding-right: 80px;
+    padding-bottom: 50px;
+  }
+
+  .card {
+    max-width: 600px;
+    padding: 38px 90px 46px 48px;
+  }
+}
+
+@media (min-width: 1441px) and (max-width: 1720px) {
+  .banner {
+    height: 670px;
+  }
+
+  .content {
+    padding-right: 125px;
+    padding-bottom: 61px;
+  }
+
+  .card {
+    max-width: 660px;
+    padding: 43px 126px 53px 57px;
+  }
+}

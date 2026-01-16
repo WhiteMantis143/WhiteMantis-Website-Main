@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useCart } from "../_context/CartContext";
+import { cleanProductName } from "../../lib/productUtils";
 
 import { stripeElementStyle } from "./_components/stripeStyles.js";
 import {
@@ -700,7 +701,7 @@ function CheckoutForm({
                 </div>
 
                 <div className={styles.ProdDetails}>
-                  <h4>{item.title || item.name}</h4>
+                  <h4>{cleanProductName(item.title || item.name)}</h4>
                   <p>
                     {item.attributes?.attribute_pa_weight || item.weight} | {item.quantity}x
                   </p>

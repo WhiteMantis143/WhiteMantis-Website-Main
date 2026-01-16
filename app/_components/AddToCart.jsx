@@ -4,7 +4,7 @@ import { useCart } from '../_context/CartContext';
 import toast from 'react-hot-toast';
 
 const AddToCart = ({ product }) => {
-  const { addItem } = useCart();
+  const { addItem, refresh } = useCart();
   const [loading, setLoading] = useState(false);
 
   const handleAddToCart = async (e) => {
@@ -28,6 +28,7 @@ const AddToCart = ({ product }) => {
         description: product.description,
         image: product.image,
       });
+      await refresh(); // Refresh cart to get updated data from server
       toast.success('Added to cart!');
     } catch (err) {
       console.error('Add to cart error', err);
@@ -48,7 +49,7 @@ const AddToCart = ({ product }) => {
         fontSize: "15px",
         fontWeight: 500,
         border: "none",
-       padding: "12px clamp(24px, 5vw, 61.5px)",
+        padding: "12px clamp(24px, 5vw, 61.5px)",
 
         whiteSpace: "nowrap",
         cursor: loading ? "wait" : "pointer",

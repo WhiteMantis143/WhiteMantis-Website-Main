@@ -1,0 +1,391 @@
+.main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  padding:
+  clamp(80px, calc(80px + (80 * ((100vw - 320px) / 1120))), 160px)
+  clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+
+}
+.MainContainer{
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  height: 100%;
+ gap: clamp(50px, calc(50px + (209 * ((100vw - 320px) / 1120))), 259px);
+
+  flex-direction: row;
+  
+}
+.Left{
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+ gap: clamp(16px, calc(16px + (24 * ((100vw - 320px) / 1120))), 40px);
+
+  max-width: 576px;
+}
+.LeftTop{
+  display: flex;
+  justify-content: left;
+}
+.LeftTop h3{
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2F362A;
+  text-transform: uppercase;
+
+}
+.LeftBottom{
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 18px;
+   align-items: stretch;
+}
+.LeftBottomFilters{
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: 24px;
+
+}
+.videoveer{
+   width: 100%;
+   max-width: 244px;
+   min-width: 244px;
+   height: 100%;
+   object-fit: cover;
+
+}
+.FilterName{
+  display: flex;
+  justify-content: left;
+}
+.FilterName h4{
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2F362A;
+  text-transform: uppercase;
+}
+.Line{
+  width: 1px;
+  height: 100%;
+  background-color: #2F362A4D;
+}
+.LeftBottomFiltersData{
+  display: flex;
+  justify-content: left;
+  align-items: stretch
+   /* max-height: 511px; */
+
+}
+.LeftBottomFiltersDataImage{
+  display: flex;
+  justify-content: left;
+   align-items: stretch;
+     height: auto;
+  
+}
+.LeftBottomFiltersDataImage img{
+  width: 100%;
+  height: 100%;
+   object-fit: cover;
+  max-width: 244px;
+  min-width: 244px;
+  /* max-height: 511px; */
+
+}
+.LeftBottomFiltersDataInfo{
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  min-width: 332px;
+  max-width: 332px;
+    height: auto;
+  /* max-height: 511px; */
+}
+.one{
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px 24px 20px 35px;
+  border: 1px solid #2F362A4D;
+}
+.one h4{
+  font-family: var(--lato);
+  font-size: 14px;
+  font-weight: 400;
+  color: #6E736A;
+}
+.one p{
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #2F362A;
+}
+.Right{
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 60px;
+  
+}
+.RightTop{
+  display: flex;
+  justify-content: left;
+}
+.RightTop p{
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #6E736A;
+}
+.RightBottom
+{
+  display: flex;
+  justify-content: left;
+ 
+}
+.RightBottom img{
+  width: 100%;
+  height: 100%;
+  max-width: 835px;
+  /* max-height: 511px; */
+   object-fit: cover;
+}
+.activeFilter h4 {
+  color: #2F362A;
+}
+
+.inactiveFilter h4 {
+  color: #2F362A4D;
+}
+@media (max-width: 640px) {
+
+  .main {
+    padding: 80px 24px;
+  }
+
+  .MainContainer {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* Hide right section completely */
+  .Right {
+    display: none;
+  }
+
+  /* Title */
+  .LeftTop h3 {
+    font-size: 20px;
+  }
+
+  /* Stack everything vertically */
+  .LeftBottomFiltersData {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Image full width on top */
+  .LeftBottomFiltersDataImage {
+    width: 100%;
+    height: auto;
+  }
+
+  .LeftBottomFiltersDataImage img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    min-width: 100%;
+    object-fit: cover;
+  }
+
+  /* Filters row spacing */
+  .LeftBottomFilters {
+    gap: 16px;
+  }
+
+  .FilterName h4 {
+    font-size: 16px;
+  }
+
+  /* Specs full width */
+  .LeftBottomFiltersDataInfo {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .one {
+    padding: 16px 16px 16px 24px;
+  }
+
+  .one h4 {
+    font-size: 14px;
+  }
+
+  .one p {
+    font-size: 14px;
+  }
+  .videoveer{
+   width: 100%;
+   max-width: 100%;
+   height: auto;
+   object-fit: cover;
+  }
+}
+@media (min-width: 641px) and (max-width: 1024px) {
+
+  /* .main {
+    padding: 120px 48px;
+  } */
+
+  .MainContainer {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+
+  .Right {
+    display: none;
+  }
+  .videoveer{
+   width: 100%;
+   max-width: 100%;
+   height: auto;
+   object-fit: cover;
+  }
+
+
+  .LeftTop h3 {
+    font-size: 21px;
+  }
+
+
+  .LeftBottomFiltersData {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .LeftBottomFiltersDataImage {
+    width: 100%;
+    height: auto;
+  }
+
+  .LeftBottomFiltersDataImage img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    min-width: 100%;
+    object-fit: cover;
+  }
+
+  .LeftBottomFilters {
+    gap: 20px;
+  }
+
+  .FilterName h4 {
+    font-size: 17px;
+  }
+
+  .LeftBottomFiltersDataInfo {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .one {
+    padding: 18px 18px 18px 28px;
+  }
+
+  .one h4 {
+    font-size: 14px;
+  }
+
+  .one p {
+    font-size: 15px;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1640px) {
+
+  .main {
+    padding: 140px 80px;
+  }
+
+  .MainContainer {
+    flex-direction: row;
+    gap: 180px;
+  }
+.videoveer{
+   width: 100%;
+   max-width: 100%;
+   height: auto;
+   object-fit: cover;
+  }
+ 
+  .Right {
+    display: flex;
+  }
+
+  .Left {
+    width: 50%;
+  }
+
+  .Right {
+    width: 50%;
+  }
+
+
+  .LeftTop h3 {
+    font-size: 22px;
+  }
+
+
+  .LeftBottomFiltersData {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .LeftBottomFiltersDataImage {
+    height: auto;
+  }
+
+  .LeftBottomFiltersDataImage img {
+    max-width: 244px;
+    min-width: 244px;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .LeftBottomFiltersDataInfo {
+    min-width: 332px;
+    max-width: 332px;
+  }
+
+
+  .RightBottom img {
+    max-width: 720px;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .FilterName h4 {
+    font-size: 18px;
+  }
+
+  .one h4 {
+    font-size: 14px;
+  }
+
+  .one p {
+    font-size: 15px;
+  }
+}
