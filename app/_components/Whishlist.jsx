@@ -45,15 +45,15 @@ const Wishlist = ({ product }) => {
     <div
       onClick={handleToggle}
       style={{
-        width: "35px",
-        height: "35px",
+width: "clamp(25px, 5vw, 35px)",
+    height: "clamp(25px, 5vw, 35px)",
         cursor: loading ? "wait" : "pointer",
         opacity: loading ? 0.6 : 1,
       }}
     >
       <svg
-        width="35"
-        height="35"
+         width="100%"
+    height="100%"
         viewBox="0 0 35 35"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

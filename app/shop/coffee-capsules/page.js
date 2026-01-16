@@ -6,8 +6,9 @@ export default function ShopCoffeeCapsules() {
   return (
     <>
       <Landing />
-      <Listing />
       <NavigationStrip />
+      <Listing />
+      
 
     </>
   );

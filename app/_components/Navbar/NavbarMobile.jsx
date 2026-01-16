@@ -144,14 +144,14 @@ const NavbarMobile = () => {
                         Coffee beans
                       </Link>
                       <Link
-                        href="/shop/drip-bags"
+                        href="/shop/coffee-dripbags"
                         onClick={() => setOpen(false)}
                         className={styles.subLinks}
                       >
                         Coffee Drip bags
                       </Link>
                       <Link
-                        href="/shop/capsules"
+                        href="/shop/coffee-capsules"
                         onClick={() => setOpen(false)}
                         className={styles.subLinks}
                       >
