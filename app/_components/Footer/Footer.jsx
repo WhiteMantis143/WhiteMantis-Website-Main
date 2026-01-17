@@ -40,7 +40,7 @@ const Footer = () => {
                     <h4>Company</h4>
                   </div>
                   <div className={styles.TopMiddleOneBottom}>
-                    <Link href="/about">
+                    <Link href="/about-us">
                       <p>About us</p>
                     </Link>
                     {/* <Link href="/workshop">
@@ -100,7 +100,7 @@ const Footer = () => {
                     <Link href="/account/orders">
                       <p>Orders</p>
                     </Link>
-                    <Link href="/wishlist">
+                    <Link href="/account/wishlist">
                       <p>Whishlist</p>
                     </Link>
                     {/* <Link href="/subscription/manage">
@@ -230,7 +230,7 @@ const Footer = () => {
               </div>
 
               <div className={styles.TopRightBottomMobile}>
-                <Link href="/terms">
+                <Link href="/terms-and-conditions">
                   <p>Terms and Conditions</p>
                 </Link>
                 <Link href="/privacy-policy">
@@ -249,7 +249,7 @@ const Footer = () => {
 
               <div className={styles.BottomBottomMiddle}>
                 <div className={styles.TandC}>
-                  <Link href="/terms">
+                  <Link href="/terms-and-conditions">
                     <p>Terms and Conditions</p>
                   </Link>
                 </div>

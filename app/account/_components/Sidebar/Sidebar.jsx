@@ -122,6 +122,7 @@ export default function Sidebar() {
                 <p>Wishlist</p>
               </div>
             </Link> */}
+            {session && (
             <div
               className={styles.Logout}
               onClick={() => setShowLogout(true)}
@@ -140,6 +141,7 @@ export default function Sidebar() {
               </svg>
               <p>Logout</p>
             </div>
+            )}
           </div>
         </div>
         {showLogout && (
