@@ -3,6 +3,16 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../../../../../lib/nextauth";
 
 const WP_API_BASE = process.env.WP_URL ? process.env.WP_URL.replace(/\/$/, "") : "";
+const normalizeCountry = (c?: string) => {
+  if (!c) return "AE";
+  if (c.length === 2) return c.toUpperCase();
+  return "AE";
+};
+
+const normalizePhone = (p?: string) => {
+  const cleaned = (p || "").replace(/\D/g, "");
+  return cleaned.length >= 7 ? cleaned : null;
+};
 
 export async function POST(req: NextRequest) {
     try {
@@ -13,6 +23,13 @@ export async function POST(req: NextRequest) {
             taxRateId,
             shippingCost,
             shippingMethodId, finalPrice } = body;
+            if (!email) {
+  return NextResponse.json(
+    { success: false, message: "Email is required" },
+    { status: 400 }
+  );
+}
+
 
         // Validate address
         if (!address?.shipping) {
@@ -78,22 +95,23 @@ export async function POST(req: NextRequest) {
             if (deliveryOption === "ship") {
 
                 const cleanNumber = (address.shipping.phone || "").replace(/\D/g, '');
-                const uaeRegex = /^(?:00971|971|0)?(5[024568]|2|3|4|6|7|9)\d{7}$/;
-                const match = cleanNumber.match(uaeRegex);
+                // const uaeRegex = /^(?:00971|971|0)?(5[024568]|2|3|4|6|7|9)\d{7}$/;
+                // const match = cleanNumber.match(uaeRegex);
 
-                if (!match) {
-                    return NextResponse.json(
-                        { success: false, message: "Invalid phone number" },
-                        { status: 400 }
-                    );
-                }
+                // if (!match) {
+                //     return NextResponse.json(
+                //         { success: false, message: "Invalid phone number" },
+                //         { status: 400 }
+                //     );
+                // }
 
                 payload = {
                     customer_id: session.user.wpCustomerId,
                     payment_method: "stripe",
                     payment_method_title: "Stripe",
-                    status: "pending",
-                    set_paid: false,
+status: "processing",
+                   set_paid: true,
+
                     billing: {
                         first_name: address.shippingAsbillingAddress ? address.shipping.firstName : address.billing.firstName,
                         last_name: address.shippingAsbillingAddress ? address.shipping.lastName : address.billing.lastName,
@@ -101,9 +119,17 @@ export async function POST(req: NextRequest) {
                         city: address.shippingAsbillingAddress ? address.shipping.city : address.billing.city,
                         state: address.shippingAsbillingAddress ? address.shipping.state : address.billing.state,
                         postcode: address.shippingAsbillingAddress ? address.shipping.postalCode : address.billing.postalCode,
-                        country: address.shippingAsbillingAddress ? address.shipping.country : address.billing.country,
+                       country: normalizeCountry(
+  address.shippingAsbillingAddress
+    ? address.shipping.country
+    : address.billing.country
+),
                         email: email || session.user.email,
-                        phone: address.shippingAsbillingAddress ? address.shipping.phone : address.billing.phone,
+                        phone: normalizePhone(
+  address.shippingAsbillingAddress
+    ? address.shipping.phone
+    : address.billing.phone
+),
                     },
                     shipping: {
                         first_name: address.shipping.firstName,
@@ -112,7 +138,7 @@ export async function POST(req: NextRequest) {
                         city: address.shipping.city,
                         state: address.shipping.state,
                         postcode: address.shipping.postalCode,
-                        country: address.shipping.country,
+country: normalizeCountry(address.shipping.country),
                     },
                     line_items,
                     coupon_lines: couponCode ? [
@@ -146,21 +172,22 @@ export async function POST(req: NextRequest) {
             } else if (deliveryOption === "pickup") {
 
                 const cleanNumber = (address.billing.phone || "").replace(/\D/g, '');
-                const uaeRegex = /^(?:00971|971|0)?(5[024568]|2|3|4|6|7|9)\d{7}$/;
-                const match = cleanNumber.match(uaeRegex);
+                // const uaeRegex = /^(?:00971|971|0)?(5[024568]|2|3|4|6|7|9)\d{7}$/;
+                // const match = cleanNumber.match(uaeRegex);
 
-                if (!match) {
-                    return NextResponse.json(
-                        { success: false, message: "Invalid phone number" },
-                        { status: 400 }
-                    );
-                }
+                // if (!match) {
+                //     return NextResponse.json(
+                //         { success: false, message: "Invalid phone number" },
+                //         { status: 400 }
+                //     );
+                // }
                 payload = {
                     customer_id: session.user.wpCustomerId,
                     payment_method: "stripe",
                     payment_method_title: "Stripe",
-                    status: "pending",
-                    set_paid: false,
+status: "processing",
+set_paid: true,
+
                     billing: {
                         first_name: address.shippingAsbillingAddress ? address.shipping.firstName : address.billing.firstName,
                         last_name: address.shippingAsbillingAddress ? address.shipping.lastName : address.billing.lastName,
@@ -168,9 +195,19 @@ export async function POST(req: NextRequest) {
                         city: address.shippingAsbillingAddress ? address.shipping.city : address.billing.city,
                         state: address.shippingAsbillingAddress ? address.shipping.state : address.billing.state,
                         postcode: address.shippingAsbillingAddress ? address.shipping.postalCode : address.billing.postalCode,
-                        country: address.shippingAsbillingAddress ? address.shipping.country : address.billing.country,
+                        country: normalizeCountry(
+  address.shippingAsbillingAddress
+    ? address.shipping.country
+    : address.billing.country
+),
+
                         email: email || session.user.email,
-                        phone: address.shippingAsbillingAddress ? address.shipping.phone : address.billing.phone,
+                        phone: normalizePhone(
+  address.shippingAsbillingAddress
+    ? address.shipping.phone
+    : address.billing.phone
+),
+
                     },
                     shipping: {
                         first_name: "",
@@ -209,21 +246,22 @@ export async function POST(req: NextRequest) {
             if (deliveryOption === "ship") {
 
                 const cleanNumber = (address.shipping.phone || "").replace(/\D/g, '');
-                const uaeRegex = /^(?:00971|971|0)?(5[024568]|2|3|4|6|7|9)\d{7}$/;
-                const match = cleanNumber.match(uaeRegex);
+                // const uaeRegex = /^(?:00971|971|0)?(5[024568]|2|3|4|6|7|9)\d{7}$/;
+                // const match = cleanNumber.match(uaeRegex);
 
-                if (!match) {
-                    return NextResponse.json(
-                        { success: false, message: "Invalid phone number" },
-                        { status: 400 }
-                    );
-                }
+                // if (!match) {
+                //     return NextResponse.json(
+                //         { success: false, message: "Invalid phone number" },
+                //         { status: 400 }
+                //     );
+                // }
 
                 payload = {
                     payment_method: "stripe",
                     payment_method_title: "Stripe",
-                    status: "pending",
-                    set_paid: false,
+status: "processing",
+                   set_paid: true,
+
                     billing: {
                         first_name: address.billing.firstName,
                         last_name: address.billing.lastName,
@@ -231,9 +269,11 @@ export async function POST(req: NextRequest) {
                         city: address.billing.city,
                         state: address.billing.state,
                         postcode: address.billing.postalCode,
-                        country: address.billing.country,
+                       country: normalizeCountry(address.billing.country),
+
                         email: email,
-                        phone: address.billing.phone,
+                       phone: normalizePhone(address.billing.phone),
+
                     },
                     shipping: {
                         first_name: address.shipping.firstName,
@@ -242,7 +282,7 @@ export async function POST(req: NextRequest) {
                         city: address.shipping.city,
                         state: address.shipping.state,
                         postcode: address.shipping.postalCode,
-                        country: address.shipping.country,
+                      country: normalizeCountry(address.shipping.country),
                     },
                     line_items,
                     coupon_lines: couponCode ? [
@@ -276,21 +316,22 @@ export async function POST(req: NextRequest) {
             } else {
 
                 const cleanNumber = (address.billing.phone || "").replace(/\D/g, '');
-                const uaeRegex = /^(?:00971|971|0)?(5[024568]|2|3|4|6|7|9)\d{7}$/;
-                const match = cleanNumber.match(uaeRegex);
+                // const uaeRegex = /^(?:00971|971|0)?(5[024568]|2|3|4|6|7|9)\d{7}$/;
+                // const match = cleanNumber.match(uaeRegex);
 
-                if (!match) {
-                    return NextResponse.json(
-                        { success: false, message: "Invalid phone number" },
-                        { status: 400 }
-                    );
-                }
+                // if (!match) {
+                //     return NextResponse.json(
+                //         { success: false, message: "Invalid phone number" },
+                //         { status: 400 }
+                //     );
+                // }
 
                 payload = {
                     payment_method: "stripe",
                     payment_method_title: "Stripe",
-                    status: "pending",
-                    set_paid: false,
+                 status: "processing",
+                    set_paid: true,
+
                     billing: {
                         first_name: address.billing.firstName,
                         last_name: address.billing.lastName,
@@ -298,9 +339,11 @@ export async function POST(req: NextRequest) {
                         city: address.billing.city,
                         state: address.billing.state,
                         postcode: address.billing.postalCode,
-                        country: address.billing.country,
+                      country: normalizeCountry(address.billing.country),
+
                         email: email,
-                        phone: address.billing.phone,
+                        phone: normalizePhone(address.billing.phone),
+
                     },
                     shipping: {
                         first_name: "",
@@ -363,6 +406,7 @@ export async function POST(req: NextRequest) {
             const url = `${WP_API_BASE}/wp-json/wc/v3/orders`;
 
             console.log("📦 Sending to WooCommerce - coupon_lines:", payload.coupon_lines);
+console.log("🧾 FINAL ORDER PAYLOAD", JSON.stringify(payload, null, 2));
 
             const res = await fetch(url, {
                 method: "POST",
