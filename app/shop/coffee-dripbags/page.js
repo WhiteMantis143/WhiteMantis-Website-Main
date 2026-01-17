@@ -6,9 +6,9 @@ export default function ShopCoffeeDripBags() {
   return (
     <>
       <Landing />
-        <NavigationStrip />
+      <NavigationStrip />
       <Listing />
-    
+
 
     </>
   );

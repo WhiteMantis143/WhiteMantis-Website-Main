@@ -58,12 +58,12 @@ const Lisiting = () => {
         const sortParam = sortMap[sortType] || "latest";
 
         const res = await fetch(
-          `/api/website/products/categories?categories=${categoryParam}&sort=${sortParam}`
+          `/api/website/products?category_id=${categoryParam}&sort=${sortParam}`
         );
         const json = await res.json();
 
         if (res.ok) {
-          setProducts(json.data || []);
+          setProducts(Array.isArray(json) ? json : json.data || []);
           setVisibleCount(ITEMS_PER_LOAD); // Reset pagination on new filter
         }
       } catch (err) {
@@ -195,45 +195,66 @@ const Lisiting = () => {
 
           <div className={styles.RightBottom}>
             <div className={styles.ProductsGrid}>
-              {PRODUCTS.slice(0, visibleCount).map((product) => (
-                <div className={styles.ProductCard} key={product.id}>
-                  <div className={styles.ProductTop}>
-                    <div className={styles.WishlistIcon}><Wishlist product={product} /></div>
-                    <div className={styles.ProductImage}>
-                      {product.image || (product.images && product.images[0]) ? (
-                        <Image
-                          src={product.image || product.images[0].src || product.images[0]}
-                          alt={product.name}
-                          width={300}
-                          height={300}
-                        />
-                      ) : (
-                        <div className={styles.NoImage}>No Image</div>
-                      )}
-                    </div>
-                  </div>
+              {PRODUCTS.slice(0, visibleCount).map((product) => {
+                // Extract variation image from nested children structure
+                const getProductImage = () => {
+                  // Check if product has children object
+                  if (product.children && typeof product.children === 'object') {
+                    const childKeys = Object.keys(product.children);
+                    if (childKeys.length > 0) {
+                      const firstChild = product.children[childKeys[0]];
+                      // Check for variation_options array
+                      if (firstChild.variation_options && firstChild.variation_options.length > 0) {
+                        return firstChild.variation_options[0].image;
+                      }
+                    }
+                  }
+                  // Fallback to regular image sources
+                  return product.image || (product.images && product.images[0]?.src) || (product.images && product.images[0]);
+                };
 
-                  <div className={styles.ProductBottom}>
-                    <div className={styles.ProductInfo}>
-                      <div className={styles.ProductPrice}>
-                        <h4>AED {product.price || product.regular_price}</h4>
-                        {product.sale_price && product.sale_price !== product.regular_price && (
-                          <p className={styles.OldPrice}>AED {product.regular_price}</p>
+                const productImage = getProductImage();
+
+                return (
+                  <div className={styles.ProductCard} key={product.id}>
+                    <div className={styles.ProductTop}>
+                      {/* <div className={styles.WishlistIcon}><Wishlist product={product} /></div> */}
+                      <div className={styles.ProductImage}>
+                        {productImage ? (
+                          <Image
+                            src={productImage}
+                            alt={product.name}
+                            width={300}
+                            height={300}
+                          />
+                        ) : (
+                          <div className={styles.NoImage}>No Image</div>
                         )}
                       </div>
-                      <div className={styles.Line}></div>
-                      <div className={styles.ProductName}>
-                        <h3>{product.name}</h3>
-                        <p>{product.slug}</p>
+                    </div>
+
+                    <div className={styles.ProductBottom}>
+                      <div className={styles.ProductInfo}>
+                        <div className={styles.ProductPrice}>
+                          <h4>AED {product.price || product.regular_price}</h4>
+                          {product.sale_price && product.sale_price !== product.regular_price && (
+                            <p className={styles.OldPrice}>AED {product.regular_price}</p>
+                          )}
+                        </div>
+                        <div className={styles.Line}></div>
+                        <div className={styles.ProductName}>
+                          <h3>{product.name}</h3>
+                          <p>{product.slug}</p>
+                        </div>
+                      </div>
+                      <div className={styles.ProductActions}>
+                        <AddToCart product={product} />
+                        {/* <button className={styles.Subscribe}>Subscribe</button> */}
                       </div>
                     </div>
-                    <div className={styles.ProductActions}>
-                      <AddToCart product={product} />
-                      <button className={styles.Subscribe}>Subscribe</button>
-                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {visibleCount < PRODUCTS.length && (
