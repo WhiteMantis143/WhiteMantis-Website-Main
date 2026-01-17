@@ -212,11 +212,11 @@
   justify-content: end;
   flex-direction: column;
   gap: 20px;
-  background: url("./1.png");
+  background: url("./111.png");
   padding-bottom: 32px;
   height: 432px;
   padding-left: 29px;
-  max-width: 501px;
+  /* max-width: 501px; */
   width: 100%;
 }
 .DummyRightOneTop,
@@ -225,7 +225,7 @@
   justify-content: left;
   flex-direction: column;
   gap: 2px;
-  max-width: 200px;
+  max-width: 300px;
 }
 .DummyRightOneTop h4 {
   font-family: var(--lexend);

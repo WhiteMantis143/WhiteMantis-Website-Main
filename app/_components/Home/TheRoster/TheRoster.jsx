@@ -24,7 +24,7 @@ const TheRoster = () => {
       <div className={styles.MainConatiner}>
         <div className={styles.Left}>
           <div className={styles.LeftTop}>
-            <h3>Meet the Roster: Join the Inner Circle</h3>
+            <h3>Meet the Roaster: Join the Inner Circle</h3>
             <p>
               Beyond the cup, the Inner Circle is your access to exclusive
               knowledge and offers. Join our community to receive new recipes,

@@ -27,7 +27,6 @@ const CartSideBar = () => {
   const router = useRouter();
   const isCartEmpty = products.length === 0;
 
-
   const handleIncrease = async (product_id, variation_id) => {
     await addItem(product_id, 1, { variation_id });
   };
@@ -173,7 +172,7 @@ const CartSideBar = () => {
                                 handleDecrease(
                                   item.product_id,
                                   item.variation_id,
-                                  item.quantity
+                                  item.quantity,
                                 )
                               }
                             >
@@ -189,7 +188,7 @@ const CartSideBar = () => {
                               onClick={() =>
                                 handleIncrease(
                                   item.product_id,
-                                  item.variation_id
+                                  item.variation_id,
                                 )
                               }
                             >
@@ -342,15 +341,15 @@ const CartSideBar = () => {
                       <h4>AED {cartTotals.total.toFixed(2)}</h4>
                     </div>
                   </div>
-                 <button
-  className={styles.CheckOutCta}
-  onClick={() => !isCartEmpty && handleCheckout()}
-  disabled={isCartEmpty}
-  style={{
-    opacity: isCartEmpty ? 0.5 : 1,
-    cursor: isCartEmpty ? "not-allowed" : "pointer",
-  }}
->
+                  <button
+                    className={styles.CheckOutCta}
+                    onClick={() => !isCartEmpty && handleCheckout()}
+                    disabled={isCartEmpty}
+                    style={{
+                      opacity: isCartEmpty ? 0.5 : 1,
+                      cursor: isCartEmpty ? "not-allowed" : "pointer",
+                    }}
+                  >
                     Checkout
                   </button>
                   <p

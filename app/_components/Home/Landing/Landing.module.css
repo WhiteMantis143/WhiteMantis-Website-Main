@@ -88,6 +88,7 @@ padding-right: clamp(24px, calc(24px + (102 * ((100vw - 320px) / 1120))), 125px)
 .RightBottomText{
   display: flex;
   justify-content: right;
+  align-items: center;
  
 }
 .RightBottomText  p{
