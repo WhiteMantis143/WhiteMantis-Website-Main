@@ -4,9 +4,10 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const WP_API =
-      process.env.WORDPRESS_API_URL ||
-      "https://wordpressbackend.whitemantis.ae/wp-json/custom/v1/newsletter";
+   const WP_API =
+  process.env.WP_NEWSLETTER_API_URL ??
+  "https://wordpressbackend.whitemantis.ae/wp-json/custom/v1/newsletter";
+
 
     const wpRes = await fetch(WP_API, {
       method: "POST",
