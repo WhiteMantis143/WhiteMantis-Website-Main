@@ -282,7 +282,7 @@ const NavbarMobile = () => {
                 href="/auth"
                 onClick={() => setOpen(false)}
               >
-                Get Started
+                Login/SignUp
               </Link>
             )}
           </div>
