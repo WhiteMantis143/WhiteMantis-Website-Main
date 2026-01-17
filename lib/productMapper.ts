@@ -7,6 +7,7 @@ export function filterProductResponse(product: any) {
         id: product.id,
         name: product.name,
         slug: product.slug,
+        tagline: getMetaValue(product.meta_data, 'tagline') || '',
         permalink: product.permalink,
         type: product.type,
         status: product.status,

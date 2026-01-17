@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
-export default function AccountIndex() {
+export default async function AccountIndex() {
   redirect("/account/profile");
 }

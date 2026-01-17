@@ -2,6 +2,7 @@
 import React from "react";
 import { redirect } from "next/navigation";
 import { fetchProductById } from "../../../lib/woocommerce";
+
 import TopNavigation from "./_components/TopNavigation/TopNavigation";
 import ProductMain from "./_components/ProductMain/ProductMain";
 import VideoSection from "./_components/Landing/VideoSection";
@@ -13,10 +14,29 @@ import BannerSection from "./_components/BannerSection/BannerSection";
 
 import { ProductImageProvider } from "./_context/ProductImageContext";
 
+/* ---------------- SLUG HELPER (OPTIONAL) ---------------- */
+const slugify = (text) =>
+  text
+    ?.toLowerCase()
+    .trim()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
 export default async function ProductDetailPage({ params }) {
-  const { id } = await params;
+  /**
+   * params.id = "ethiopia-guji-light-roast-134"
+   * Extract ID from the last hyphen
+   */
+  const { id: slugWithId } = await params;
+  const id = slugWithId?.split("-").pop();
+
+  if (!id) {
+    redirect("/shop/coffee-beans");
+  }
 
   let product = null;
+
   try {
     product = await fetchProductById(id);
   } catch (err) {
@@ -29,11 +49,8 @@ export default async function ProductDetailPage({ params }) {
     );
   }
 
-  console.log("product", product);
-
-  // Validate product type - only allow grouped products
+  // ---------- VALIDATIONS ----------
   if (!product || product.type !== "grouped") {
-    console.error("Invalid product type");
     redirect("/shop/coffee-beans");
   }
 
@@ -41,39 +58,43 @@ export default async function ProductDetailPage({ params }) {
     redirect("/shop/coffee-beans");
   }
 
-  if (Object.keys(product).length <= 0) {
+  if (Object.keys(product).length === 0) {
     redirect("/shop/coffee-beans");
   }
 
-  // ---------- NEW: fetch grouped children (simple + subscription etc.) ----------
+  // ---------- CANONICAL URL CHECK (SEO) ----------
+  const canonicalSlug = product.tagline
+    ? `${slugify(`${product.name}-${product.tagline}`)}-${product.id}`
+    : `${slugify(product.name)}-${product.id}`;
+
+  if (slugWithId !== canonicalSlug) {
+    redirect(`/products/${canonicalSlug}`);
+  }
+
+  // ---------- FETCH GROUPED CHILD PRODUCTS ----------
   let groupedChildren = [];
 
   if (
-    product &&
     product.type === "grouped" &&
     Array.isArray(product.grouped_products) &&
     product.grouped_products.length > 0
   ) {
     const childPromises = product.grouped_products.map((childId) =>
-      fetchProductById(childId).catch((err) => {
-        return null;
-      })
+      fetchProductById(childId).catch(() => null)
     );
 
     const resolvedChildren = await Promise.all(childPromises);
     groupedChildren = resolvedChildren.filter(Boolean);
   }
-  // -----------------------------------------------------------------------------
 
-
-  // ---- Recommended products logic stays the same ----
+  // ---------- RECOMMENDED PRODUCTS ----------
   const meta = Array.isArray(product?.meta_data) ? product.meta_data : [];
+
   let raw = null;
   for (const m of meta) {
     if (
-      m &&
-      (m.key === "_product_recommendations" ||
-        m.key === "product_recommendations")
+      m?.key === "_product_recommendations" ||
+      m?.key === "product_recommendations"
     ) {
       raw = m.value;
       break;
@@ -90,7 +111,7 @@ export default async function ProductDetailPage({ params }) {
     console.warn("Failed to parse recommended ids", e);
   }
 
-  recommendedIds = (recommendedIds || [])
+  recommendedIds = recommendedIds
     .map((n) => Number(n))
     .filter(Boolean)
     .slice(0, 3);
@@ -98,17 +119,15 @@ export default async function ProductDetailPage({ params }) {
   let recommendedProducts = [];
   if (recommendedIds.length) {
     const proms = recommendedIds.map((rid) =>
-      fetchProductById(rid).catch((err) => {
-        console.warn("Failed fetching recommended product", rid, err);
-        return null;
-      })
+      fetchProductById(rid).catch(() => null)
     );
     const resolved = await Promise.all(proms);
     recommendedProducts = resolved.filter(Boolean);
   }
 
+  // ---------- META HELPERS ----------
   const getMetaValue = (metaData, key) =>
-    metaData?.find(item => item.key === key)?.value ?? null;
+    metaData?.find((item) => item.key === key)?.value ?? null;
 
   const videoSection = {
     title: getMetaValue(product.meta_data, "video_banner_title"),
@@ -122,15 +141,20 @@ export default async function ProductDetailPage({ params }) {
     imageId: getMetaValue(product.meta_data, "banner_image"),
   };
 
-  const nestedGroups = product.meta_data.find(
-    item => item.key === "_cg_main_section_data"
-  )?.value ?? [];
+  const nestedGroups =
+    product.meta_data.find(
+      (item) => item.key === "_cg_main_section_data"
+    )?.value ?? [];
 
+  // ---------- RENDER ----------
   return (
     <div>
       <ProductImageProvider>
         <TopNavigation />
-        <ProductMain product={product} variationOptions={product.variation_options} />
+        <ProductMain
+          product={product}
+          variationOptions={product.variation_options}
+        />
         <VideoSection product={videoSection} />
         <Crafting product={nestedGroups} />
         <BannerSection product={imageBanner} />
