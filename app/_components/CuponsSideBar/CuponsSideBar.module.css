@@ -196,13 +196,13 @@
     right: -100%;
     height: 100svh;
     overflow-y: auto;
-    z-index: 100;
+    
   }
   .open {
     right: 0;
   }
   .Main {
-    padding: 150px 24px 50px 24px;
+    padding: 50px 24px 50px 24px;
   }
   .Header h3 {
     font-size: 20px;
@@ -233,20 +233,20 @@
     width: 60%;
     right: -60%;
     height: 100svh;
-     z-index: 100;
+    
   }
 
   .open {
     right: 0;
   }
   .Main{
-    padding-top: 150px;
+    padding-top: 100px;
     padding-bottom: 50px;
   }
 }
 @media (min-width: 1201px) and (max-width:1900px) {
   .Main{
-    padding-top: 150px;
+    padding-top: 100px;
     padding-bottom: 50px;
   }
 }

@@ -443,6 +443,13 @@
   overflow-y: auto;
   padding: 100px 16px 20px 16px;
 }
+.LoaderWrapper {
+  width: 100%;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 @media (max-width: 640px) {
   .main {
@@ -526,6 +533,9 @@
   .RightConatiner {
     gap: 32px;
   }
+   .FilterBox{
+    min-width: 120px;
+  }
 }
 @media (min-width: 641px) and (max-width: 940px) {
   .main {
@@ -590,6 +600,7 @@
   .ProductCard {
     max-width: 350px;
   }
+ 
 }
 @media (min-width: 941px) and (max-width: 1440px) {
   .main {

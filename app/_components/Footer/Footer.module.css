@@ -265,9 +265,12 @@
   text-decoration: underline;
   cursor: pointer;
 }
+.BottomBottomRight a{
+  color: #FFFFFF;
+}
 .TandC a,
 .PrivacyPolicy a,
-.BottomBottomRight a,
+
 .BottomBottomLeft a,
 .Socials a,
 .Email a,

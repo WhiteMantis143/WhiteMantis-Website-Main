@@ -40,7 +40,7 @@ const Shop = () => {
               </div>
             </Link>
             <Link
-              href="/shop/drip-bags"
+              href="/shop/coffee-dripbags"
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <div className={styles.Two}>
@@ -64,7 +64,7 @@ const Shop = () => {
               </div>
             </Link>
             <Link
-              href="/shop/capsules"
+              href="/shop/coffee-capsules"
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <div className={styles.Three}>

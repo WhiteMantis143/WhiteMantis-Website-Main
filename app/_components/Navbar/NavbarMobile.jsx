@@ -247,13 +247,13 @@ const NavbarMobile = () => {
                   >
                     Wishlist
                   </Link>
-                  <Link
+                  {/* <Link
                     href="/logout"
                     onClick={() => setOpen(false)}
                     className={styles.subLinks}
                   >
                     Logout
-                  </Link>
+                  </Link> */}
                 </div>
               )}
             </div>

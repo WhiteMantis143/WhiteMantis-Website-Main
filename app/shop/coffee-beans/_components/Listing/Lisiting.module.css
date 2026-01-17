@@ -533,6 +533,9 @@
   .RightConatiner {
     gap: 32px;
   }
+   .FilterBox{
+    min-width: 120px;
+  }
 }
 @media (min-width: 641px) and (max-width: 940px) {
   .main {
@@ -597,6 +600,7 @@
   .ProductCard {
     max-width: 350px;
   }
+ 
 }
 @media (min-width: 941px) and (max-width: 1440px) {
   .main {

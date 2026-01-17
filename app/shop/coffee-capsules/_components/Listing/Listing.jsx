@@ -19,6 +19,7 @@ const Lisiting = () => {
   const [PRODUCTS_CATEGORIES, setProductsCategories] = useState([]);
   const [open, setOpen] = useState({});
   const [selected, setSelected] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const mobileFiltersRef = useRef(null);
 
@@ -133,6 +134,19 @@ const Lisiting = () => {
     if (isMobileFiltersOpen) document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMobileFiltersOpen]);
+  // if (isLoading) {
+  //   return (
+  //     <div className={styles.LoaderWrapper}>
+  //       <Image
+  //         src="/White-mantis-green-loader.gif"
+  //         alt="Loading products"
+  //         width={120}
+  //         height={120}
+  //         unoptimized
+  //       />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className={styles.main}>
