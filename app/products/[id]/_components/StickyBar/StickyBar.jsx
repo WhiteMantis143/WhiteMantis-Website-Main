@@ -3,12 +3,11 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./StickyBar.module.css";
 import { useCart } from "../../../../_context/CartContext";
-import toast from "react-hot-toast";
 import { useProductImage } from "../../_context/ProductImageContext";
 
 const StickyBar = ({ groupedChildren, product }) => {
   const router = useRouter();
-  const { addItem } = useCart();
+  const { addItem, refresh } = useCart();
   const { setSelectedImage } = useProductImage();
 
   // Parse simple and subscription products
@@ -121,7 +120,6 @@ const StickyBar = ({ groupedChildren, product }) => {
   // Handle buy now - add to cart
   const handleBuyNow = async () => {
     if (!selectedWeight?.variation) {
-      toast.error('Please select a weight');
       return;
     }
 
@@ -137,8 +135,10 @@ const StickyBar = ({ groupedChildren, product }) => {
         description: product?.description,
         image: finalImage,
       });
+
+      refresh();
     } catch (error) {
-      toast.error('Failed to add to cart');
+      console.error('Failed to add to cart', error);
     }
   };
 
