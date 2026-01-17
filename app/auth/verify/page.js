@@ -117,6 +117,8 @@ export default function Otp() {
         console.error("NextAuth session creation failed:", signInResult.error);
       }
 
+      console.log("signInResult", json);
+
       if (json.isNewUser) {
         router.push("/auth/create-profile");
       } else {

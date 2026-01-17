@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
         ).toString("base64");
 
     try {
-        const response = await fetch(`${WP_URL}/wp-json/wc/v3/orders?customer=${userId}&page=${page}&per_page=${perPage}`, {
+        const response = await fetch(`${WP_URL}/wp-json/wc/v3/orders?customer=${userId}&page=${page}&per_page=${perPage}&status=processing,completed`, {
             method: 'GET',
             headers: {
                 'Authorization': authHeader,

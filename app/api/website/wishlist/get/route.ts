@@ -39,7 +39,9 @@ export async function GET(request: NextRequest) {
         );
 
         if (!wishlistRes.ok) {
-            throw new Error("Failed to fetch wishlist");
+            const errorText = await wishlistRes.text();
+            console.error(`Wishlist fetch failed: ${wishlistRes.status} ${wishlistRes.statusText}`, errorText);
+            throw new Error(`Failed to fetch wishlist: ${wishlistRes.status} ${errorText}`);
         }
 
         const { items: wishlistIds } = await wishlistRes.json();
