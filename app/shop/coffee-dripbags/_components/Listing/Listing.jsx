@@ -7,15 +7,6 @@ import Link from "next/link";
 import Wishlist from "../../../../_components/Whishlist";
 import AddToCart from "../../../../_components/AddToCart";
 
-/* ---------------- SLUG HELPER ---------------- */
-const slugify = (text) =>
-  text
-    ?.toLowerCase()
-    .trim()
-    .replace(/&/g, "and")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-
 const Lisiting = () => {
   const PARENT_ID = 217;
   const ITEMS_PER_LOAD = 9;
@@ -307,12 +298,6 @@ const Lisiting = () => {
               {filteredProducts.slice(0, visibleCount).map((product) => {
                 const displayData = getDisplayData(product);
 
-                /* --------- SEO SLUG + ID --------- */
-                const productSlug = product.tagline
-                  ? slugify(`${product.name}-${product.tagline}`)
-                  : slugify(product.name);
-                const productUrl = `/products/${productSlug}-${product.id}`;
-
                 // Get the 250g variation ID and child product ID (Functionality)
                 let variation_id = null;
                 let child_product_id = null;
@@ -353,7 +338,7 @@ const Lisiting = () => {
                         <Wishlist product={product} />
                       </div> */}
                       <Link
-                        href={productUrl}
+                        href={`/products/${product.id}`}
                         className={styles.ProductImage}
                       >
                         {displayData.image ? (
@@ -371,7 +356,7 @@ const Lisiting = () => {
 
                     <div className={styles.ProductBottom}>
                       <Link
-                        href={productUrl}
+                        href={`/products/${product.id}`}
                         style={{ textDecoration: "none", color: "inherit" }}
                       >
                         <div className={styles.ProductInfo}>

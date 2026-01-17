@@ -258,9 +258,9 @@ function CheckoutForm({
           type: checkoutMode,
           ...(checkoutMode === "subscription"
             ? {
-                subscriptionProductId: subscriptionId,
-                subscriptionProductVariationId: variationId,
-              }
+              subscriptionProductId: subscriptionId,
+              subscriptionProductVariationId: variationId,
+            }
             : {}),
         },
         deliveryOption: delivery,
@@ -378,9 +378,8 @@ function CheckoutForm({
 
             <div className={styles.ThreeTwo}>
               <div
-                className={`${styles.ThreeRow} ${
-                  delivery === "ship" ? styles.Active : ""
-                }`}
+                className={`${styles.ThreeRow} ${delivery === "ship" ? styles.Active : ""
+                  }`}
                 onClick={() => setDelivery("ship")}
               >
                 <div className={styles.RowLeft}>
@@ -420,9 +419,8 @@ function CheckoutForm({
               </div>
 
               <div
-                className={`${styles.ThreeRow} ${
-                  delivery === "pickup" ? styles.Active : ""
-                }`}
+                className={`${styles.ThreeRow} ${delivery === "pickup" ? styles.Active : ""
+                  }`}
                 onClick={() => setDelivery("pickup")}
               >
                 <div className={styles.RowLeft}>
@@ -472,9 +470,8 @@ function CheckoutForm({
                       {savedAddresses.map((addr) => (
                         <div
                           key={addr.id}
-                          className={`${styles.AddressCard} ${
-                            selectedAddressId === addr.id ? styles.Selected : ""
-                          }`}
+                          className={`${styles.AddressCard} ${selectedAddressId === addr.id ? styles.Selected : ""
+                            }`}
                           onClick={() => {
                             setSelectedAddressId(addr.id);
                             setShowNewAddressForm(false);
@@ -968,25 +965,7 @@ function CheckoutContent() {
   const [useShippingAsBilling, setUseShippingAsBilling] = useState(false);
   const { data: session, status } = useSession();
   const [showNewAddressForm, setShowNewAddressForm] = useState(false);
-  const { cartTotals: contextCartTotals, items: cartItems } = useCart();
-
-  // Reload page when cart items change
-  const [initialCartItemsCount, setInitialCartItemsCount] = useState(null);
-
-  useEffect(() => {
-    // Set initial cart count on first load
-    if (initialCartItemsCount === null && cartItems.length > 0) {
-      setInitialCartItemsCount(cartItems.length);
-    }
-
-    // Reload page if cart items change after initial load
-    if (
-      initialCartItemsCount !== null &&
-      cartItems.length !== initialCartItemsCount
-    ) {
-      window.location.reload();
-    }
-  }, [cartItems, initialCartItemsCount]);
+  const { cartTotals: contextCartTotals, products: cartProducts } = useCart();
 
   const [shippingTax, setShippingTax] = useState({
     shipping: 0,
@@ -1021,6 +1000,26 @@ function CheckoutContent() {
     discount: 0,
     total: 0,
   });
+
+  // Sync cart totals from context for cart mode
+  useEffect(() => {
+    if (checkoutMode === "cart" && contextCartTotals) {
+      setCartTotals({
+        subtotal: contextCartTotals.subtotal || 0,
+        shipping: contextCartTotals.shipping || 0,
+        tax: contextCartTotals.tax || 0,
+        discount: contextCartTotals.discount || 0,
+        total: contextCartTotals.total || 0,
+      });
+    }
+  }, [contextCartTotals, checkoutMode]);
+
+  // Sync products from context for cart mode
+  useEffect(() => {
+    if (checkoutMode === "cart" && cartProducts) {
+      setProducts(cartProducts);
+    }
+  }, [cartProducts, checkoutMode]);
 
   useEffect(() => {
     const validateAndFetchData = async () => {
@@ -1071,6 +1070,7 @@ function CheckoutContent() {
               subtotal: price,
               shipping: 0, // Placeholder
               tax: 0, // Placeholder
+              discount: 0,
               total: price,
             });
           } else {
@@ -1081,39 +1081,7 @@ function CheckoutContent() {
         }
       } else if (mode === "cart") {
         setCheckoutMode("cart");
-
-        try {
-          const response = await fetch(`/api/website/cart/get`);
-          const data = await response.json();
-
-          if (response.ok && data.cart && data.cart.products) {
-            setProducts(data.cart.products);
-            // Calculate totals
-            const sub = data.cart.products.reduce(
-              (acc, item) =>
-                acc +
-                parseFloat(item.price.final_price || item.price) *
-                  item.quantity,
-              0,
-            );
-            const ship = 0; // You might need another fetching logic for real shipping costs
-            const tax = 0; // Placeholder
-            setCartTotals({
-              subtotal: sub,
-              shipping: ship,
-              tax: tax,
-              total: sub + ship + tax,
-            });
-          } else {
-            console.error("Cart data malformed", data);
-
-            return;
-          }
-        } catch (error) {
-          console.error("Cart fetch error", error);
-
-          return;
-        }
+        // Products and totals will be synced from context via useEffect
       } else {
         router.push("/");
         return;
@@ -1189,7 +1157,7 @@ function CheckoutContent() {
         (acc, item) =>
           acc +
           parseFloat(item.price?.final_price || item.price || 0) *
-            (item.quantity || 1),
+          (item.quantity || 1),
         0,
       );
     }

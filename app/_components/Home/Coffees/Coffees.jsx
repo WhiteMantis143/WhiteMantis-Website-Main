@@ -158,7 +158,7 @@ const Coffees = () => {
             <div className={styles.EmblaContainer} style={{ cursor: "pointer" }}>
               {coffeeData.map((item, index) => (
                 <div
-                  onClick={() => router.push(`/products/${item.id}`)}
+                  onClick={() => router.push(`/products/${item.slug}-${item.id}`)}
                   className={styles.EmblaSlide}
                   key={`coffee-${item.title.replace(/\s+/g, "-").toLowerCase()}`}
                 >
