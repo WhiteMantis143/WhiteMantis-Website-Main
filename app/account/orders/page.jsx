@@ -8,7 +8,7 @@ import Placed from "../_components/OrderComponents/Placed/page";
 import CancellationRequested from "../_components/OrderComponents/Cancellation/page";
 import Cancelled from "../_components/OrderComponents/Cancelled/page";
 import InProgress from "../_components/OrderComponents/in-progress/page";
-import toast from "react-hot-toast";
+
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
@@ -30,7 +30,7 @@ export default function OrdersPage() {
       }
     } catch (error) {
       console.error("Error fetching orders:", error);
-      toast.error("Failed to load orders");
+      console.error("Failed to load orders");
     } finally {
       setLoading(false);
     }

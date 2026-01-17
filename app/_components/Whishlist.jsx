@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { useWishlist } from '../_context/WishlistContext';
 import { useAuth } from '../_context/AuthContext';
-import toast from 'react-hot-toast';
 
 const Wishlist = ({ product }) => {
   const { items = [], toggle } = useWishlist();
@@ -26,7 +25,6 @@ const Wishlist = ({ product }) => {
 
     // Prevent guests from calling the wishlist API
     if (!user) {
-      toast("Please login or signup to use the wishlist.");
       return;
     }
 
@@ -35,7 +33,6 @@ const Wishlist = ({ product }) => {
       await toggle(product.id);
     } catch (err) {
       console.error('Wishlist toggle error', err);
-      toast.error('Failed to update wishlist');
     } finally {
       setLoading(false);
     }
@@ -45,15 +42,15 @@ const Wishlist = ({ product }) => {
     <div
       onClick={handleToggle}
       style={{
-width: "clamp(25px, 5vw, 35px)",
-    height: "clamp(25px, 5vw, 35px)",
+        width: "clamp(25px, 5vw, 35px)",
+        height: "clamp(25px, 5vw, 35px)",
         cursor: loading ? "wait" : "pointer",
         opacity: loading ? 0.6 : 1,
       }}
     >
       <svg
-         width="100%"
-    height="100%"
+        width="100%"
+        height="100%"
         viewBox="0 0 35 35"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
