@@ -245,7 +245,10 @@ function CheckoutForm({
       const addressPayload = {
         billing: billingMeta,
         shipping: shippingMeta,
-        addressId: selectedAddressId,
+        addressId:
+          status === "authenticated" && !showNewAddressForm
+            ? selectedAddressId
+            : null,
         shippingAsbillingAddress: useShippingAsBilling,
         saveAddress: shippingForm.saveAddress,
       };
@@ -472,7 +475,10 @@ function CheckoutForm({
                           className={`${styles.AddressCard} ${
                             selectedAddressId === addr.id ? styles.Selected : ""
                           }`}
-                          onClick={() => setSelectedAddressId(addr.id)}
+                          onClick={() => {
+                            setSelectedAddressId(addr.id);
+                            setShowNewAddressForm(false);
+                          }}
                         >
                           <span className={styles.Radio}>
                             {selectedAddressId === addr.id && (
@@ -485,7 +491,7 @@ function CheckoutForm({
                             </p>
                             <p className={styles.AddressText}>{addr.city}</p>
                           </div>
-                          {selectedAddressId === addr.id && (
+                          {/* {selectedAddressId === addr.id && (
                             <div className={styles.MenuContainer}>
                               <div
                                 className={styles.MenuIcon}
@@ -537,7 +543,7 @@ function CheckoutForm({
                                 </div>
                               )}
                             </div>
-                          )}
+                          )} */}
                         </div>
                       ))}
                     </div>
@@ -550,6 +556,7 @@ function CheckoutForm({
                             return;
                           }
                           setShowNewAddressForm(true);
+                          setSelectedAddressId(null);
                         }}
                       >
                         <svg
