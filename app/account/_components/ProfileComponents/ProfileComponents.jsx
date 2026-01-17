@@ -20,12 +20,12 @@ const ProfileComponents = ({ initialData }) => {
   const [addresses, setAddresses] = useState(
     (
       initialData.profile.metaData?.find(
-        (item) => item.key === "saved_addresses"
+        (item) => item.key === "saved_addresses",
       )?.value || []
     ).map((addr, index) => ({
       ...addr,
       id: addr.id || Date.now() + index,
-    }))
+    })),
   );
 
   const [showDeletePopup, setShowDeletePopup] = useState(false);
@@ -185,7 +185,7 @@ const ProfileComponents = ({ initialData }) => {
 
   const confirmDeleteAddress = async () => {
     const newAddresses = addresses.filter(
-      (addr) => addr.id !== deleteAddressId
+      (addr) => addr.id !== deleteAddressId,
     );
     setAddresses(newAddresses);
     setShowDeleteAddressPopup(false);
@@ -222,7 +222,9 @@ const ProfileComponents = ({ initialData }) => {
       setAccountStatus(checkData);
     } catch (error) {
       console.error("Delete account check error:", error);
-      alert(error.message || "Failed to check account status. Please try again.");
+      alert(
+        error.message || "Failed to check account status. Please try again.",
+      );
     }
   };
 
@@ -260,7 +262,7 @@ const ProfileComponents = ({ initialData }) => {
               <img
                 src={
                   initialData.profile.metaData?.find(
-                    (item) => item.key === "profile_image"
+                    (item) => item.key === "profile_image",
                   )?.value?.url || one.src
                 }
                 alt="Profile Pic"
@@ -400,7 +402,7 @@ const ProfileComponents = ({ initialData }) => {
                     <input
                       value={
                         initialData.profile.metaData?.find(
-                          (item) => item.key === "gender"
+                          (item) => item.key === "gender",
                         )?.value
                       }
                       style={{ textTransform: "capitalize" }}
@@ -561,10 +563,12 @@ const ProfileComponents = ({ initialData }) => {
 
             <div className={styles.DeleteAccount}>
               <h4>DELETE ACCOUNT</h4>
-              <button onClick={async () => {
-                await handleDeleteAccount();
-                setShowDeletePopup(true);
-              }}>
+              <button
+                onClick={async () => {
+                  await handleDeleteAccount();
+                  setShowDeletePopup(true);
+                }}
+              >
                 Delete My Account
               </button>
             </div>
@@ -581,8 +585,8 @@ const ProfileComponents = ({ initialData }) => {
               <>
                 {accountStatus.activeSubscriptions?.count > 0 && (
                   <p>
-                    You currently have an active subscription on this account, which will
-                    be cancelled.{" "}
+                    You currently have an active subscription on this account,
+                    which will be cancelled.{" "}
                     {accountStatus.activeOrders?.count > 0 &&
                       "If you have any pending orders, they will still be delivered."}
                   </p>
@@ -590,9 +594,7 @@ const ProfileComponents = ({ initialData }) => {
 
                 {accountStatus.activeSubscriptions?.count === 0 &&
                   accountStatus.activeOrders?.count > 0 && (
-                    <p>
-                      Any pending orders will still be delivered.
-                    </p>
+                    <p>Any pending orders will still be delivered.</p>
                   )}
               </>
             ) : (
@@ -600,22 +602,26 @@ const ProfileComponents = ({ initialData }) => {
                 <p>
                   Any pending orders will still be delivered.
                   <br />
-                  Deleting your account will permanently remove your data and saved
-                  preferences.
+                  Deleting your account will permanently remove your data and
+                  saved preferences.
                 </p>
               </>
             )}
 
-            <p style={{ color: "#d32f2f", fontWeight: "500", marginTop: "16px" }}>
-              Deleting your account will permanently erase your data, history, and
-              saved settings.
+            <p
+              style={{ color: "#d32f2f", fontWeight: "500", marginTop: "16px" }}
+            >
+              Deleting your account will permanently erase your data, history,
+              and saved settings.
             </p>
 
             <div className={styles.DeletePopupActions}>
-              <button onClick={() => {
-                setShowDeletePopup(false);
-                setAccountStatus(null);
-              }}>
+              <button
+                onClick={() => {
+                  setShowDeletePopup(false);
+                  setAccountStatus(null);
+                }}
+              >
                 Keep Account
               </button>
               <button
@@ -642,7 +648,8 @@ const ProfileComponents = ({ initialData }) => {
             />
 
             <input
-              placeholder="Country / Region"
+              value="United Arab Emirates"
+              readOnly
               // value={addressForm.country || ""}
               onChange={(e) =>
                 setAddressForm({ ...addressForm, country: e.target.value })
@@ -788,7 +795,8 @@ const ProfileComponents = ({ initialData }) => {
             />
 
             <input
-              placeholder="Country / Region"
+              // value="United Arab Emirates"
+              readOnly
               value={addressForm.country || ""}
               onChange={(e) =>
                 setAddressForm({ ...addressForm, country: e.target.value })
