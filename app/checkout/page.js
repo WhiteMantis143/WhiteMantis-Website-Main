@@ -22,20 +22,33 @@ import {
   CardNumberElement,
 } from "@stripe/react-stripe-js";
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+);
 
 function CheckoutForm({
-  session, status,
-  delivery, setDelivery,
+  session,
+  status,
+  delivery,
+  setDelivery,
   savedAddresses,
-  selectedAddressId, setSelectedAddressId,
-  openMenuId, setOpenMenuId,
-  showNewAddressForm, setShowNewAddressForm,
-  useShippingAsBilling, setUseShippingAsBilling,
-  product, cartTotals,
-  shippingForm, setShippingForm,
-  billingForm, setBillingForm,
-  checkoutMode, subscriptionId, variationId
+  selectedAddressId,
+  setSelectedAddressId,
+  openMenuId,
+  setOpenMenuId,
+  showNewAddressForm,
+  setShowNewAddressForm,
+  useShippingAsBilling,
+  setUseShippingAsBilling,
+  product,
+  cartTotals,
+  shippingForm,
+  setShippingForm,
+  billingForm,
+  setBillingForm,
+  checkoutMode,
+  subscriptionId,
+  variationId,
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -60,31 +73,33 @@ function CheckoutForm({
       // 1. Get Card Element
       const cardElement = elements.getElement(CardNumberElement);
       if (!cardElement) {
-
         setIsProcessing(false);
         openCart();
-        router.push('/');
+        router.push("/");
         return;
       }
 
       // Helper for Country Code
       const getCountryCode = (name) => {
-        if (!name) return 'AE';
+        if (!name) return "AE";
         const map = {
-          'united arab emirates': 'AE',
-          'uae': 'AE',
-          'india': 'IN',
-          'united states': 'US',
-          'usa': 'US',
-          'united kingdom': 'GB',
-          'uk': 'GB',
-          'saudi arabia': 'SA',
-          'oman': 'OM',
-          'bahrain': 'BH',
-          'kuwait': 'KW',
-          'qatar': 'QA'
+          "united arab emirates": "AE",
+          uae: "AE",
+          india: "IN",
+          "united states": "US",
+          usa: "US",
+          "united kingdom": "GB",
+          uk: "GB",
+          "saudi arabia": "SA",
+          oman: "OM",
+          bahrain: "BH",
+          kuwait: "KW",
+          qatar: "QA",
         };
-        return map[name.toLowerCase()] || (name.length === 2 ? name.toUpperCase() : 'AE');
+        return (
+          map[name.toLowerCase()] ||
+          (name.length === 2 ? name.toUpperCase() : "AE")
+        );
       };
 
       // 2. Prepare Billing Details for Stripe
@@ -92,13 +107,17 @@ function CheckoutForm({
         email: email || session?.user?.email,
         name: "",
         phone: "",
-        address: { country: 'AE' } // Default
+        address: { country: "AE" }, // Default
       };
 
       if (useShippingAsBilling) {
-        if (delivery === 'ship') {
-          if (status === 'authenticated' && !showNewAddressForm && selectedAddressId) {
-            const addr = savedAddresses.find(a => a.id === selectedAddressId);
+        if (delivery === "ship") {
+          if (
+            status === "authenticated" &&
+            !showNewAddressForm &&
+            selectedAddressId
+          ) {
+            const addr = savedAddresses.find((a) => a.id === selectedAddressId);
             if (addr) {
               billingDetails.name = addr.name;
               billingDetails.address = {
@@ -115,8 +134,8 @@ function CheckoutForm({
               line1: shippingForm.address,
               line2: shippingForm.apartment,
               city: shippingForm.city,
-              country: 'AE'
-            }
+              country: "AE",
+            };
           }
         }
       } else {
@@ -126,22 +145,22 @@ function CheckoutForm({
           line1: billingForm.address,
           line2: billingForm.apartment,
           city: billingForm.city,
-          country: 'AE'
-        }
+          country: "AE",
+        };
       }
 
       // 3. Create Payment Method
-      const { error: pmError, paymentMethod } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: cardElement,
-        billing_details: billingDetails,
-      });
+      const { error: pmError, paymentMethod } =
+        await stripe.createPaymentMethod({
+          type: "card",
+          card: cardElement,
+          billing_details: billingDetails,
+        });
 
       if (pmError) {
-
         setIsProcessing(false);
         openCart();
-        router.push('/');
+        router.push("/");
         return;
       }
 
@@ -156,31 +175,71 @@ function CheckoutForm({
         state: "",
         country: country || "",
         phone: phone,
-        postalCode: ""
+        postalCode: "",
       });
 
       let shippingMeta = {};
       let billingMeta = {};
 
       // Resolve Shipping
-      if (delivery === 'ship') {
-        if (status === 'authenticated' && !showNewAddressForm && selectedAddressId) {
-          const s = savedAddresses.find(a => a.id === selectedAddressId)?.original;
-          if (s) shippingMeta = formatAddr(s.firstName, s.lastName, s.address, s.apartment, s.city, s.country, s.phone);
+      if (delivery === "ship") {
+        if (
+          status === "authenticated" &&
+          !showNewAddressForm &&
+          selectedAddressId
+        ) {
+          const s = savedAddresses.find(
+            (a) => a.id === selectedAddressId,
+          )?.original;
+          if (s)
+            shippingMeta = formatAddr(
+              s.firstName,
+              s.lastName,
+              s.address,
+              s.apartment,
+              s.city,
+              s.country,
+              s.phone,
+            );
         } else {
-          shippingMeta = formatAddr(shippingForm.firstName, shippingForm.lastName, shippingForm.address, shippingForm.apartment, shippingForm.city, "United Arab Emirates", shippingForm.phone);
+          shippingMeta = formatAddr(
+            shippingForm.firstName,
+            shippingForm.lastName,
+            shippingForm.address,
+            shippingForm.apartment,
+            shippingForm.city,
+            "United Arab Emirates",
+            shippingForm.phone,
+          );
         }
       } else {
-        shippingMeta = formatAddr("", "", "Pickup", "", "", "United Arab Emirates", "");
+        shippingMeta = formatAddr(
+          "",
+          "",
+          "Pickup",
+          "",
+          "",
+          "United Arab Emirates",
+          "",
+        );
       }
 
       // Resolve Billing
-      const effectiveUseShippingAsBilling = useShippingAsBilling && delivery !== 'pickup';
+      const effectiveUseShippingAsBilling =
+        useShippingAsBilling && delivery !== "pickup";
 
       if (effectiveUseShippingAsBilling) {
         billingMeta = { ...shippingMeta };
       } else {
-        billingMeta = formatAddr(billingForm.firstName, billingForm.lastName, billingForm.address, billingForm.apartment, billingForm.city, "United Arab Emirates", billingForm.phone);
+        billingMeta = formatAddr(
+          billingForm.firstName,
+          billingForm.lastName,
+          billingForm.address,
+          billingForm.apartment,
+          billingForm.city,
+          "United Arab Emirates",
+          billingForm.phone,
+        );
       }
 
       const addressPayload = {
@@ -188,29 +247,34 @@ function CheckoutForm({
         shipping: shippingMeta,
         addressId: selectedAddressId,
         shippingAsbillingAddress: useShippingAsBilling,
-        saveAddress: shippingForm.saveAddress
+        saveAddress: shippingForm.saveAddress,
       };
 
       const payload = {
         checkout: {
           type: checkoutMode,
-          ...(checkoutMode === 'subscription' ? {
-            subscriptionProductId: subscriptionId,
-            subscriptionProductVariationId: variationId
-          } : {})
+          ...(checkoutMode === "subscription"
+            ? {
+                subscriptionProductId: subscriptionId,
+                subscriptionProductVariationId: variationId,
+              }
+            : {}),
         },
         deliveryOption: delivery,
         address: addressPayload,
         paymentMethodId: paymentMethod.id,
-        email: email || session?.user?.email
+        email: email || session?.user?.email,
       };
 
       // 5. Create Checkout Session
-      const response = await fetch("/api/website/stripe/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch(
+        "/api/website/stripe/create-checkout-session",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
 
       const data = await response.json();
 
@@ -220,20 +284,17 @@ function CheckoutForm({
 
       // 6. Confirm Payment
       if (data.clientSecret) {
-        const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret);
+        const { error: confirmError, paymentIntent } =
+          await stripe.confirmCardPayment(data.clientSecret);
 
         if (confirmError) {
-
           setIsProcessing(false);
           openCart();
-          router.push('/');
+          router.push("/");
           return;
         }
 
         if (paymentIntent && paymentIntent.status === "succeeded") {
-
-
-
           // Clear the cart after successful payment
           try {
             await fetch("/api/website/cart/clear", {
@@ -254,7 +315,6 @@ function CheckoutForm({
           router.push(successUrl);
         }
       }
-
     } catch (e) {
       console.error(e);
 
@@ -298,15 +358,26 @@ function CheckoutForm({
           <div className={styles.Three}>
             <div className={styles.HeaderRow}>
               <h3>DELIVERY</h3>
-              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 0L0 5L1.41 6.41L5 2.83L8.59 6.41L10 5L5 0Z" fill="#2F362A" transform="rotate(180 5 3)" />
+              <svg
+                width="10"
+                height="6"
+                viewBox="0 0 10 6"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 0L0 5L1.41 6.41L5 2.83L8.59 6.41L10 5L5 0Z"
+                  fill="#2F362A"
+                  transform="rotate(180 5 3)"
+                />
               </svg>
             </div>
 
             <div className={styles.ThreeTwo}>
               <div
-                className={`${styles.ThreeRow} ${delivery === "ship" ? styles.Active : ""
-                  }`}
+                className={`${styles.ThreeRow} ${
+                  delivery === "ship" ? styles.Active : ""
+                }`}
                 onClick={() => setDelivery("ship")}
               >
                 <div className={styles.RowLeft}>
@@ -346,8 +417,9 @@ function CheckoutForm({
               </div>
 
               <div
-                className={`${styles.ThreeRow} ${delivery === "pickup" ? styles.Active : ""
-                  }`}
+                className={`${styles.ThreeRow} ${
+                  delivery === "pickup" ? styles.Active : ""
+                }`}
                 onClick={() => setDelivery("pickup")}
               >
                 <div className={styles.RowLeft}>
@@ -387,7 +459,7 @@ function CheckoutForm({
                     className={styles.Input}
                     value="United Arab Emirates"
                     readOnly
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                   />
                 </div>
 
@@ -397,8 +469,9 @@ function CheckoutForm({
                       {savedAddresses.map((addr) => (
                         <div
                           key={addr.id}
-                          className={`${styles.AddressCard} ${selectedAddressId === addr.id ? styles.Selected : ""
-                            }`}
+                          className={`${styles.AddressCard} ${
+                            selectedAddressId === addr.id ? styles.Selected : ""
+                          }`}
                           onClick={() => setSelectedAddressId(addr.id)}
                         >
                           <span className={styles.Radio}>
@@ -418,19 +491,49 @@ function CheckoutForm({
                                 className={styles.MenuIcon}
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  setOpenMenuId(openMenuId === addr.id ? null : addr.id);
+                                  setOpenMenuId(
+                                    openMenuId === addr.id ? null : addr.id,
+                                  );
                                 }}
                               >
-                                <svg width="3" height="15" viewBox="0 0 3 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <circle cx="1.5" cy="1.5" r="1.5" fill="#6E736A" />
-                                  <circle cx="1.5" cy="7.5" r="1.5" fill="#6E736A" />
-                                  <circle cx="1.5" cy="13.5" r="1.5" fill="#6E736A" />
+                                <svg
+                                  width="3"
+                                  height="15"
+                                  viewBox="0 0 3 15"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <circle
+                                    cx="1.5"
+                                    cy="1.5"
+                                    r="1.5"
+                                    fill="#6E736A"
+                                  />
+                                  <circle
+                                    cx="1.5"
+                                    cy="7.5"
+                                    r="1.5"
+                                    fill="#6E736A"
+                                  />
+                                  <circle
+                                    cx="1.5"
+                                    cy="13.5"
+                                    r="1.5"
+                                    fill="#6E736A"
+                                  />
                                 </svg>
                               </div>
                               {openMenuId === addr.id && (
-                                <div className={styles.MenuDropdown} onClick={(e) => e.stopPropagation()}>
-                                  <button className={styles.MenuItem}>Edit</button>
-                                  <button className={styles.MenuItem}>Delete</button>
+                                <div
+                                  className={styles.MenuDropdown}
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  <button className={styles.MenuItem}>
+                                    Edit
+                                  </button>
+                                  <button className={styles.MenuItem}>
+                                    Delete
+                                  </button>
                                 </div>
                               )}
                             </div>
@@ -444,7 +547,6 @@ function CheckoutForm({
                         className={styles.AddNewAddress}
                         onClick={() => {
                           if (savedAddresses.length >= 5) {
-
                             return;
                           }
                           setShowNewAddressForm(true);
@@ -470,8 +572,19 @@ function CheckoutForm({
                         className={styles.AddNewAddress}
                         onClick={() => setShowNewAddressForm(false)}
                       >
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M1 1L11 11M1 11L11 1" stroke="#6E736A" strokeWidth="1.5" strokeLinecap="round" />
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 12 12"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M1 1L11 11M1 11L11 1"
+                            stroke="#6E736A"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                          />
                         </svg>
                         <p>Discard</p>
                       </button>
@@ -481,81 +594,122 @@ function CheckoutForm({
               </>
             )}
 
-            {(showNewAddressForm || status !== "authenticated") && delivery === "ship" && (
-              <>
-                <input
-                  className={styles.Input}
-                  value="United Arab Emirates"
-                  readOnly
-                />
-                <div className={styles.Row}>
+            {(showNewAddressForm || status !== "authenticated") &&
+              delivery === "ship" && (
+                <>
                   <input
                     className={styles.Input}
-                    placeholder="First Name"
-                    value={shippingForm.firstName}
-                    onChange={(e) => setShippingForm({ ...shippingForm, firstName: e.target.value })}
+                    value="United Arab Emirates"
+                    readOnly
                   />
-                  <input
-                    className={styles.Input}
-                    placeholder="Last Name"
-                    value={shippingForm.lastName}
-                    onChange={(e) => setShippingForm({ ...shippingForm, lastName: e.target.value })}
-                  />
-                </div>
-                <input
-                  className={styles.Input}
-                  placeholder="House number, Street name"
-                  value={shippingForm.address}
-                  onChange={(e) => setShippingForm({ ...shippingForm, address: e.target.value })}
-                />
-                <input
-                  className={styles.Input}
-                  placeholder="Apartment, suite, etc. (optional)"
-                  value={shippingForm.apartment}
-                  onChange={(e) => setShippingForm({ ...shippingForm, apartment: e.target.value })}
-                />
-                <div className={styles.Row}>
-                  <input
-                    className={styles.Input}
-                    placeholder="City"
-                    value={shippingForm.city}
-                    onChange={(e) => setShippingForm({ ...shippingForm, city: e.target.value })}
-                  />
-                  <select className={styles.Select}>
-                    <option>Dubai</option>
-                    <option>Abu Dhabi</option>
-                    <option>Sharjah</option>
-                    <option>Ajman</option>
-                    <option>Umm Al Quwain</option>
-                    <option>Ras Al Khaimah</option>
-                    <option>Fujairah</option>
-                  </select>
-                </div>
-                <input
-                  className={styles.Input}
-                  placeholder="Phone"
-                  value={shippingForm.phone}
-                  onChange={(e) => setShippingForm({ ...shippingForm, phone: e.target.value })}
-                />
-                {status === "authenticated" && (
-                  <label className={styles.CheckBox}>
+                  <div className={styles.Row}>
                     <input
-                      type="checkbox"
-                      checked={shippingForm.saveAddress}
-                      onChange={(e) => setShippingForm({ ...shippingForm, saveAddress: e.target.checked })}
+                      className={styles.Input}
+                      placeholder="First Name"
+                      value={shippingForm.firstName}
+                      onChange={(e) =>
+                        setShippingForm({
+                          ...shippingForm,
+                          firstName: e.target.value,
+                        })
+                      }
                     />
-                    <p>Save this for next time.</p>
-                  </label>
-                )}
-              </>
-            )}
+                    <input
+                      className={styles.Input}
+                      placeholder="Last Name"
+                      value={shippingForm.lastName}
+                      onChange={(e) =>
+                        setShippingForm({
+                          ...shippingForm,
+                          lastName: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <input
+                    className={styles.Input}
+                    placeholder="House number, Street name"
+                    value={shippingForm.address}
+                    onChange={(e) =>
+                      setShippingForm({
+                        ...shippingForm,
+                        address: e.target.value,
+                      })
+                    }
+                  />
+                  <input
+                    className={styles.Input}
+                    placeholder="Apartment, suite, etc. (optional)"
+                    value={shippingForm.apartment}
+                    onChange={(e) =>
+                      setShippingForm({
+                        ...shippingForm,
+                        apartment: e.target.value,
+                      })
+                    }
+                  />
+                  <div className={styles.Row}>
+                    <input
+                      className={styles.Input}
+                      placeholder="City"
+                      value={shippingForm.city}
+                      onChange={(e) =>
+                        setShippingForm({
+                          ...shippingForm,
+                          city: e.target.value,
+                        })
+                      }
+                    />
+                    <select className={styles.Select}>
+                      <option>Dubai</option>
+                      <option>Abu Dhabi</option>
+                      <option>Sharjah</option>
+                      <option>Ajman</option>
+                      <option>Umm Al Quwain</option>
+                      <option>Ras Al Khaimah</option>
+                      <option>Fujairah</option>
+                    </select>
+                  </div>
+                  <input
+                    className={styles.Input}
+                    placeholder="Phone"
+                    value={shippingForm.phone}
+                    onChange={(e) =>
+                      setShippingForm({
+                        ...shippingForm,
+                        phone: e.target.value,
+                      })
+                    }
+                  />
+                  {status === "authenticated" && (
+                    <label className={styles.CheckBox}>
+                      <input
+                        type="checkbox"
+                        checked={shippingForm.saveAddress}
+                        onChange={(e) =>
+                          setShippingForm({
+                            ...shippingForm,
+                            saveAddress: e.target.checked,
+                          })
+                        }
+                      />
+                      <p>Save this for next time.</p>
+                    </label>
+                  )}
+                </>
+              )}
 
             {delivery === "pickup" && (
               <div className={styles.PickupList}>
                 <p>Pickup Locations Near You</p>
 
                 <div className={styles.PickupCard}>
-                  <input type="radio" style={{ accentColor: "#2F362A" }} checked readOnly />
+                  <input
+                    type="radio"
+                    style={{ accentColor: "#2F362A" }}
+                    checked
+                    readOnly
+                  />
                   <div>
                     <h5>White Mantis Roastery - Al Quoz</h5>
                     <p>Warehouse #2 – Al Quoz Industrial Area 4, Dubai</p>
@@ -575,7 +729,9 @@ function CheckoutForm({
               </div>
               <div className={styles.PaymentBody}>
                 <div className={styles.StripeInput}>
-                  <CardNumberElement options={{ ...stripeElementStyle, disableLink: true }} />
+                  <CardNumberElement
+                    options={{ ...stripeElementStyle, disableLink: true }}
+                  />
                 </div>
 
                 <div className={styles.Row}>
@@ -614,33 +770,52 @@ function CheckoutForm({
                     className={styles.Input}
                     placeholder="First Name"
                     value={billingForm.firstName}
-                    onChange={(e) => setBillingForm({ ...billingForm, firstName: e.target.value })}
+                    onChange={(e) =>
+                      setBillingForm({
+                        ...billingForm,
+                        firstName: e.target.value,
+                      })
+                    }
                   />
                   <input
                     className={styles.Input}
                     placeholder="Last Name"
                     value={billingForm.lastName}
-                    onChange={(e) => setBillingForm({ ...billingForm, lastName: e.target.value })}
+                    onChange={(e) =>
+                      setBillingForm({
+                        ...billingForm,
+                        lastName: e.target.value,
+                      })
+                    }
                   />
                 </div>
                 <input
                   className={styles.Input}
                   placeholder="House number, Street name"
                   value={billingForm.address}
-                  onChange={(e) => setBillingForm({ ...billingForm, address: e.target.value })}
+                  onChange={(e) =>
+                    setBillingForm({ ...billingForm, address: e.target.value })
+                  }
                 />
                 <input
                   className={styles.Input}
                   placeholder="Apartment, suite, etc. (optional)"
                   value={billingForm.apartment}
-                  onChange={(e) => setBillingForm({ ...billingForm, apartment: e.target.value })}
+                  onChange={(e) =>
+                    setBillingForm({
+                      ...billingForm,
+                      apartment: e.target.value,
+                    })
+                  }
                 />
                 <div className={styles.Row}>
                   <input
                     className={styles.Input}
                     placeholder="City"
                     value={billingForm.city}
-                    onChange={(e) => setBillingForm({ ...billingForm, city: e.target.value })}
+                    onChange={(e) =>
+                      setBillingForm({ ...billingForm, city: e.target.value })
+                    }
                   />
                   <select className={styles.Select}>
                     <option>Dubai</option>
@@ -656,7 +831,9 @@ function CheckoutForm({
                   className={styles.Input}
                   placeholder="Phone"
                   value={billingForm.phone}
-                  onChange={(e) => setBillingForm({ ...billingForm, phone: e.target.value })}
+                  onChange={(e) =>
+                    setBillingForm({ ...billingForm, phone: e.target.value })
+                  }
                 />
               </>
             )}
@@ -705,13 +882,19 @@ function CheckoutForm({
                 <div className={styles.ProdDetails}>
                   <h4>{cleanProductName(item.title || item.name)}</h4>
                   <p>
-                    {item.attributes?.attribute_pa_weight || item.weight} | {item.quantity}x
+                    {item.attributes?.attribute_pa_weight || item.weight} |{" "}
+                    {item.quantity}x
                   </p>
                   {item.frequency && <span>{item.frequency}</span>}
                 </div>
 
                 <div className={styles.ProdPrice}>
-                  <h4>AED {parseFloat(item.price?.final_price || item.price).toFixed(2)}</h4>
+                  <h4>
+                    AED{" "}
+                    {parseFloat(item.price?.final_price || item.price).toFixed(
+                      2,
+                    )}
+                  </h4>
                 </div>
               </div>
             ))}
@@ -726,13 +909,21 @@ function CheckoutForm({
             {cartTotals.discount > 0 && (
               <div className={styles.Subtotal}>
                 <p>Discount</p>
-                <h5 style={{ color: 'green' }}>- AED {cartTotals.discount.toFixed(2)}</h5>
+                <h5 style={{ color: "green" }}>
+                  - AED {cartTotals.discount.toFixed(2)}
+                </h5>
               </div>
             )}
 
             <div className={styles.Shipping}>
               <p>Shipping</p>
-              <h5>{cartTotals.shipping === 0 ? (delivery === 'pickup' ? 'Free (Pickup)' : 'Calculated at next step') : `AED ${cartTotals.shipping.toFixed(2)}`}</h5>
+              <h5>
+                {cartTotals.shipping === 0
+                  ? delivery === "pickup"
+                    ? "Free (Pickup)"
+                    : "Calculated at next step"
+                  : `AED ${cartTotals.shipping.toFixed(2)}`}
+              </h5>
             </div>
 
             <div className={styles.EstimatedTax}>
@@ -756,9 +947,9 @@ function CheckoutContent() {
   const router = useRouter();
 
   // Get mode and IDs from URL parameters
-  const mode = searchParams.get('mode');
-  const subscriptionId = searchParams.get('subscriptionId');
-  const variationId = searchParams.get('variationId');
+  const mode = searchParams.get("mode");
+  const subscriptionId = searchParams.get("subscriptionId");
+  const variationId = searchParams.get("variationId");
 
   const [delivery, setDelivery] = useState("ship");
   const [checkoutMode, setCheckoutMode] = useState(null);
@@ -782,12 +973,19 @@ function CheckoutContent() {
     }
 
     // Reload page if cart items change after initial load
-    if (initialCartItemsCount !== null && cartItems.length !== initialCartItemsCount) {
+    if (
+      initialCartItemsCount !== null &&
+      cartItems.length !== initialCartItemsCount
+    ) {
       window.location.reload();
     }
   }, [cartItems, initialCartItemsCount]);
 
-  const [shippingTax, setShippingTax] = useState({ shipping: 0, tax: 0, taxPercent: 0 });
+  const [shippingTax, setShippingTax] = useState({
+    shipping: 0,
+    tax: 0,
+    taxPercent: 0,
+  });
 
   // Form States
   const [shippingForm, setShippingForm] = useState({
@@ -797,7 +995,7 @@ function CheckoutContent() {
     apartment: "",
     city: "",
     phone: "",
-    saveAddress: false
+    saveAddress: false,
   });
 
   const [billingForm, setBillingForm] = useState({
@@ -806,7 +1004,7 @@ function CheckoutContent() {
     address: "",
     apartment: "",
     city: "",
-    phone: ""
+    phone: "",
   });
 
   const [cartTotals, setCartTotals] = useState({
@@ -814,61 +1012,68 @@ function CheckoutContent() {
     shipping: 0,
     tax: 0,
     discount: 0,
-    total: 0
+    total: 0,
   });
 
   useEffect(() => {
     const validateAndFetchData = async () => {
-      if (mode === 'subscription') {
+      if (mode === "subscription") {
         if (!subscriptionId || !variationId) {
-          console.error('Invalid subscription checkout.')
-          router.push('/');
+          console.error("Invalid subscription checkout.");
+          router.push("/");
           return;
         }
-        setCheckoutMode('subscription');
+        setCheckoutMode("subscription");
 
         try {
-          const response = await fetch(`/api/website/products/${subscriptionId}`);
+          const response = await fetch(
+            `/api/website/products/${subscriptionId}`,
+          );
           const data = await response.json();
 
           if (response.ok) {
-
             if (data.product?.type !== "variable-subscription") {
-              console.error('Invalid subscription checkout.')
-              router.push('/')
-              return
+              console.error("Invalid subscription checkout.");
+              router.push("/");
+              return;
             }
 
             // Standardize subscription product structure to match cart
-            setProducts([{
-              id: data.product.id,
-              image: data.product.images[0]?.src || one, // Fallback image
-              title: data.product.name,
-              weight: data.product.attributes.find(a => a.name === 'Weight')?.option || '',
-              quantityText: "1x", // basic assumption for sub
-              frequency: data.product.meta_data.find(m => m.key === '_subscription_period')?.value || 'Monthly',
-              price: data.variation?.price || data.product.price,
-              quantity: 1
-            }])
+            setProducts([
+              {
+                id: data.product.id,
+                image: data.product.images[0]?.src || one, // Fallback image
+                title: data.product.name,
+                weight:
+                  data.product.attributes.find((a) => a.name === "Weight")
+                    ?.option || "",
+                quantityText: "1x", // basic assumption for sub
+                frequency:
+                  data.product.meta_data.find(
+                    (m) => m.key === "_subscription_period",
+                  )?.value || "Monthly",
+                price: data.variation?.price || data.product.price,
+                quantity: 1,
+              },
+            ]);
             // Calculate totals for subscription (simplified)
-            const price = parseFloat(data.variation?.price || data.product.price || 0);
+            const price = parseFloat(
+              data.variation?.price || data.product.price || 0,
+            );
             setCartTotals({
               subtotal: price,
               shipping: 0, // Placeholder
               tax: 0, // Placeholder
-              total: price
+              total: price,
             });
-
           } else {
-
-            return
+            return;
           }
         } catch (error) {
-
-          return
+          return;
         }
-      } else if (mode === 'cart') {
-        setCheckoutMode('cart');
+      } else if (mode === "cart") {
+        setCheckoutMode("cart");
 
         try {
           const response = await fetch(`/api/website/cart/get`);
@@ -877,48 +1082,54 @@ function CheckoutContent() {
           if (response.ok && data.cart && data.cart.products) {
             setProducts(data.cart.products);
             // Calculate totals
-            const sub = data.cart.products.reduce((acc, item) => acc + (parseFloat(item.price.final_price || item.price) * item.quantity), 0);
+            const sub = data.cart.products.reduce(
+              (acc, item) =>
+                acc +
+                parseFloat(item.price.final_price || item.price) *
+                  item.quantity,
+              0,
+            );
             const ship = 0; // You might need another fetching logic for real shipping costs
             const tax = 0; // Placeholder
             setCartTotals({
               subtotal: sub,
               shipping: ship,
               tax: tax,
-              total: sub + ship + tax
+              total: sub + ship + tax,
             });
-
           } else {
             console.error("Cart data malformed", data);
 
-            return
+            return;
           }
         } catch (error) {
           console.error("Cart fetch error", error);
 
-          return
+          return;
         }
       } else {
-
-        router.push('/');
+        router.push("/");
         return;
       }
 
       // Fetch addresses if authenticated
       if (status === "authenticated") {
         try {
-          const addrResponse = await fetch('/api/website/profile/address/get');
+          const addrResponse = await fetch("/api/website/profile/address/get");
           const addrData = await addrResponse.json();
           if (addrData.success && addrData.addresses) {
             const mappedAddresses = addrData.addresses.map((addr) => ({
               id: addr.id,
               name: `${addr.firstName} ${addr.lastName}`,
-              address: `${addr.address}${addr.apartment ? ', ' + addr.apartment : ''}`,
+              address: `${addr.address}${addr.apartment ? ", " + addr.apartment : ""}`,
               city: `${addr.city}, ${addr.country}`,
-              original: addr
+              original: addr,
             }));
             setsavedAddresses(mappedAddresses);
             // Select default address if available, otherwise first
-            const defaultAddr = mappedAddresses.find(a => a.original.setAsDefault);
+            const defaultAddr = mappedAddresses.find(
+              (a) => a.original.setAsDefault,
+            );
             if (defaultAddr) {
               setSelectedAddressId(defaultAddr.id);
             } else if (mappedAddresses.length > 0) {
@@ -932,7 +1143,7 @@ function CheckoutContent() {
 
       // Fetch Shipping and Tax
       try {
-        const taxRes = await fetch('/api/website/get-shipping-tax');
+        const taxRes = await fetch("/api/website/get-shipping-tax");
         const taxData = await taxRes.json();
         if (taxData.success && taxData.data) {
           setShippingTax({
@@ -956,21 +1167,27 @@ function CheckoutContent() {
     let sub = 0;
     let disc = 0;
 
-    if (checkoutMode === 'cart') {
+    if (checkoutMode === "cart") {
       sub = product.reduce((acc, item) => {
         const price = parseFloat(item.price?.final_price || item.price || 0);
-        return acc + (price * (item.quantity || 1));
+        return acc + price * (item.quantity || 1);
       }, 0);
 
       // If coupon applied in context
       if (contextCartTotals?.discount) {
         disc = contextCartTotals.discount;
       }
-    } else if (checkoutMode === 'subscription') {
-      sub = product.reduce((acc, item) => acc + (parseFloat(item.price?.final_price || item.price || 0) * (item.quantity || 1)), 0);
+    } else if (checkoutMode === "subscription") {
+      sub = product.reduce(
+        (acc, item) =>
+          acc +
+          parseFloat(item.price?.final_price || item.price || 0) *
+            (item.quantity || 1),
+        0,
+      );
     }
 
-    const shipping = delivery === 'ship' ? shippingTax.shipping : 0;
+    const shipping = delivery === "ship" ? shippingTax.shipping : 0;
 
     // Tax Calculation: (Subtotal - Discount + Shipping) * Percent
     const taxableAmount = Math.max(0, sub - disc + shipping);
@@ -983,15 +1200,14 @@ function CheckoutContent() {
       discount: disc,
       shipping: shipping,
       tax: tax,
-      total: total
+      total: total,
     });
-
   }, [product, checkoutMode, contextCartTotals, shippingTax, delivery]);
 
   if (isLoading) {
     return (
       <div className={styles.Main}>
-        <div style={{ textAlign: 'center', padding: '50px' }}>
+        <div style={{ textAlign: "center", padding: "50px" }}>
           <p>Loading checkout...</p>
         </div>
       </div>
@@ -1012,7 +1228,11 @@ function CheckoutContent() {
   };
 
   return (
-    <Elements stripe={stripePromise} options={options} key={session?.user?.email || "no-email"}>
+    <Elements
+      stripe={stripePromise}
+      options={options}
+      key={session?.user?.email || "no-email"}
+    >
       <CheckoutForm
         session={session}
         status={status}

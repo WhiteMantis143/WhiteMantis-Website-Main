@@ -1,96 +1,152 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import styles from "./Lisiting.module.css";
 import Image from "next/image";
+import Link from "next/link";
 import Wishlist from "../../../../_components/Whishlist";
 import AddToCart from "../../../../_components/AddToCart";
 
 const Lisiting = () => {
+  const PARENT_ID = 217;
   const ITEMS_PER_LOAD = 9;
-  const parent_id = "217";
 
-  // State
-  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_LOAD);
-  const [sortOpen, setSortOpen] = useState(false);
-  const [sortType, setSortType] = useState("Recommended");
-  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
-  const [PRODUCTS, setProducts] = useState([]);
+  // 1. Data State (Functionality)
+  const [allProducts, setAllProducts] = useState([]);
+  const [productsCategories, setProductsCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [PRODUCTS_CATEGORIES, setProductsCategories] = useState([]);
-  const [open, setOpen] = useState({});
-  const [selected, setSelected] = useState([]); // Store array of category IDs
 
+  // 2. UI/Filter State
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_LOAD);
+  const [sortType, setSortType] = useState("Recommended");
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [openMenus, setOpenMenus] = useState({});
+  const [sortOpen, setSortOpen] = useState(false);
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+
+  // UI Ref for Mobile Filters
   const mobileFiltersRef = useRef(null);
 
-  // 1. Initial Fetch: Categories only
+  // 3. Fetch Data Once on Mount (Functionality)
   useEffect(() => {
-    async function fetchCategories() {
+    async function fetchData() {
+      setIsLoading(true);
       try {
-        const res = await fetch(`/api/website/products/categories?parent_id=${parent_id}`);
-        const json = await res.json();
-        if (res.ok) {
-          setProductsCategories(json.data);
+        const [catRes, prodRes] = await Promise.all([
+          fetch(`/api/website/products/categories?parent_id=${PARENT_ID}`),
+          fetch(`/api/website/products?category_id=${PARENT_ID}`),
+        ]);
+
+        if (catRes.ok && prodRes.ok) {
+          const catJson = await catRes.json();
+          const prodJson = await prodRes.json();
+          setProductsCategories(catJson.data || []);
+          setAllProducts(prodJson || []);
+
+          console.log(prodJson);
+
+          // Initialize openMenus state for UI
           const initOpen = {};
-          json.data.forEach(cat => { initOpen[cat.slug] = false; });
-          setOpen(initOpen);
+          if (catJson.data) {
+            catJson.data.forEach((cat) => {
+              initOpen[cat.slug] = false;
+            });
+          }
+          setOpenMenus(initOpen);
         }
       } catch (err) {
-        console.error("Error fetching categories:", err);
+        console.error("Error fetching shop data:", err);
+      } finally {
+        setIsLoading(false);
       }
     }
-    fetchCategories();
+    fetchData();
   }, []);
 
-  // 2. Filtered Fetch: Triggers when selected categories or sort changes
-  useEffect(() => {
-    async function fetchFilteredProducts() {
-      try {
-        // Map UI labels to API sort keys
-        const sortMap = {
-          "Latest to Oldest": "latest",
-          "Oldest to Latest": "oldest",
-          "Recommended": "latest"
-        };
+  // 4. FRONTEND ONLY: Filter & Sort logic (Functionality)
+  const filteredProducts = useMemo(() => {
+    let result = [...allProducts];
 
-        // If no categories selected, use parent_id to show all
-        const categoryParam = selected.length > 0 ? selected.join(",") : parent_id;
-        const sortParam = sortMap[sortType] || "latest";
-
-        const res = await fetch(
-          `/api/website/products?category_id=${categoryParam}&sort=${sortParam}`
-        );
-        const json = await res.json();
-
-        if (res.ok) {
-          setProducts(Array.isArray(json) ? json : json.data || []);
-          setVisibleCount(ITEMS_PER_LOAD); // Reset pagination on new filter
-        }
-      } catch (err) {
-        console.error("Error fetching filtered products:", err);
-      }
+    // Category Filter
+    if (selectedCategories.length > 0) {
+      result = result.filter((product) =>
+        product.categories?.some((cat) => selectedCategories.includes(cat.id)),
+      );
     }
 
-    fetchFilteredProducts();
-  }, [selected, sortType]);
+    // Sorting
+    const sortMap = {
+      "Latest to Oldest": (a, b) => b.id - a.id,
+      "Oldest to Latest": (a, b) => a.id - b.id,
+      Recommended: (a, b) => 0, // Default or specific logic
+    };
 
-  const toggle = (key) => {
-    setOpen((prev) => ({ ...prev, [key]: !prev[key] }));
+    if (sortType === "Latest to Oldest") {
+      result.sort((a, b) => b.id - a.id);
+    } else if (sortType === "Oldest to Latest") {
+      result.sort((a, b) => a.id - b.id);
+    }
+
+    return result;
+  }, [allProducts, selectedCategories, sortType]);
+
+  // 5. Handlers
+  const handleToggleCategory = (id) => {
+    setSelectedCategories((prev) => {
+      const newSelection = prev.includes(id)
+        ? prev.filter((item) => item !== id)
+        : [...prev, id];
+      return newSelection;
+    });
+    setVisibleCount(ITEMS_PER_LOAD); // Reset scroll position on filter
+  };
+
+  const toggleMenu = (slug) => {
+    setOpenMenus((prev) => ({ ...prev, [slug]: !prev[slug] }));
   };
 
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + ITEMS_PER_LOAD);
   };
 
-  // Toggle selection in the array
-  function handleSelect(id) {
-    setSelected((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-    );
-  }
+  // Helper to get variation data (Functionality)
+  const getDisplayData = (product) => {
+    let targetVariation = null;
+    if (product.children) {
+      const children = Object.values(product.children);
+      for (const child of children) {
+        // Try to find 250g weight first (legacy logic)
+        let vOption = child.variation_options?.find(
+          (v) => v.attributes?.attribute_pa_weight === "250g",
+        );
 
-  function renderCategories(categories, parentSlug = null) {
-    if (!categories || !Array.isArray(categories) || categories.length === 0) return null;
+        // If not found, looking for capsule or just take the first logical variation
+        if (!vOption && child.variation_options?.length > 0) {
+          vOption = child.variation_options[0];
+        }
+
+        if (vOption) {
+          targetVariation = vOption;
+          break;
+        }
+      }
+    }
+    return {
+      price: targetVariation?.price || product.price || product.regular_price,
+      regular_price: targetVariation?.regular_price || product.regular_price,
+      sale_price: targetVariation?.sale_price || product.sale_price,
+      image:
+        targetVariation?.image ||
+        product.image ||
+        product.images?.[0]?.src ||
+        product.images?.[0],
+    };
+  };
+
+  // Render Categories Recursive Helper (UI - Preserved from Listing.jsx)
+  function renderCategories(categories) {
+    if (!categories || !Array.isArray(categories) || categories.length === 0)
+      return null;
 
     return categories.map((cat) => {
       const hasChildren = cat.children && cat.children.length > 0;
@@ -98,13 +154,20 @@ const Lisiting = () => {
       if (hasChildren) {
         return (
           <div key={cat.id} className={styles.FilterBox}>
-            <div className={styles.FilterHeader} onClick={() => toggle(cat.slug)}>
+            <div
+              className={styles.FilterHeader}
+              onClick={() => toggleMenu(cat.slug)}
+            >
               <h5>{cat.name}</h5>
-              {open[cat.slug] ? <span>✕</span> : <span>▾</span>}
+              {openMenus[cat.slug] ? <span>✕</span> : <span>▾</span>}
             </div>
-            <div className={`${styles.AnimatedBox} ${open[cat.slug] ? styles.open : ""}`}>
+            <div
+              className={`${styles.AnimatedBox} ${
+                openMenus[cat.slug] ? styles.open : ""
+              }`}
+            >
               <div className={styles.FilterOptions}>
-                {renderCategories(cat.children, cat.slug)}
+                {renderCategories(cat.children)}
               </div>
             </div>
           </div>
@@ -115,8 +178,8 @@ const Lisiting = () => {
         <label key={cat.id}>
           <input
             type="checkbox"
-            checked={selected.includes(cat.id)}
-            onChange={() => handleSelect(cat.id)}
+            checked={selectedCategories.includes(cat.id)}
+            onChange={() => handleToggleCategory(cat.id)}
           />
           {cat.name}
         </label>
@@ -124,45 +187,58 @@ const Lisiting = () => {
     });
   }
 
-  // Outside click for mobile filters
+  // Outside click for mobile filters (UI - Preserved)
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (mobileFiltersRef.current && !mobileFiltersRef.current.contains(e.target)) {
+      if (
+        mobileFiltersRef.current &&
+        !mobileFiltersRef.current.contains(e.target)
+      ) {
         setIsMobileFiltersOpen(false);
       }
     };
-    if (isMobileFiltersOpen) document.addEventListener("mousedown", handleClickOutside);
+    if (isMobileFiltersOpen)
+      document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMobileFiltersOpen]);
-  // if (isLoading) {
-  //   return (
-  //     <div className={styles.LoaderWrapper}>
-  //       <Image
-  //         src="/White-mantis-green-loader.gif"
-  //         alt="Loading products"
-  //         width={120}
-  //         height={120}
-  //         unoptimized
-  //       />
-  //     </div>
-  //   );
-  // }
+
+  if (isLoading) {
+    return (
+      <div className={styles.LoaderWrapper}>
+        <Image
+          src="/White-mantis-green-loader.gif"
+          alt="Loading products"
+          width={120}
+          height={120}
+          unoptimized
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.main}>
       <div className={styles.MainContainer}>
+        {/* Sidebar Filters */}
         <div className={styles.LeftConatiner}>
-          <div className={styles.LeftTop}><p>Filter</p></div>
+          <div className={styles.LeftTop}>
+            <p>Filter</p>
+          </div>
           <div className={styles.LeftBottom}>
-            {renderCategories(PRODUCTS_CATEGORIES)}
+            {renderCategories(productsCategories)}
           </div>
         </div>
 
+        {/* Right Product Section */}
         <div className={styles.RightConatiner}>
           <div className={styles.RightTop}>
             <div className={styles.RightTopLeft}>
-              <div className={styles.CatName}><h3>Coffee Dripbags</h3></div>
-              <div className={styles.CatCount}><p>({PRODUCTS?.length || 0} items)</p></div>
+              <div className={styles.CatName}>
+                <h3>Coffee Drip Bags</h3>
+              </div>
+              <div className={styles.CatCount}>
+                <p>({filteredProducts.length} items)</p>
+              </div>
             </div>
 
             <div className={styles.RightTopRight}>
@@ -170,20 +246,45 @@ const Lisiting = () => {
                 className={styles.MobileFilterBtn}
                 onClick={() => setIsMobileFiltersOpen(true)}
               >
-                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4.66667 8V6.66667H7.33333V8H4.66667ZM2 4.66667V3.33333H10V4.66667H2ZM0 1.33333V0H12V1.33333H0Z" fill="#6E736A" />
+                <svg
+                  width="12"
+                  height="8"
+                  viewBox="0 0 12 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M4.66667 8V6.66667H7.33333V8H4.66667ZM2 4.66667V3.33333H10V4.66667H2ZM0 1.33333V0H12V1.33333H0Z"
+                    fill="#6E736A"
+                  />
                 </svg>
                 Filter
               </button>
-              <div className={styles.SortBy}><p>Sort by:</p></div>
+
+              <div className={styles.SortBy}>
+                <p>Sort by:</p>
+              </div>
               <div className={styles.SortWrapper}>
-                <div className={styles.SortOptions} onClick={() => setSortOpen((p) => !p)}>
+                <div
+                  className={styles.SortOptions}
+                  onClick={() => setSortOpen(!sortOpen)}
+                >
                   <p>{sortType}</p>
                 </div>
                 {sortOpen && (
                   <div className={styles.SortDropdown}>
-                    {["Recommended", "Latest to Oldest", "Oldest to Latest"].map((item) => (
-                      <p key={item} onClick={() => { setSortType(item); setSortOpen(false); }}>
+                    {[
+                      "Recommended",
+                      "Latest to Oldest",
+                      "Oldest to Latest",
+                    ].map((item) => (
+                      <p
+                        key={item}
+                        onClick={() => {
+                          setSortType(item);
+                          setSortOpen(false);
+                        }}
+                      >
                         {item}
                       </p>
                     ))}
@@ -195,34 +296,55 @@ const Lisiting = () => {
 
           <div className={styles.RightBottom}>
             <div className={styles.ProductsGrid}>
-              {PRODUCTS.slice(0, visibleCount).map((product) => {
-                // Extract variation image from nested children structure
-                const getProductImage = () => {
-                  // Check if product has children object
-                  if (product.children && typeof product.children === 'object') {
-                    const childKeys = Object.keys(product.children);
-                    if (childKeys.length > 0) {
-                      const firstChild = product.children[childKeys[0]];
-                      // Check for variation_options array
-                      if (firstChild.variation_options && firstChild.variation_options.length > 0) {
-                        return firstChild.variation_options[0].image;
-                      }
+              {filteredProducts.slice(0, visibleCount).map((product) => {
+                const displayData = getDisplayData(product);
+
+                // Get the 250g variation ID and child product ID (Functionality)
+                let variation_id = null;
+                let child_product_id = null;
+                if (product.children) {
+                  const children = Object.values(product.children);
+                  for (const child of children) {
+                    let vOption = child.variation_options?.find(
+                      (v) => v.attributes?.attribute_pa_weight === "250g",
+                    );
+
+                    // Fallback for capsules or other types
+                    if (!vOption && child.variation_options?.length > 0) {
+                      vOption = child.variation_options[0];
+                    }
+
+                    if (vOption) {
+                      variation_id = vOption.id;
+                      child_product_id = child.id;
+                      break;
                     }
                   }
-                  // Fallback to regular image sources
-                  return product.image || (product.images && product.images[0]?.src) || (product.images && product.images[0]);
-                };
+                }
 
-                const productImage = getProductImage();
+                // Format product data for AddToCart (Functionality)
+                const cartProduct = {
+                  product_id: child_product_id || product.id, // Use child ID if available
+                  variation_id: variation_id,
+                  name: product.name,
+                  image: displayData.image,
+                  description: product.description || product.short_description,
+                  quantity: 1,
+                };
 
                 return (
                   <div className={styles.ProductCard} key={product.id}>
                     <div className={styles.ProductTop}>
-                      {/* <div className={styles.WishlistIcon}><Wishlist product={product} /></div> */}
-                      <div className={styles.ProductImage}>
-                        {productImage ? (
+                      {/* <div className={styles.WishlistIcon}>
+                        <Wishlist product={product} />
+                      </div> */}
+                      <Link
+                        href={`/products/${product.id}`}
+                        className={styles.ProductImage}
+                      >
+                        {displayData.image ? (
                           <Image
-                            src={productImage}
+                            src={displayData.image}
                             alt={product.name}
                             width={300}
                             height={300}
@@ -230,25 +352,35 @@ const Lisiting = () => {
                         ) : (
                           <div className={styles.NoImage}>No Image</div>
                         )}
-                      </div>
+                      </Link>
                     </div>
 
                     <div className={styles.ProductBottom}>
-                      <div className={styles.ProductInfo}>
-                        <div className={styles.ProductPrice}>
-                          <h4>AED {product.price || product.regular_price}</h4>
-                          {product.sale_price && product.sale_price !== product.regular_price && (
-                            <p className={styles.OldPrice}>AED {product.regular_price}</p>
-                          )}
+                      <Link
+                        href={`/products/${product.id}`}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <div className={styles.ProductInfo}>
+                          <div className={styles.ProductPrice}>
+                            <h4>AED {displayData.price}</h4>
+                            {displayData.sale_price &&
+                              displayData.sale_price !==
+                                displayData.regular_price && (
+                                <p className={styles.OldPrice}>
+                                  AED {displayData.regular_price}
+                                </p>
+                              )}
+                          </div>
+                          <div className={styles.Line}></div>
+                          <div className={styles.ProductName}>
+                            <h3>{`${product.name} ${product.tagline}`}</h3>
+                            <p>{product.tasting_notes_description}</p>
+                          </div>
                         </div>
-                        <div className={styles.Line}></div>
-                        <div className={styles.ProductName}>
-                          <h3>{product.name}</h3>
-                          <p>{product.slug}</p>
-                        </div>
-                      </div>
+                      </Link>
                       <div className={styles.ProductActions}>
-                        <AddToCart product={product} />
+                        <AddToCart product={cartProduct} />
+                        {/* Preserving Subscribe button from UI */}
                         {/* <button className={styles.Subscribe}>Subscribe</button> */}
                       </div>
                     </div>
@@ -257,7 +389,7 @@ const Lisiting = () => {
               })}
             </div>
 
-            {visibleCount < PRODUCTS.length && (
+            {visibleCount < filteredProducts.length && (
               <div className={styles.LoadMore}>
                 <button className={styles.LoadMoreCta} onClick={handleLoadMore}>
                   Load More
@@ -274,7 +406,7 @@ const Lisiting = () => {
               <span onClick={() => setIsMobileFiltersOpen(false)}>✕</span>
             </div>
             <div className={styles.LeftBottom}>
-              {renderCategories(PRODUCTS_CATEGORIES)}
+              {renderCategories(productsCategories)}
             </div>
           </div>
         )}
