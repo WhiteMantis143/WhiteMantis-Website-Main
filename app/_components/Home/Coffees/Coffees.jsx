@@ -6,32 +6,41 @@ import Image from "next/image";
 import coffeImg from "./1.png";
 import useEmblaCarousel from "embla-carousel-react";
 
-
 const coffeeData = [
   {
     title: "Indonesia ALAMIN Co-Fermented Jasmine",
     desc: "Jasmine tea, honey, floral",
-    img: "https://wordpressbackend.whitemantis.ae/wp-content/uploads/2026/01/Indonesia-jasmine-250g.png" || coffeImg,
+    img:
+      "https://wordpressbackend.whitemantis.ae/wp-content/uploads/2026/01/Indonesia-jasmine-250g.png" ||
+      coffeImg,
   },
   {
     title: "Indonesia Meriah Classic Natural",
     desc: "Floral, berry, honey",
-    img: "https://wordpressbackend.whitemantis.ae/wp-content/uploads/2026/01/Classic-Natural-250g-1.png" || coffeImg,
+    img:
+      "https://wordpressbackend.whitemantis.ae/wp-content/uploads/2026/01/Classic-Natural-250g-1.png" ||
+      coffeImg,
   },
   {
     title: "Indonesia Bener Meriah Triple Wet Hull",
     desc: "Brown sugar, chocolate, black tea",
-    img: "https://wordpressbackend.whitemantis.ae/wp-content/uploads/2026/01/Wet-hulled-250g.png" || coffeImg,
+    img:
+      "https://wordpressbackend.whitemantis.ae/wp-content/uploads/2026/01/Wet-hulled-250g.png" ||
+      coffeImg,
   },
   {
     title: "El Salvador Santa Leticia",
     desc: "Red apple, plum, caramel",
-    img: "https://wordpressbackend.whitemantis.ae/wp-content/uploads/2026/01/El-Salvador-SL.png" || coffeImg,
+    img:
+      "https://wordpressbackend.whitemantis.ae/wp-content/uploads/2026/01/El-Salvador-SL.png" ||
+      coffeImg,
   },
   {
     title: "Colombia Huila 720",
     desc: "Cinnamon, chocolate, tropical fruit",
-    img: "https://wordpressbackend.whitemantis.ae/wp-content/uploads/2026/01/Colombia-Huila-720-250g.png" || coffeImg,
+    img:
+      "https://wordpressbackend.whitemantis.ae/wp-content/uploads/2026/01/Colombia-Huila-720-250g.png" ||
+      coffeImg,
   },
 ];
 
@@ -76,7 +85,6 @@ const Coffees = () => {
   return (
     <div className={styles.Main}>
       <div className={styles.MainContainer}>
-
         <div className={styles.Left}>
           <div className={styles.LeftTop}>
             <h3>Selected coffees</h3>
@@ -87,7 +95,6 @@ const Coffees = () => {
           </div>
 
           <div className={styles.LeftBottom}>
-
             <svg
               onClick={scrollPrev}
               style={{
@@ -138,7 +145,10 @@ const Coffees = () => {
           <div className={styles.Embla} ref={emblaRef}>
             <div className={styles.EmblaContainer}>
               {coffeeData.map((item, index) => (
-                <div className={styles.EmblaSlide} key={`coffee-${item.title.replace(/\s+/g, '-').toLowerCase()}`}>
+                <div
+                  className={styles.EmblaSlide}
+                  key={`coffee-${item.title.replace(/\s+/g, "-").toLowerCase()}`}
+                >
                   <div className={styles.Card}>
                     <div className={styles.CardTop}>
                       <div className={styles.LinkSvg}>
@@ -164,9 +174,7 @@ const Coffees = () => {
                         </svg>
                       </div>
 
-                      <div
-                        className={styles.ProductImage}
-                      >
+                      <div className={styles.ProductImage}>
                         <Image
                           src={item.img}
                           alt={item.title}
@@ -185,7 +193,6 @@ const Coffees = () => {
               ))}
             </div>
           </div>
-
         </div>
 
         <div className={styles.MobileArrows}>
@@ -233,7 +240,6 @@ const Coffees = () => {
             />
           </svg>
         </div>
-
       </div>
     </div>
   );
