@@ -15,6 +15,8 @@ const UAE_STATES = [
 
 const ProfileComponents = ({ initialData }) => {
   const [profile, setProfile] = useState(initialData.profile);
+  const isGuestUser = !initialData.profile?.email;
+
   const [editMode, setEditMode] = useState(false);
 
   const [addresses, setAddresses] = useState(
@@ -271,55 +273,70 @@ const ProfileComponents = ({ initialData }) => {
                 className={styles.ProfilePic}
               />
             </div>
-            <div className={styles.TopRight}>
-              <label
-                className={styles.pfbtn}
-                style={{
-                  cursor: "pointer",
-                  display: "inline-block",
-                  textAlign: "center",
-                  paddingTop: "10px",
-                }}
-              >
-                Upload New Profile Picture
-                <input
-                  type="file"
-                  accept="image/*"
-                  hidden
-                  onChange={async (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      const reader = new FileReader();
-                      reader.onloadend = async () => {
-                        const base64Image = reader.result;
-                        const res = await updateProfileAPI({ base64Image });
-                        if (res && res.success) {
-                          // Update profile image in state locally if possible
-                          // Or reload the page
-                          window.location.reload();
-                        }
-                      };
-                      reader.readAsDataURL(file);
-                    }
+            {!isGuestUser && (
+              <div className={styles.TopRight}>
+                <label
+                  className={styles.pfbtn}
+                  style={{
+                    cursor: "pointer",
+                    display: "inline-block",
+                    textAlign: "center",
+                    paddingTop: "10px",
                   }}
-                />
-              </label>
-              <button className={styles.pfrembtn} onClick={removeProfilePic}>
-                Remove Profile Picture
-              </button>
-            </div>
+                >
+                  Upload New Profile Picture
+                  <input
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    onChange={async (e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onloadend = async () => {
+                          const base64Image = reader.result;
+                          const res = await updateProfileAPI({ base64Image });
+                          if (res && res.success) {
+                            // Update profile image in state locally if possible
+                            // Or reload the page
+                            window.location.reload();
+                          }
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                  />
+                </label>
+                <button className={styles.pfrembtn} onClick={removeProfilePic}>
+                  Remove Profile Picture
+                </button>
+              </div>
+            )}
           </div>
           <div className={styles.Bottom}>
             <div className={styles.PersonalInfoSection}>
+              {isGuestUser && (
+                <p className={styles.GuestNote}>
+                  Please login to manage your profile details.
+                </p>
+              )}
               <h4>PERSONAL INFORMATION</h4>
 
               <div className={styles.Field}>
                 <input
-                  value={profile.firstName + " " + profile.lastName}
-                  disabled={!editMode}
+                  value={
+                    profile.firstName || profile.lastName
+                      ? `${profile.firstName || ""} ${profile.lastName || ""}`.trim()
+                      : isGuestUser
+                        ? "Guest User"
+                        : ""
+                  }
+                  placeholder={!isGuestUser ? "Enter your full name" : ""}
+                  disabled={!editMode || isGuestUser}
                   onChange={(e) => handleProfileChange("name", e.target.value)}
                 />
-                <span onClick={() => setEditMode(true)}>
+
+                <span onClick={() => !isGuestUser && setEditMode(true)}>
                   <svg
                     width="16"
                     height="16"
@@ -337,11 +354,17 @@ const ProfileComponents = ({ initialData }) => {
 
               <div className={styles.Field}>
                 <input
-                  value={profile.email}
-                  disabled={!editMode}
+                  value={profile.email || ""}
+                  placeholder={
+                    isGuestUser
+                      ? "Login to view email"
+                      : "Enter your email address"
+                  }
+                  disabled={!editMode || isGuestUser}
                   onChange={(e) => handleProfileChange("email", e.target.value)}
                 />
-                <span onClick={() => setEditMode(true)}>
+
+                <span onClick={() => !isGuestUser && setEditMode(true)}>
                   <svg
                     width="16"
                     height="16"
@@ -360,13 +383,23 @@ const ProfileComponents = ({ initialData }) => {
               <div className={styles.Row}>
                 <div className={styles.Field}>
                   <input
-                    value={profile.phone || profile.shipping?.phone || ""}
-                    disabled={!editMode}
+                    value={profile.phone || ""}
+                    placeholder={
+                      editMode
+                        ? "Add your phone number"
+                        : profile.phone
+                          ? ""
+                          : isGuestUser
+                            ? "Login to add phone number"
+                            : "No phone number added"
+                    }
+                    disabled={!editMode || isGuestUser}
                     onChange={(e) =>
                       handleProfileChange("phone", e.target.value)
                     }
                   />
-                  <span onClick={() => setEditMode(true)}>
+
+                  <span onClick={() => !isGuestUser && setEditMode(true)}>
                     <svg
                       width="16"
                       height="16"
@@ -412,7 +445,7 @@ const ProfileComponents = ({ initialData }) => {
                 </div>
               </div>
 
-              {editMode && (
+              {editMode && !isGuestUser && (
                 <div className={styles.ActionRow}>
                   <button className={styles.SaveBtn} onClick={saveProfile}>
                     Save Changes
@@ -426,100 +459,38 @@ const ProfileComponents = ({ initialData }) => {
                 </div>
               )}
             </div>
+            {!isGuestUser && (
+              <div className={styles.AddressSection}>
+                <div className={styles.AddressHeader}>
+                  <h4>SAVED ADDRESS</h4>
+                  <button onClick={openAddAddress}>Add new Address</button>
+                </div>
 
-            <div className={styles.AddressSection}>
-              <div className={styles.AddressHeader}>
-                <h4>SAVED ADDRESS</h4>
-                <button onClick={openAddAddress}>Add new Address</button>
-              </div>
+                {defaultAddress && (
+                  <>
+                    <div className={styles.fixerOne}>
+                      <p>Default address</p>
 
-              {defaultAddress && (
-                <>
-                  <div className={styles.fixerOne}>
-                    <p>Default address</p>
-
-                    <div className={styles.AddressCard}>
-                      <div className={styles.AddressText}>
-                        <p className={styles.Name}>
-                          {defaultAddress.firstName +
-                            " " +
-                            defaultAddress.lastName}
-                        </p>
-                        <p>{defaultAddress.address} </p>
-                        <p>{defaultAddress.apartment}</p>
-                        <p>
-                          {defaultAddress.city}, {defaultAddress.state}{" "}
-                          {defaultAddress.postalCode}
-                        </p>
-                        <p className={styles.Phone}>
-                          Phone number: {defaultAddress.phone}
-                        </p>
-                      </div>
-
-                      <div className={styles.AddressActions}>
-                        <span onClick={() => openEditAddress(defaultAddress)}>
-                          <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M1.41176 14.5882H2.59906L12.2334 4.95388L11.0461 3.76659L1.41176 13.4009V14.5882ZM0 16V12.8146L12.4146 0.405411C12.5569 0.276156 12.714 0.176314 12.8859 0.105882C13.058 0.0352941 13.2384 0 13.4271 0C13.6158 0 13.7985 0.0334907 13.9753 0.100471C14.1522 0.167451 14.3089 0.27396 14.4452 0.419999L15.5946 1.58376C15.7406 1.72008 15.8447 1.87694 15.9068 2.05435C15.9689 2.23176 16 2.40918 16 2.58659C16 2.77592 15.9677 2.95655 15.9031 3.12847C15.8384 3.30055 15.7356 3.45773 15.5946 3.6L3.18541 16H0ZM11.6294 4.37059L11.0461 3.76659L12.2334 4.95388L11.6294 4.37059Z"
-                              fill="#6E736A"
-                            />
-                          </svg>
-                        </span>
-
-                        <span
-                          onClick={() => {
-                            setDeleteAddressId(defaultAddress.id);
-                            setShowDeleteAddressPopup(true);
-                          }}
-                        >
-                          <svg
-                            width="15"
-                            height="16"
-                            viewBox="0 0 15 16"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M2.66067 16C2.18812 16 1.78444 15.8327 1.44961 15.498C1.11495 15.1632 0.947615 14.7595 0.947615 14.287V2.25959H0V0.838165H4.26427V0H9.94995V0.838165H14.2142V2.25959H13.2666V14.287C13.2666 14.7657 13.1008 15.1708 12.7691 15.5025C12.4374 15.8342 12.0323 16 11.5536 16H2.66067ZM11.8452 2.25959H2.36904V14.287C2.36904 14.3721 2.39636 14.442 2.45101 14.4966C2.50565 14.5513 2.57554 14.5786 2.66067 14.5786H11.5536C11.6265 14.5786 11.6933 14.5482 11.754 14.4874C11.8148 14.4267 11.8452 14.3599 11.8452 14.287V2.25959ZM4.6471 12.6833H6.06829V4.15482H4.6471V12.6833ZM8.14593 12.6833H9.56712V4.15482H8.14593V12.6833Z"
-                              fill="#6E736A"
-                            />
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {otherAddresses.length > 0 && (
-                <>
-                  <div className={styles.fixerTwo}>
-                    <h6 className={styles.other}>Other addresses</h6>
-
-                    {otherAddresses.map((addr) => (
-                      <div key={addr.id} className={styles.AddressCard}>
+                      <div className={styles.AddressCard}>
                         <div className={styles.AddressText}>
                           <p className={styles.Name}>
-                            {addr.firstName + " " + addr.lastName}
+                            {defaultAddress.firstName +
+                              " " +
+                              defaultAddress.lastName}
                           </p>
-                          <p>{addr.address}</p>
-                          <p>{addr.apartment}</p>
+                          <p>{defaultAddress.address} </p>
+                          <p>{defaultAddress.apartment}</p>
                           <p>
-                            {addr.city}, {addr.country}
+                            {defaultAddress.city}, {defaultAddress.state}{" "}
+                            {defaultAddress.postalCode}
                           </p>
                           <p className={styles.Phone}>
-                            Phone number: {addr.phone}
+                            Phone number: {defaultAddress.phone}
                           </p>
                         </div>
 
                         <div className={styles.AddressActions}>
-                          <span onClick={() => openEditAddress(addr)}>
+                          <span onClick={() => openEditAddress(defaultAddress)}>
                             <svg
                               width="16"
                               height="16"
@@ -536,7 +507,7 @@ const ProfileComponents = ({ initialData }) => {
 
                           <span
                             onClick={() => {
-                              setDeleteAddressId(addr.id);
+                              setDeleteAddressId(defaultAddress.id);
                               setShowDeleteAddressPopup(true);
                             }}
                           >
@@ -555,23 +526,87 @@ const ProfileComponents = ({ initialData }) => {
                           </span>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
+                    </div>
+                  </>
+                )}
 
-            <div className={styles.DeleteAccount}>
-              <h4>DELETE ACCOUNT</h4>
-              <button
-                onClick={async () => {
-                  await handleDeleteAccount();
-                  setShowDeletePopup(true);
-                }}
-              >
-                Delete My Account
-              </button>
-            </div>
+                {otherAddresses.length > 0 && (
+                  <>
+                    <div className={styles.fixerTwo}>
+                      <h6 className={styles.other}>Other addresses</h6>
+
+                      {otherAddresses.map((addr) => (
+                        <div key={addr.id} className={styles.AddressCard}>
+                          <div className={styles.AddressText}>
+                            <p className={styles.Name}>
+                              {addr.firstName + " " + addr.lastName}
+                            </p>
+                            <p>{addr.address}</p>
+                            <p>{addr.apartment}</p>
+                            <p>
+                              {addr.city}, {addr.country}
+                            </p>
+                            <p className={styles.Phone}>
+                              Phone number: {addr.phone}
+                            </p>
+                          </div>
+
+                          <div className={styles.AddressActions}>
+                            <span onClick={() => openEditAddress(addr)}>
+                              <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M1.41176 14.5882H2.59906L12.2334 4.95388L11.0461 3.76659L1.41176 13.4009V14.5882ZM0 16V12.8146L12.4146 0.405411C12.5569 0.276156 12.714 0.176314 12.8859 0.105882C13.058 0.0352941 13.2384 0 13.4271 0C13.6158 0 13.7985 0.0334907 13.9753 0.100471C14.1522 0.167451 14.3089 0.27396 14.4452 0.419999L15.5946 1.58376C15.7406 1.72008 15.8447 1.87694 15.9068 2.05435C15.9689 2.23176 16 2.40918 16 2.58659C16 2.77592 15.9677 2.95655 15.9031 3.12847C15.8384 3.30055 15.7356 3.45773 15.5946 3.6L3.18541 16H0ZM11.6294 4.37059L11.0461 3.76659L12.2334 4.95388L11.6294 4.37059Z"
+                                  fill="#6E736A"
+                                />
+                              </svg>
+                            </span>
+
+                            <span
+                              onClick={() => {
+                                setDeleteAddressId(addr.id);
+                                setShowDeleteAddressPopup(true);
+                              }}
+                            >
+                              <svg
+                                width="15"
+                                height="16"
+                                viewBox="0 0 15 16"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M2.66067 16C2.18812 16 1.78444 15.8327 1.44961 15.498C1.11495 15.1632 0.947615 14.7595 0.947615 14.287V2.25959H0V0.838165H4.26427V0H9.94995V0.838165H14.2142V2.25959H13.2666V14.287C13.2666 14.7657 13.1008 15.1708 12.7691 15.5025C12.4374 15.8342 12.0323 16 11.5536 16H2.66067ZM11.8452 2.25959H2.36904V14.287C2.36904 14.3721 2.39636 14.442 2.45101 14.4966C2.50565 14.5513 2.57554 14.5786 2.66067 14.5786H11.5536C11.6265 14.5786 11.6933 14.5482 11.754 14.4874C11.8148 14.4267 11.8452 14.3599 11.8452 14.287V2.25959ZM4.6471 12.6833H6.06829V4.15482H4.6471V12.6833ZM8.14593 12.6833H9.56712V4.15482H8.14593V12.6833Z"
+                                  fill="#6E736A"
+                                />
+                              </svg>
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+            {!isGuestUser && (
+              <div className={styles.DeleteAccount}>
+                <h4>DELETE ACCOUNT</h4>
+                <button
+                  onClick={async () => {
+                    await handleDeleteAccount();
+                    setShowDeletePopup(true);
+                  }}
+                >
+                  Delete My Account
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -673,13 +708,15 @@ const ProfileComponents = ({ initialData }) => {
             />
 
             <div className={styles.Row} style={{ display: "flex" }}>
-              <input
-                placeholder="City"
-                value={addressForm.city || ""}
-                onChange={(e) =>
-                  setAddressForm({ ...addressForm, city: e.target.value })
-                }
-              />
+              {!isGuestUser && (
+                <input
+                  placeholder="City"
+                  value={addressForm.city || ""}
+                  onChange={(e) =>
+                    setAddressForm({ ...addressForm, city: e.target.value })
+                  }
+                />
+              )}
 
               {/* Check if country is UAE-like to show dropdown */}
 
