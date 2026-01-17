@@ -228,7 +228,7 @@
 
 @media (max-width: 1024px) {
     .Main {
-        height: 100svh;
+        height: 100dvh;
         padding-right: 0px;
     }
 
@@ -259,6 +259,8 @@
         padding-left: 24px;
         padding-right: 24px;
         padding-bottom: 100px;
+        padding-top: 50px;
+        
     }
 
     .RightTop {
