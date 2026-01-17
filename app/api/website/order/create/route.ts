@@ -109,8 +109,8 @@ export async function POST(req: NextRequest) {
                     customer_id: session.user.wpCustomerId,
                     payment_method: "stripe",
                     payment_method_title: "Stripe",
-status: "processing",
-                   set_paid: true,
+status: "pending",
+set_paid: false,
 
                     billing: {
                         first_name: address.shippingAsbillingAddress ? address.shipping.firstName : address.billing.firstName,
@@ -185,8 +185,8 @@ country: normalizeCountry(address.shipping.country),
                     customer_id: session.user.wpCustomerId,
                     payment_method: "stripe",
                     payment_method_title: "Stripe",
-status: "processing",
-set_paid: true,
+status: "pending",
+set_paid: false,
 
                     billing: {
                         first_name: address.shippingAsbillingAddress ? address.shipping.firstName : address.billing.firstName,
@@ -259,8 +259,8 @@ set_paid: true,
                 payload = {
                     payment_method: "stripe",
                     payment_method_title: "Stripe",
-status: "processing",
-                   set_paid: true,
+status: "pending",
+set_paid: false,
 
                     billing: {
                         first_name: address.billing.firstName,
@@ -329,8 +329,8 @@ status: "processing",
                 payload = {
                     payment_method: "stripe",
                     payment_method_title: "Stripe",
-                 status: "processing",
-                    set_paid: true,
+              status: "pending",
+set_paid: false,
 
                     billing: {
                         first_name: address.billing.firstName,
