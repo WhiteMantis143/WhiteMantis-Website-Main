@@ -1,4 +1,5 @@
 // import React from "react";
+// import ProfileComponents from "../_components/ProfileComponents/ProfileComponents";
 import ProfileComponents from "../_components/ProfileComponents/ProfileComponents";
 import { headers } from "next/headers";
 async function getProfile() {
