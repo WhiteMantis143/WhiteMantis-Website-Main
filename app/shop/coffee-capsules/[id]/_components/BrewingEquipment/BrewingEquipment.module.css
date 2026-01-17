@@ -1,0 +1,215 @@
+.Main {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+padding:
+  clamp(80px, calc(80px + (70 * ((100vw - 320px) / 1120))), 150px)
+  clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+
+}
+.MainContainer {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: clamp(32px, calc(32px + (40 * ((100vw - 320px) / 1120))), 72px);
+
+}
+.Top {
+  display: flex;
+  justify-content: left;
+}
+.Top h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2f362a;
+  text-transform: uppercase;
+}
+.Bottom {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+gap: clamp(56px, calc(56px + (24 * ((100vw - 320px) / 1120))), 80px);
+
+}
+.BottomTop {
+  display: flex;
+  justify-content: left;
+ gap: clamp(30px, calc(30px + (40 * ((100vw - 320px) / 1120))), 70px);
+
+  flex-direction: row;
+}
+.Card {
+  display: flex;
+  width: 100%;
+  justify-content: left;
+  flex-direction: column;
+  gap: clamp(15px, calc(15px + (5 * ((100vw - 320px) / 1120))), 20px);
+
+}
+.CardTitle {
+  display: flex;
+  justify-content: left;
+}
+.CardTitle h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2f362a;
+  text-transform: uppercase;
+}
+.CardDetails {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+ gap: clamp(15px, calc(15px + (9 * ((100vw - 320px) / 1120))), 24px);
+
+}
+.CardImage img {
+  width: 100%;
+  height: 100%;
+  max-width: 800px;
+  max-height: 350px;
+}
+.CardInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.CardDesc {
+  display: flex;
+  justify-content: left;
+}
+.CardDesc p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #6e736a;
+  max-width: 400px;
+}
+.CardPrice {
+  display: flex;
+  justify-content: right;
+}
+.CardPrice h4 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #6e736a;
+}
+.CardMoreButton {
+  display: flex;
+  justify-content: left;
+}
+.More {
+  font-size: 15px;
+  font-family: var(--lato);
+  color: #2f362a;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+}
+.BottomBottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+}
+.EXplore {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 500;
+  color: #6c7a5f;
+  border: 1px solid #6c7a5f;
+  background-color: #ffffff;
+  padding: 13.5px 38.5px;
+  cursor: pointer;
+}
+.MobilePrice{
+    display: none;
+}
+@media (max-width: 640px) {
+    .Main {
+        padding: 80px 24px;
+    }
+    .Top h3 {
+        font-size: 20px;
+    }
+    .MainContainer {
+        gap: 32px;
+    }
+    .Card, .CardDetails{
+        gap: 15px;
+    }
+    .Bottom {
+        gap: 56px;
+    }
+    .BottomTop {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .CardImage img {
+        max-width: 100%;
+        max-height: auto;
+    }
+    .More{
+        font-size: 14px;
+    }
+    .MobilePrice h4{
+        font-size: 20px;
+        white-space: nowrap;
+        color: #6E736A;
+        font-family: var(--lexend);
+        font-weight: 500;
+        text-transform: uppercase
+    }
+    .CardPrice {
+        display: none;
+    }
+    .CardDesc p{
+        font-size: 14px;
+        max-width: 100%;
+    }
+    .CardMoreButton{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+    }
+    .CardTitle h3{
+        font-size: 20px;
+    }
+    .MobilePrice{
+        display: flex;
+        /* justify-content: space-between; */
+    }
+}
+@media (min-width: 641px) and (max-width: 1024px) {
+  .Main {
+    padding: 115px 40px;
+  }
+  .Card{
+    width: 100%;
+  }
+  .CardDesc{
+    max-width: 200px;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .Main {
+    padding: 130px 60px;
+  }
+  /* .Card{
+    max-width: 400px;
+  } */
+  .CardDesc{
+    max-width: 300px;
+  }
+  .Card{
+    width: 100%;
+  }
+}

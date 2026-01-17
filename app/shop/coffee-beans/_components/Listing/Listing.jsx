@@ -331,7 +331,7 @@ const Lisiting = () => {
                 const productSlug = product.tagline
                   ? slugify(`${product.name}-${product.tagline}`)
                   : slugify(product.name);
-                const productUrl = `/products/${productSlug}-${product.id}`;
+                const productUrl = `/shop/coffee-beans/${productSlug}-${product.id}`;
 
                 return (
                   <div className={styles.ProductCard} key={product.id}>

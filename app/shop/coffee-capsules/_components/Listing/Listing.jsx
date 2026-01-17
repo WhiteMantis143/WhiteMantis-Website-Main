@@ -311,7 +311,7 @@ const Lisiting = () => {
                 const productSlug = product.tagline
                   ? slugify(`${product.name}-${product.tagline}`)
                   : slugify(product.name);
-                const productUrl = `/products/${productSlug}-${product.id}`;
+                const productUrl = `/shop/coffee-capsules/${productSlug}-${product.id}`;
 
                 // Get the 250g variation ID and child product ID (Functionality)
                 let variation_id = null;

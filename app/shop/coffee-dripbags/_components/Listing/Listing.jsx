@@ -7,6 +7,14 @@ import Link from "next/link";
 import Wishlist from "../../../../_components/Whishlist";
 import AddToCart from "../../../../_components/AddToCart";
 
+const slugify = (text) =>
+  text
+    ?.toLowerCase()
+    .trim()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
 const Lisiting = () => {
   const PARENT_ID = 217;
   const ITEMS_PER_LOAD = 9;
@@ -331,6 +339,12 @@ const Lisiting = () => {
                   quantity: 1,
                 };
 
+                /* --------- SEO SLUG + ID --------- */
+                const productSlug = product.tagline
+                  ? slugify(`${product.name}-${product.tagline}`)
+                  : slugify(product.name);
+                const productUrl = `/shop/coffee-dripbags/${productSlug}-${product.id}`;
+
                 return (
                   <div className={styles.ProductCard} key={product.id}>
                     <div className={styles.ProductTop}>
@@ -338,7 +352,7 @@ const Lisiting = () => {
                         <Wishlist product={product} />
                       </div> */}
                       <Link
-                        href={`/products/${product.id}`}
+                        href={productUrl}
                         className={styles.ProductImage}
                       >
                         {displayData.image ? (
@@ -356,7 +370,7 @@ const Lisiting = () => {
 
                     <div className={styles.ProductBottom}>
                       <Link
-                        href={`/products/${product.id}`}
+                        href={productUrl}
                         style={{ textDecoration: "none", color: "inherit" }}
                       >
                         <div className={styles.ProductInfo}>

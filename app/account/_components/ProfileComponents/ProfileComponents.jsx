@@ -364,7 +364,7 @@ const ProfileComponents = ({ initialData }) => {
                   onChange={(e) => handleProfileChange("email", e.target.value)}
                 />
 
-                <span onClick={() => !isGuestUser && setEditMode(true)}>
+                {/* <span onClick={() => !isGuestUser && setEditMode(true)}>
                   <svg
                     width="16"
                     height="16"
@@ -377,7 +377,7 @@ const ProfileComponents = ({ initialData }) => {
                       fill="#6E736A"
                     />
                   </svg>
-                </span>
+                </span> */}
               </div>
 
               <div className={styles.Row}>
