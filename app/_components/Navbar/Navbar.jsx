@@ -9,6 +9,10 @@ import { useSession } from "next-auth/react";
 import { useCart } from "../../_context/CartContext";
 
 const Navbar = () => {
+  const closeShopDropdown = () => {
+  setShopOpen(false);
+};
+
   const pathname = usePathname();
 
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -111,13 +115,13 @@ const Navbar = () => {
                           <h4>Coffee</h4>
                         </div>
                         <div className={styles.DummyLeftTwoLeftBottom}>
-                          <Link href="/shop/coffee-beans">
+                          <Link href="/shop/coffee-beans" onClick={closeShopDropdown}>
                             <p>Coffee Beans</p>
                           </Link>
-                          <Link href="/shop/coffee-dripbags">
+                          <Link href="/shop/coffee-dripbags" onClick={closeShopDropdown}>
                             <p>Coffee Drip bags</p>
                           </Link>
-                          <Link href="/shop/coffee-capsules">
+                          <Link href="/shop/coffee-capsules" onClick={closeShopDropdown}>
                             <p>Coffee Capsules</p>
                           </Link>
                         </div>
@@ -246,7 +250,7 @@ const Navbar = () => {
               className={pathname.startsWith("/auth") ? styles.active : ""}
               style={{ cursor: "pointer" }}
             >
-              <p>Get Started</p>
+              <p>Login/SignUp</p>
             </Link>
           )}
         </div>
