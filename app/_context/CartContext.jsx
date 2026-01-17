@@ -8,7 +8,6 @@ import React, {
   useMemo,
 } from "react";
 import { useAuth } from "./AuthContext";
-import toast from "react-hot-toast";
 
 const CartContext = createContext(null);
 
@@ -95,14 +94,12 @@ export function CartProvider({ children }) {
 
       if (!data?.ok) {
         setItems(prevSnapshot);
-        toast.error(data?.error || "Failed to update cart");
         return { ok: false };
       }
 
       return { ok: true };
     } catch (err) {
       setItems(prevSnapshot);
-      toast.error("Network error");
       return { ok: false };
     }
   }, []);
@@ -137,13 +134,11 @@ export function CartProvider({ children }) {
 
       if (!data?.ok) {
         setItems(prevSnapshot);
-        toast.error(data?.error || "Failed to remove item");
       }
 
       return data;
     } catch (err) {
       setItems(prevSnapshot);
-      toast.error("Network error");
       return { ok: false };
     }
   }, []);
@@ -157,15 +152,12 @@ export function CartProvider({ children }) {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        toast.error(data.message || "Invalid coupon");
         return { ok: false };
       }
 
       setAppliedCoupon(data.coupon);
-      toast.success("Coupon applied!");
       return { ok: true };
     } catch {
-      toast.error("Failed to apply coupon");
       return { ok: false };
     }
   }, []);
@@ -176,9 +168,8 @@ export function CartProvider({ children }) {
         credentials: "include",
       });
       setAppliedCoupon(null);
-      toast.success("Coupon removed");
     } catch {
-      toast.error("Failed to remove coupon");
+      // Silent fail
     }
   }, []);
 

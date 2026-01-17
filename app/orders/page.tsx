@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import toast from "react-hot-toast";
+
 
 export default function OrdersPage() {
     const { data: session } = useSession();
@@ -28,7 +28,7 @@ export default function OrdersPage() {
 
         } catch (error) {
             console.error("Error fetching orders:", error);
-            toast.error("Failed to load orders");
+            console.error("Failed to load orders");
         } finally {
             setLoading(false);
         }
@@ -45,7 +45,7 @@ export default function OrdersPage() {
         )?.value;
 
         if (!chargeId) {
-            toast.error("Cannot cancel: Transaction ID not found");
+            console.error("Cannot cancel: Transaction ID not found");
             return;
         }
 
@@ -64,13 +64,13 @@ export default function OrdersPage() {
             const data = await response.json();
 
             if (data.success) {
-                toast.success("Order cancelled and refunded successfully");
+                console.log("Order cancelled and refunded successfully");
                 fetchOrders(); // Refresh list
             } else {
-                toast.error(data.message || "Failed to cancel order");
+                console.error(data.message || "Failed to cancel order");
             }
         } catch (error) {
-            toast.error("An error occurred while canceling");
+            console.error("An error occurred while canceling");
         } finally {
             setCanceling(null);
         }

@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 
-
 import styles from "./Sidebar.module.css";
 
 export default function Sidebar() {
@@ -13,7 +12,16 @@ export default function Sidebar() {
   const [showLogout, setShowLogout] = React.useState(false);
   const { data: session } = useSession();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      // Call logout API to clear all cookies
+      await fetch("/api/website/auth/logout", {
+        method: "POST",
+      });
+    } catch (error) {
+      console.error("Logout API error:", error);
+    }
+    // Sign out with NextAuth
     signOut({ callbackUrl: "/" });
   };
 

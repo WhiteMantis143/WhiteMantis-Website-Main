@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import styles from "./Enquires.module.css";
 import Image from "next/image";
 import one from "./1.png";
-import toast from "react-hot-toast";
+
 
 const Enquires = () => {
   const [formData, setFormData] = useState({
@@ -49,7 +49,7 @@ const Enquires = () => {
       !formData.email ||
       !formData.location
     ) {
-      toast.error("Please fill in all required fields");
+      console.error("Please fill in all required fields");
       return;
     }
 
@@ -58,7 +58,7 @@ const Enquires = () => {
     try {
       const payload = { ...formData };
       if (otherCategory) {
-       
+
       }
 
       const res = await fetch("/api/website/enquiry", {
@@ -70,7 +70,7 @@ const Enquires = () => {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        toast.success("Enquiry submitted successfully!");
+        console.log("Enquiry submitted successfully!");
         setFormData({
           businessName: "",
           contactName: "",
@@ -83,11 +83,11 @@ const Enquires = () => {
         });
         setOtherCategory("");
       } else {
-        toast.error(data.message || "Failed to submit enquiry");
+        console.error(data.message || "Failed to submit enquiry");
       }
     } catch (error) {
       console.error("Submission error:", error);
-      toast.error("Something went wrong. Please try again.");
+      console.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }

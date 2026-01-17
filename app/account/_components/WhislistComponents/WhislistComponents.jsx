@@ -5,7 +5,7 @@ import { useCart } from "../../../_context/CartContext";
 import styles from "./WhislistComponents.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+
 
 const WhislistComponents = () => {
   const { items: wishlistData, loading, remove } = useWishlist();
@@ -56,13 +56,13 @@ const WhislistComponents = () => {
     const selectedVariation = selectedVariations[item.id];
 
     if (!selectedVariation) {
-      toast.error("Please select a weight");
+      console.error("Please select a weight");
       return;
     }
 
     const childProduct = item.children?.[0];
     if (!childProduct) {
-      toast.error("Product not available");
+      console.error("Product not available");
       return;
     }
 
@@ -79,10 +79,10 @@ const WhislistComponents = () => {
         image: finalImage,
       });
 
-      toast.success("Added to cart!");
+      console.log("Added to cart!");
     } catch (error) {
       console.error("Error adding to cart:", error);
-      toast.error("Failed to add to cart");
+      console.error("Failed to add to cart");
     }
   };
 

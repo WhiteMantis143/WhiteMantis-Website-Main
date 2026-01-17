@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import Image from "next/image";
 import one from "./1.png";
-import toast from "react-hot-toast";
+
 import { useSession } from "next-auth/react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useCart } from "../_context/CartContext";
@@ -60,7 +60,7 @@ function CheckoutForm({
       // 1. Get Card Element
       const cardElement = elements.getElement(CardNumberElement);
       if (!cardElement) {
-        toast.error("Invalid card details");
+
         setIsProcessing(false);
         openCart();
         router.push('/');
@@ -138,7 +138,7 @@ function CheckoutForm({
       });
 
       if (pmError) {
-        toast.error(pmError.message);
+
         setIsProcessing(false);
         openCart();
         router.push('/');
@@ -223,7 +223,7 @@ function CheckoutForm({
         const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret);
 
         if (confirmError) {
-          toast.error(confirmError.message);
+
           setIsProcessing(false);
           openCart();
           router.push('/');
@@ -231,13 +231,15 @@ function CheckoutForm({
         }
 
         if (paymentIntent && paymentIntent.status === "succeeded") {
-          toast.success("Payment successful!");
+
+
 
           // Clear the cart after successful payment
           try {
             await fetch("/api/website/cart/clear", {
-              method: "POST",
+              method: "DELETE",
               headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ action: "clear" }),
             });
           } catch (clearError) {
             console.error("Failed to clear cart:", clearError);
@@ -255,7 +257,7 @@ function CheckoutForm({
 
     } catch (e) {
       console.error(e);
-      toast.error(e.message || "An error occurred");
+
       openCart();
       // router.push('/');
     } finally {
@@ -442,7 +444,7 @@ function CheckoutForm({
                         className={styles.AddNewAddress}
                         onClick={() => {
                           if (savedAddresses.length >= 5) {
-                            toast.error("Remove one address first as 5 address is the limit");
+
                             return;
                           }
                           setShowNewAddressForm(true);
@@ -768,7 +770,22 @@ function CheckoutContent() {
   const [useShippingAsBilling, setUseShippingAsBilling] = useState(false);
   const { data: session, status } = useSession();
   const [showNewAddressForm, setShowNewAddressForm] = useState(false);
-  const { cartTotals: contextCartTotals } = useCart();
+  const { cartTotals: contextCartTotals, items: cartItems } = useCart();
+
+  // Reload page when cart items change
+  const [initialCartItemsCount, setInitialCartItemsCount] = useState(null);
+
+  useEffect(() => {
+    // Set initial cart count on first load
+    if (initialCartItemsCount === null && cartItems.length > 0) {
+      setInitialCartItemsCount(cartItems.length);
+    }
+
+    // Reload page if cart items change after initial load
+    if (initialCartItemsCount !== null && cartItems.length !== initialCartItemsCount) {
+      window.location.reload();
+    }
+  }, [cartItems, initialCartItemsCount]);
 
   const [shippingTax, setShippingTax] = useState({ shipping: 0, tax: 0, taxPercent: 0 });
 
@@ -804,7 +821,7 @@ function CheckoutContent() {
     const validateAndFetchData = async () => {
       if (mode === 'subscription') {
         if (!subscriptionId || !variationId) {
-          toast.error('Invalid subscription checkout.')
+          console.error('Invalid subscription checkout.')
           router.push('/');
           return;
         }
@@ -817,7 +834,7 @@ function CheckoutContent() {
           if (response.ok) {
 
             if (data.product?.type !== "variable-subscription") {
-              toast.error('Invalid subscription checkout.')
+              console.error('Invalid subscription checkout.')
               router.push('/')
               return
             }
@@ -843,11 +860,11 @@ function CheckoutContent() {
             });
 
           } else {
-            toast.error('Failed to load subscription details');
+
             return
           }
         } catch (error) {
-          toast.error('Failed to load subscription details');
+
           return
         }
       } else if (mode === 'cart') {
@@ -872,16 +889,16 @@ function CheckoutContent() {
 
           } else {
             console.error("Cart data malformed", data);
-            toast.error('Failed to load cart details');
+
             return
           }
         } catch (error) {
           console.error("Cart fetch error", error);
-          toast.error('Failed to load cart details');
+
           return
         }
       } else {
-        toast.error('Invalid checkout mode. Redirecting to home.');
+
         router.push('/');
         return;
       }

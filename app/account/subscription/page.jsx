@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 import Image from "next/image";
-import toast from "react-hot-toast";
+
 
 export default function SubscriptionPage() {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -21,11 +21,11 @@ export default function SubscriptionPage() {
       if (data.success && Array.isArray(data.data)) {
         setSubscriptions(data.data);
       } else {
-        toast.error("Failed to load subscriptions");
+        console.error("Failed to load subscriptions");
       }
     } catch (error) {
       console.error("Error fetching subscriptions:", error);
-      toast.error("ErrorMessage");
+      console.error("ErrorMessage");
     } finally {
       setLoading(false);
     }

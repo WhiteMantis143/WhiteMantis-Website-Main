@@ -1,118 +1,147 @@
-.Main{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-   padding:
-  clamp(80px, calc(80px + (80 * ((100vw - 320px) / 1120))), 160px)
-  clamp(0px, calc(24px + (-24 * ((100vw - 320px) / 1120))), 24px)
-  clamp(80px, calc(80px + (80 * ((100vw - 320px) / 1120))), 160px)
-  clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+.Main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding:
+    clamp(80px, calc(80px + (80 * ((100vw - 320px) / 1120))), 160px) clamp(0px, calc(24px + (-24 * ((100vw - 320px) / 1120))), 24px) clamp(80px, calc(80px + (80 * ((100vw - 320px) / 1120))), 160px) clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
 
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
-.MainContainer{
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-   gap: clamp(44px, calc(44px + (63 * ((100vw - 320px) / 1120))), 107px);
 
-    flex-direction: row;
-}
-.Left{
-    display: flex;
-    justify-content: left;
-   flex-direction: column;
-height: 100%;
-gap: clamp(24px, calc(24px + (97 * ((100vw - 320px) / 1120))), 121px);
+.MainContainer {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: clamp(44px, calc(44px + (63 * ((100vw - 320px) / 1120))), 107px);
 
+  flex-direction: row;
 }
-.LeftTop{
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-    gap: 12px;
-    max-width: 307px;
-}
-.LeftTop h3{
-    font-family: var(--lexend);
-    font-size: var(--fs-22);
-    font-weight: 500;
-    color: #2F362A;
-    text-transform: uppercase;
-}
-.LeftTop p{
-    font-family: var(--lato);
-    font-size: 15px;
-    color: #6E736A; 
-    font-weight: 400;
-}
-.LeftBottom{
-    display: flex;
-    justify-content: left;
-    flex-direction: row;
-    gap: 12px;
-}
-.LeftBottom svg{
-   width: 100%;
-   max-width: 46px;
-   cursor: pointer;
-   height: 100%;
-   max-height: 46px;
-}
-.Right{
-    display: flex;
-    justify-content: left;
-   flex-direction: row;
-   gap: 40px;
-}
-.Card{
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-    gap: 24px;
-    
-}
-.ProdImge img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    max-width: 401px;
-    max-height: 350px;
+
+.Left {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  height: 100%;
+  gap: clamp(24px, calc(24px + (97 * ((100vw - 320px) / 1120))), 121px);
 
 }
-.CardTop{
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-    position: relative;
+
+.LeftTop {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 307px;
 }
-.LinkSvg{
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
+
+.LeftTop h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2F362A;
+  text-transform: uppercase;
 }
-.CardBottom{
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-    gap: 4px;
+
+.LeftTop p {
+  font-family: var(--lato);
+  font-size: 15px;
+  color: #6E736A;
+  font-weight: 400;
 }
-.CardBottom h3{
-    font-size: 15px;
-    font-family: var(--lato);
-    color: #2F362A;
-    font-weight: 400;
+
+.LeftBottom {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: 12px;
 }
-.CardBottom p{
-    font-size: 15px;
-    font-family: var(--lato);
-    color: #6E736A;
-    font-weight: 400;
+
+.LeftBottom svg {
+  width: 100%;
+  max-width: 46px;
+  cursor: pointer;
+  height: 100%;
+  max-height: 46px;
+}
+
+.Right {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.Card {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 24px;
+
+}
+
+.ProdImge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-width: 401px;
+  max-height: 350px;
+
+}
+
+.ProductImage {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background-color: #f8f8f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ProductImage img {
+  width: 100%;
+  height: 100%;
+  max-width: 401px;
+  max-height: 305px;
+  object-fit: contain;
+}
+
+.CardTop {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  position: relative;
+}
+
+.LinkSvg {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.CardBottom {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.CardBottom h3 {
+  font-size: 15px;
+  font-family: var(--lato);
+  color: #2F362A;
+  font-weight: 400;
+}
+
+.CardBottom p {
+  font-size: 15px;
+  font-family: var(--lato);
+  color: #6E736A;
+  font-weight: 400;
 }
 
 .Embla {
@@ -127,9 +156,11 @@ gap: clamp(24px, calc(24px + (97 * ((100vw - 320px) / 1120))), 121px);
 .EmblaSlide {
   flex: 0 0 auto;
 }
-.MobileArrows{
+
+.MobileArrows {
   display: none;
 }
+
 @media (max-width: 640px) {
   .Main {
     padding: 80px 24px;
@@ -149,10 +180,11 @@ gap: clamp(24px, calc(24px + (97 * ((100vw - 320px) / 1120))), 121px);
     max-width: 100%;
   }
 
-   .LeftBottom {
+  .LeftBottom {
     display: none;
   }
- .MobileArrows {
+
+  .MobileArrows {
     display: flex;
     justify-content: center;
     gap: 8px;
@@ -164,6 +196,7 @@ gap: clamp(24px, calc(24px + (97 * ((100vw - 320px) / 1120))), 121px);
     max-height: 25px;
     cursor: pointer;
   }
+
   .Right {
     width: 100%;
   }
@@ -185,11 +218,13 @@ gap: clamp(24px, calc(24px + (97 * ((100vw - 320px) / 1120))), 121px);
     max-width: 100%;
     max-height: none;
   }
-  .LeftBottom svg{
+
+  .LeftBottom svg {
     max-width: 25px;
     max-height: 25px;
   }
 }
+
 @media (min-width: 641px) and (max-width: 1200px) {
   .Main {
     padding: 120px 40px;

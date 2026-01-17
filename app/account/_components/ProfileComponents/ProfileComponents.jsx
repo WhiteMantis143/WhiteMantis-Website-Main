@@ -14,12 +14,6 @@ const UAE_STATES = [
 ];
 
 const ProfileComponents = ({ initialData }) => {
-  console.log("Initial Data:", initialData.profile);
-  console.log(
-    "Address:",
-    initialData.profile.metaData?.find((item) => item.key === "saved_addresses")
-      ?.value
-  );
   const [profile, setProfile] = useState(initialData.profile);
   const [editMode, setEditMode] = useState(false);
 
@@ -44,6 +38,8 @@ const ProfileComponents = ({ initialData }) => {
 
   const [showDeleteAddressPopup, setShowDeleteAddressPopup] = useState(false);
   const [deleteAddressId, setDeleteAddressId] = useState(null);
+
+  const [accountStatus, setAccountStatus] = useState(null);
 
   const handleProfileChange = (field, value) => {
     if (field === "name") {
@@ -206,6 +202,52 @@ const ProfileComponents = ({ initialData }) => {
       if (res && res.success) {
         window.location.reload();
       }
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      // Fetch account status (active orders/subscriptions)
+      const checkRes = await fetch("/api/website/profile/delete", {
+        method: "GET",
+      });
+
+      const checkData = await checkRes.json();
+
+      if (!checkRes.ok) {
+        throw new Error(checkData.message || "Failed to check account status");
+      }
+
+      // Store account status to display in popup
+      setAccountStatus(checkData);
+    } catch (error) {
+      console.error("Delete account check error:", error);
+      alert(error.message || "Failed to check account status. Please try again.");
+    }
+  };
+
+  const confirmDeleteAccount = async () => {
+    try {
+      // Proceed with deletion
+      const deleteRes = await fetch("/api/website/profile/delete/confirm", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const deleteData = await deleteRes.json();
+
+      if (!deleteRes.ok) {
+        throw new Error(deleteData.message || "Failed to delete account");
+      }
+
+      if (deleteData.success) {
+        // Account deleted successfully
+        // Redirect to home page
+        window.location.href = "/";
+      }
+    } catch (error) {
+      console.error("Delete account error:", error);
+      alert(error.message || "Failed to delete account. Please try again.");
     }
   };
 
@@ -519,7 +561,10 @@ const ProfileComponents = ({ initialData }) => {
 
             <div className={styles.DeleteAccount}>
               <h4>DELETE ACCOUNT</h4>
-              <button onClick={() => setShowDeletePopup(true)}>
+              <button onClick={async () => {
+                await handleDeleteAccount();
+                setShowDeletePopup(true);
+              }}>
                 Delete My Account
               </button>
             </div>
@@ -531,15 +576,54 @@ const ProfileComponents = ({ initialData }) => {
         <div className={styles.DeletePopupOverlay}>
           <div className={styles.DeletePopup}>
             <h3>DELETE ACCOUNT</h3>
-            <p>
-              Deleting your account permanently removes your order history,
-              subscriptions and preferences.
+
+            {accountStatus ? (
+              <>
+                {accountStatus.activeSubscriptions?.count > 0 && (
+                  <p>
+                    You currently have an active subscription on this account, which will
+                    be cancelled.{" "}
+                    {accountStatus.activeOrders?.count > 0 &&
+                      "If you have any pending orders, they will still be delivered."}
+                  </p>
+                )}
+
+                {accountStatus.activeSubscriptions?.count === 0 &&
+                  accountStatus.activeOrders?.count > 0 && (
+                    <p>
+                      Any pending orders will still be delivered.
+                    </p>
+                  )}
+              </>
+            ) : (
+              <>
+                <p>
+                  Any pending orders will still be delivered.
+                  <br />
+                  Deleting your account will permanently remove your data and saved
+                  preferences.
+                </p>
+              </>
+            )}
+
+            <p style={{ color: "#d32f2f", fontWeight: "500", marginTop: "16px" }}>
+              Deleting your account will permanently erase your data, history, and
+              saved settings.
             </p>
+
             <div className={styles.DeletePopupActions}>
-              <button onClick={() => setShowDeletePopup(false)}>
+              <button onClick={() => {
+                setShowDeletePopup(false);
+                setAccountStatus(null);
+              }}>
                 Keep Account
               </button>
-              <button className={styles.DeleteDanger}>Delete Anyway</button>
+              <button
+                className={styles.DeleteDanger}
+                onClick={confirmDeleteAccount}
+              >
+                Delete Anyway
+              </button>
             </div>
           </div>
         </div>

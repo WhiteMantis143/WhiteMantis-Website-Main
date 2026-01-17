@@ -8,7 +8,7 @@ import Cancelled from "../../_components/OrderComponents/Cancelled/page";
 import Placed from "../../_components/OrderComponents/Placed/page";
 import Progress from "../../_components/OrderComponents/Progress/page";
 import styles from "../page.module.css";
-import toast from "react-hot-toast";
+
 
 export default function OrderDetailPage({ params }) {
   const { orderId } = React.use(params);
@@ -26,11 +26,11 @@ export default function OrderDetailPage({ params }) {
         if (data.success && data.order) {
           setOrder(data.order);
         } else {
-          toast.error("Order not found");
+          console.error("Order not found");
         }
       } catch (error) {
         console.error("Error fetching order:", error);
-        toast.error("Failed to load order details");
+        console.error("Failed to load order details");
       } finally {
         setLoading(false);
       }

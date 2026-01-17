@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from "react";
 import { useCart } from '../_context/CartContext';
-import toast from 'react-hot-toast';
 
 const AddToCart = ({ product }) => {
   const { addItem, refresh } = useCart();
@@ -29,10 +28,8 @@ const AddToCart = ({ product }) => {
         image: product.image,
       });
       await refresh(); // Refresh cart to get updated data from server
-      toast.success('Added to cart!');
     } catch (err) {
       console.error('Add to cart error', err);
-      toast.error('Failed to add to cart');
     } finally {
       setLoading(false);
     }

@@ -145,7 +145,7 @@ const StickyBar = ({ groupedChildren, product }) => {
   // Handle subscription checkout
   const handleSubscription = () => {
     if (!subscriptionProduct || !subscriptionVariation) {
-      toast.error('Please select all subscription options');
+      console.error('Please select all subscription options');
       return;
     }
 

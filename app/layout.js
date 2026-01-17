@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import { Toaster } from "react-hot-toast";
+
 import Footer from "./_components/Footer/Footer";
 import CartSideBar from "./_components/CartSideBar/CartSideBar";
 import NewsLetter from "./workshops/_components/NewsLetter/NewsLetter";
@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <CartProvider>
-            <Toaster />
+
             <GlobalLoader />
             <Navbar />
             <NavbarMobile />

@@ -4,7 +4,6 @@ import styles from "./CartSideBar.module.css";
 import { useCart } from "../../_context/CartContext";
 import Image from "next/image";
 import CuponsSideBar from "../CuponsSideBar/CuponsSideBar";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { cleanProductName } from "../../../lib/productUtils";
@@ -43,7 +42,6 @@ const CartSideBar = () => {
 
   const handleApplyCoupon = async () => {
     if (!couponCode.trim()) {
-      toast.error("Please enter a coupon code");
       return;
     }
     const result = await applyCoupon(couponCode);

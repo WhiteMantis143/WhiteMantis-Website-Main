@@ -9,69 +9,69 @@ import useEmblaCarousel from "embla-carousel-react";
 
 const coffeeData = [
   {
-    title: "Indonesia Banner Mariah Triple Wet Hull",
-    desc: "Citrus, nutty, chocolate",
-    img: coffeImg,
+    title: "Indonesia ALAMIN Co-Fermented Jasmine",
+    desc: "Jasmine tea, honey, floral",
+    img: "https://wordpressbackend.whitemantis.ae/wp-content/uploads/2026/01/Indonesia-jasmine-250g.png" || coffeImg,
   },
   {
-    title: "Ethiopia Yirgacheffe Natural",
+    title: "Indonesia Meriah Classic Natural",
     desc: "Floral, berry, honey",
-    img: coffeImg,
+    img: "https://wordpressbackend.whitemantis.ae/wp-content/uploads/2026/01/Classic-Natural-250g-1.png" || coffeImg,
   },
   {
-    title: "Brazil Fazenda Vista Alegre",
-    desc: "Chocolate, caramel, nutty",
-    img: coffeImg,
+    title: "Indonesia Bener Meriah Triple Wet Hull",
+    desc: "Brown sugar, chocolate, black tea",
+    img: "https://wordpressbackend.whitemantis.ae/wp-content/uploads/2026/01/Wet-hulled-250g.png" || coffeImg,
   },
   {
-    title: "Colombia Huila Washed",
-    desc: "Citrus, sweet, balanced",
-    img: coffeImg,
+    title: "El Salvador Santa Leticia",
+    desc: "Red apple, plum, caramel",
+    img: "https://wordpressbackend.whitemantis.ae/wp-content/uploads/2026/01/El-Salvador-SL.png" || coffeImg,
   },
   {
-    title: "Kenya AA Peaberry",
-    desc: "Bright, juicy, winey",
-    img: coffeImg,
+    title: "Colombia Huila 720",
+    desc: "Cinnamon, chocolate, tropical fruit",
+    img: "https://wordpressbackend.whitemantis.ae/wp-content/uploads/2026/01/Colombia-Huila-720-250g.png" || coffeImg,
   },
 ];
 
 const Coffees = () => {
   const [canScrollPrev, setCanScrollPrev] = React.useState(false);
-const [canScrollNext, setCanScrollNext] = React.useState(false);
+  const [canScrollNext, setCanScrollNext] = React.useState(false);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     align: "start",
   });
 
-React.useEffect(() => {
-  if (!emblaApi) return;
+  React.useEffect(() => {
+    if (!emblaApi) return;
 
-  const updateButtons = () => {
-    setCanScrollPrev(emblaApi.canScrollPrev());
-    setCanScrollNext(emblaApi.canScrollNext());
-  };
+    const updateButtons = () => {
+      setCanScrollPrev(emblaApi.canScrollPrev());
+      setCanScrollNext(emblaApi.canScrollNext());
+    };
 
-  updateButtons();
+    updateButtons();
 
-  emblaApi.on("select", updateButtons);
-  emblaApi.on("reInit", updateButtons);
+    emblaApi.on("select", updateButtons);
+    emblaApi.on("reInit", updateButtons);
 
-  return () => {
-    emblaApi.off("select", updateButtons);
-    emblaApi.off("reInit", updateButtons);
-  };
-}, [emblaApi]);
+    return () => {
+      emblaApi.off("select", updateButtons);
+      emblaApi.off("reInit", updateButtons);
+    };
+  }, [emblaApi]);
 
-const scrollPrev = useCallback(() => {
-  if (!emblaApi || !canScrollPrev) return;
-  emblaApi.scrollPrev();
-}, [emblaApi, canScrollPrev]);
+  const scrollPrev = useCallback(() => {
+    if (!emblaApi || !canScrollPrev) return;
+    emblaApi.scrollPrev();
+  }, [emblaApi, canScrollPrev]);
 
- const scrollNext = useCallback(() => {
-  if (!emblaApi || !canScrollNext) return;
-  emblaApi.scrollNext();
-}, [emblaApi, canScrollNext]);
+  const scrollNext = useCallback(() => {
+    if (!emblaApi || !canScrollNext) return;
+    emblaApi.scrollNext();
+  }, [emblaApi, canScrollNext]);
 
   return (
     <div className={styles.Main}>
@@ -87,13 +87,13 @@ const scrollPrev = useCallback(() => {
           </div>
 
           <div className={styles.LeftBottom}>
-       
+
             <svg
               onClick={scrollPrev}
-               style={{
-    opacity: canScrollPrev ? 1 : 0.4,
-    cursor: canScrollPrev ? "pointer" : "not-allowed",
-  }}
+              style={{
+                opacity: canScrollPrev ? 1 : 0.4,
+                cursor: canScrollPrev ? "pointer" : "not-allowed",
+              }}
               width="47"
               height="47"
               viewBox="0 0 47 47"
@@ -112,10 +112,10 @@ const scrollPrev = useCallback(() => {
 
             <svg
               onClick={scrollNext}
-                style={{
-    opacity: canScrollNext ? 1 : 0.4,
-    cursor: canScrollNext ? "pointer" : "not-allowed",
-                }}
+              style={{
+                opacity: canScrollNext ? 1 : 0.4,
+                cursor: canScrollNext ? "pointer" : "not-allowed",
+              }}
               width="47"
               height="47"
               viewBox="0 0 47 47"
@@ -164,8 +164,15 @@ const scrollPrev = useCallback(() => {
                         </svg>
                       </div>
 
-                      <div className={styles.ProdImge}>
-                        <Image src={item.img} alt="coffee image" />
+                      <div
+                        className={styles.ProductImage}
+                      >
+                        <Image
+                          src={item.img}
+                          alt={item.title}
+                          width={300}
+                          height={300}
+                        />
                       </div>
                     </div>
 
@@ -178,54 +185,54 @@ const scrollPrev = useCallback(() => {
               ))}
             </div>
           </div>
-          
-        </div>
-   
-<div className={styles.MobileArrows}>
-  <svg
-    onClick={scrollPrev}
-     style={{
-    opacity: canScrollPrev ? 1 : 0.4,
-    cursor: canScrollPrev ? "pointer" : "not-allowed",
-  }}
-    width="47"
-    height="47"
-    viewBox="0 0 47 47"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <circle cx="23.0469" cy="23.0469" r="23.0469" fill="#6C7A5F" />
-    <path
-      d="M27.9023 32.7578L18.1914 23.0469L27.9023 13.3359"
-      stroke="white"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
 
-  <svg
-    onClick={scrollNext}
-     style={{
-    opacity: canScrollNext ? 1 : 0.4,
-    cursor: canScrollNext ? "pointer" : "not-allowed",
-  }}
-    width="47"
-    height="47"
-    viewBox="0 0 47 47"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <circle cx="23.0469" cy="23.0469" r="23.0469" fill="#6C7A5F" />
-    <path
-      d="M18.1914 13.3359L27.9023 23.0469L18.1914 32.7578"
-      stroke="white"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-</div>
+        </div>
+
+        <div className={styles.MobileArrows}>
+          <svg
+            onClick={scrollPrev}
+            style={{
+              opacity: canScrollPrev ? 1 : 0.4,
+              cursor: canScrollPrev ? "pointer" : "not-allowed",
+            }}
+            width="47"
+            height="47"
+            viewBox="0 0 47 47"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="23.0469" cy="23.0469" r="23.0469" fill="#6C7A5F" />
+            <path
+              d="M27.9023 32.7578L18.1914 23.0469L27.9023 13.3359"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+
+          <svg
+            onClick={scrollNext}
+            style={{
+              opacity: canScrollNext ? 1 : 0.4,
+              cursor: canScrollNext ? "pointer" : "not-allowed",
+            }}
+            width="47"
+            height="47"
+            viewBox="0 0 47 47"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="23.0469" cy="23.0469" r="23.0469" fill="#6C7A5F" />
+            <path
+              d="M18.1914 13.3359L27.9023 23.0469L18.1914 32.7578"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
 
       </div>
     </div>

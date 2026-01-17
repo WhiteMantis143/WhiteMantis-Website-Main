@@ -8,7 +8,7 @@ import AddToCart from "../../../../_components/AddToCart";
 
 const Lisiting = () => {
   const ITEMS_PER_LOAD = 9;
-  const parent_id = "131";
+  const parent_id = "209";
 
   // State
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_LOAD);

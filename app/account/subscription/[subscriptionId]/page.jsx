@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./page.module.css";
-import toast from "react-hot-toast";
+
 
 export default function SubscriptionDetailPage({ params }) {
   // Handle params wrapping/unwrapping
@@ -26,11 +26,11 @@ export default function SubscriptionDetailPage({ params }) {
       if (resData.success) {
         setData(resData);
       } else {
-        toast.error("Subscription not found");
+        console.error("Subscription not found");
       }
     } catch (error) {
       console.error("Error fetching subscription:", error);
-      toast.error("Failed to load subscription details");
+      console.error("Failed to load subscription details");
     } finally {
       setLoading(false);
     }
@@ -47,14 +47,14 @@ export default function SubscriptionDetailPage({ params }) {
       const resData = await response.json();
 
       if (resData.success) {
-        toast.success("Subscription cancelled successfully");
+        console.log("Subscription cancelled successfully");
         fetchSubscription(); // Refresh data
       } else {
-        toast.error(resData.message || "Failed to cancel");
+        console.error(resData.message || "Failed to cancel");
       }
     } catch (error) {
       console.error("Error cancelling:", error);
-      toast.error("An error occurred");
+      console.error("An error occurred");
     } finally {
       setCancelling(false);
     }
