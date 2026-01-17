@@ -40,8 +40,8 @@ const NavbarMobile = () => {
           <Image
             src={Logo}
             alt="White Mantis Logo"
-            width={170}
-            height={78}
+            width={145}
+            height={60}
             unoptimized
           />
         </Link>
@@ -91,8 +91,8 @@ const NavbarMobile = () => {
               <Image
                 src={Logo}
                 alt="White Mantis Logo"
-                width={170}
-                height={78}
+                width={145}
+                height={60}
                 unoptimized
               />
             </Link>

@@ -15,7 +15,7 @@ export default function AboutUs() {
       <OurValues />
       <WhyUs />
       <Partnerships />
-      <Recognitions />
+      {/* <Recognitions /> */}
     </>
   );
 }

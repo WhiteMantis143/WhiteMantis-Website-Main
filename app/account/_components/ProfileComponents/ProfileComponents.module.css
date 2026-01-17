@@ -163,6 +163,14 @@
   max-width: 60%;
   color: #2F362A;
 }
+.GuestNote {
+  font-family: var(--lato);
+  font-size: 15px;
+  margin-bottom: 40px;
+  font-weight: 400;
+ 
+  color: #2F362A;
+}
 
 .other {
   font-family: var(--lato);

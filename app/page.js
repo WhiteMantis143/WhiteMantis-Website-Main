@@ -8,18 +8,34 @@ import TheRoster from "./_components/Home/TheRoster/TheRoster";
 import ErrorHandler from "./_components/ErrorHandler";
 
 
+export const metadata = {
+  title: "White Mantis Specialty Coffee Roasters | Built on Craft, Driven by Community",
+  description:
+    "Experience premium specialty coffee in Dubai. Shop our curated selection of coffee beans, drips, and capsules.",
+  keywords: [
+    "specialty coffee Dubai",
+    "White Mantis Roasters",
+    "coffee beans UAE",
+    "coffee capsules",
+    "white mantis coffee",
+    "coffee subscription",
+   
+  ],
+};
+
 export default function Home() {
-    return (
-        <>
-            <Suspense fallback={null}>
-                <ErrorHandler />
-            </Suspense>
-            <Landing />
-            <Coffees />
-            <Shop />
-            {/* <Subscribe /> */}
-            <Community />
-            <TheRoster />
-        </>
-    );
+  return (
+    <>
+      <Suspense fallback={null}>
+        <ErrorHandler />
+      </Suspense>
+
+      <Landing />
+      <Coffees />
+      <Shop />
+      {/* <Subscribe /> */}
+      <Community />
+      <TheRoster />
+    </>
+  );
 }
