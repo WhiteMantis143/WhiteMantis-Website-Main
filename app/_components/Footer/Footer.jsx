@@ -236,6 +236,27 @@ const Footer = () => {
                 <Link href="/privacy-policy">
                   <p>Privacy Policy</p>
                 </Link>
+                 <div className={styles.Socials}>
+                  <a
+                    href="https://www.instagram.com/whitemantis.ae?igsh=cHl5NnQ3ZDY4OGNt"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <p>Instagram</p>
+                  </a>
+                  <svg
+                    width="8"
+                    height="8"
+                    viewBox="0 0 8 8"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0.354342 7.58134L7.36212 0.501629M7.36212 0.501629V6.87337M7.36212 0.501629H1.05512"
+                      stroke="white"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
@@ -260,7 +281,7 @@ const Footer = () => {
                 </div>
                 <div className={styles.Socials}>
                   <a
-                    href="https://instagram.com/whitemantis.ae"
+                    href="https://www.instagram.com/whitemantis.ae?igsh=cHl5NnQ3ZDY4OGNt"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
