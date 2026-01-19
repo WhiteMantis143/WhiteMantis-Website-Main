@@ -59,7 +59,7 @@ export const addToCartToast = (product, openCart) => {
                             fontWeight: 700,
                             letterSpacing: "0.1em",
                             marginBottom: "16px",
-                            color: "#888",
+                            color: "#2f362a",
                             textTransform: "uppercase",
                         }}
                     >
@@ -92,7 +92,7 @@ export const addToCartToast = (product, openCart) => {
                                 alt={product.name}
                                 fill
                                 sizes="64px"
-                                style={{ objectFit: "cover" }}
+                                style={{ objectFit: "contain" }}
                                 priority
                             />
                         </div>
@@ -104,9 +104,9 @@ export const addToCartToast = (product, openCart) => {
                                     fontWeight: 600,
                                     color: "#1a1a1a",
                                     margin: 0,
-                                    whiteSpace: "nowrap",
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
+                                    lineHeight: "1.4",
+                                    wordWrap: "break-word",
+                                    overflowWrap: "break-word",
                                 }}
                             >
                                 {product.name}

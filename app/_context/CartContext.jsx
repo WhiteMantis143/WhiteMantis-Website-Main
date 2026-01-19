@@ -141,10 +141,7 @@ export function CartProvider({ children }) {
       const data = await res.json();
 
       if (data?.ok) {
-        // ✅ Only show if the server confirmed deletion
-        toast.success("Item removed successfully");
       } else {
-        // ❌ Revert UI and show error if server failed
         setItems(prevSnapshot);
         toast.error("Failed to remove item");
       }
