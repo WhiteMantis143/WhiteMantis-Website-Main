@@ -112,6 +112,52 @@ function CheckoutForm({
     setValidationErrors((prev) => ({ ...prev, [fieldName]: "" }));
   };
 
+  // Scroll to first error field
+  const scrollToFirstError = (errors) => {
+    // Define the order of fields to check
+    const fieldOrder = [
+      'email',
+      'shippingFirstName',
+      'shippingLastName',
+      'shippingAddress',
+      'shippingCity',
+      'shippingPhone',
+      'billingFirstName',
+      'billingLastName',
+      'billingAddress',
+      'billingCity',
+      'billingPhone',
+      'card'
+    ];
+
+    // Find the first field with an error
+    for (const field of fieldOrder) {
+      if (errors[field]) {
+        // Use requestAnimationFrame for smoother scrolling
+        requestAnimationFrame(() => {
+          const errorElement = document.querySelector(`.${styles.InputError}`);
+          if (errorElement) {
+            // Get the element's position
+            const elementPosition = errorElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - 100; // 100px offset from top
+
+            // Smooth scroll to position
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+
+            // Focus after scroll completes
+            setTimeout(() => {
+              errorElement.focus({ preventScroll: true });
+            }, 500);
+          }
+        });
+        break;
+      }
+    }
+  };
+
   // Validate all fields before payment
   const validateAllFields = () => {
     const errors = {};
@@ -209,6 +255,13 @@ function CheckoutForm({
     }
 
     setValidationErrors(errors);
+
+    // Scroll to first error if validation failed
+    if (!isValid) {
+      // Use setTimeout to ensure the DOM has updated with error classes
+      setTimeout(() => scrollToFirstError(errors), 100);
+    }
+
     return isValid;
   };
 
