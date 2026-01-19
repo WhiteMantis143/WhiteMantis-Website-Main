@@ -9,6 +9,7 @@ import Navbar from "./_components/Navbar/Navbar";
 import NavbarMobile from "./_components/Navbar/NavbarMobile";
 import { CartProvider } from "./_context/CartContext";
 import GlobalLoader from "./_components/GlobalLoader/GlobalLoader";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,6 +57,14 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <CartProvider>
+            <Toaster
+              position="top-right"
+              containerStyle={{
+                top: 40,
+                right: 24,
+                zIndex: 9999,
+              }}
+            />
             <GlobalLoader />
             <Navbar />
             <NavbarMobile />

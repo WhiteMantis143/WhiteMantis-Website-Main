@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useCart } from "../_context/CartContext";
 import { cleanProductName } from "../../lib/productUtils";
-
+import { toast } from "react-hot-toast";
 import { stripeElementStyle } from "./_components/stripeStyles.js";
 import {
   Elements,
@@ -52,10 +52,165 @@ function CheckoutForm({
 }) {
   const stripe = useStripe();
   const elements = useElements();
-  const { appliedCoupon, removeCoupon, openCart } = useCart();
+  const { openCart } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
   const [email, setEmail] = useState("");
   const router = useRouter();
+
+  // Validation errors state
+  const [validationErrors, setValidationErrors] = useState({
+    email: "",
+    shippingFirstName: "",
+    shippingLastName: "",
+    shippingAddress: "",
+    shippingCity: "",
+    shippingPhone: "",
+    billingFirstName: "",
+    billingLastName: "",
+    billingAddress: "",
+    billingCity: "",
+    billingPhone: "",
+    card: "",
+  });
+
+  // Validation helper functions
+  const validateEmail = (emailValue) => {
+    if (!emailValue || emailValue.trim() === "") {
+      return "Email is required";
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailValue)) {
+      return "Please enter a valid email address";
+    }
+    return "";
+  };
+
+  const validatePhone = (phoneValue) => {
+    if (!phoneValue || phoneValue.trim() === "") {
+      return "Phone number is required";
+    }
+    // UAE phone validation - matches backend validation
+    const cleanNumber = phoneValue.replace(/\D/g, '');
+    const uaeRegex = /^(?:00971|971|0)?(5[024568]|2|3|4|6|7|9)\d{7}$/;
+    const match = cleanNumber.match(uaeRegex);
+
+    if (!match) {
+      return "Invalid phone number";
+    }
+    return "";
+  };
+
+  const validateRequired = (value, fieldName) => {
+    if (!value || value.trim() === "") {
+      return `${fieldName} is required`;
+    }
+    return "";
+  };
+
+  // Clear error when user starts typing
+  const clearError = (fieldName) => {
+    setValidationErrors((prev) => ({ ...prev, [fieldName]: "" }));
+  };
+
+  // Validate all fields before payment
+  const validateAllFields = () => {
+    const errors = {};
+    let isValid = true;
+
+    // Email validation
+    const emailError = validateEmail(email);
+    if (emailError) {
+      errors.email = emailError;
+      isValid = false;
+    }
+
+    // Shipping address validation (only if shipping)
+    if (delivery === "ship") {
+      if (
+        status !== "authenticated" ||
+        showNewAddressForm ||
+        !selectedAddressId
+      ) {
+        const shippingFirstNameError = validateRequired(
+          shippingForm.firstName,
+          "First name",
+        );
+        const shippingLastNameError = validateRequired(
+          shippingForm.lastName,
+          "Last name",
+        );
+        const shippingAddressError = validateRequired(
+          shippingForm.address,
+          "Address",
+        );
+        const shippingCityError = validateRequired(shippingForm.city, "City");
+        const shippingPhoneError = validatePhone(shippingForm.phone);
+
+        if (shippingFirstNameError) {
+          errors.shippingFirstName = shippingFirstNameError;
+          isValid = false;
+        }
+        if (shippingLastNameError) {
+          errors.shippingLastName = shippingLastNameError;
+          isValid = false;
+        }
+        if (shippingAddressError) {
+          errors.shippingAddress = shippingAddressError;
+          isValid = false;
+        }
+        if (shippingCityError) {
+          errors.shippingCity = shippingCityError;
+          isValid = false;
+        }
+        if (shippingPhoneError) {
+          errors.shippingPhone = shippingPhoneError;
+          isValid = false;
+        }
+      }
+    }
+
+    // Billing address validation (if not using shipping as billing or if pickup)
+    if (!useShippingAsBilling || delivery === "pickup") {
+      const billingFirstNameError = validateRequired(
+        billingForm.firstName,
+        "First name",
+      );
+      const billingLastNameError = validateRequired(
+        billingForm.lastName,
+        "Last name",
+      );
+      const billingAddressError = validateRequired(
+        billingForm.address,
+        "Address",
+      );
+      const billingCityError = validateRequired(billingForm.city, "City");
+      const billingPhoneError = validatePhone(billingForm.phone);
+
+      if (billingFirstNameError) {
+        errors.billingFirstName = billingFirstNameError;
+        isValid = false;
+      }
+      if (billingLastNameError) {
+        errors.billingLastName = billingLastNameError;
+        isValid = false;
+      }
+      if (billingAddressError) {
+        errors.billingAddress = billingAddressError;
+        isValid = false;
+      }
+      if (billingCityError) {
+        errors.billingCity = billingCityError;
+        isValid = false;
+      }
+      if (billingPhoneError) {
+        errors.billingPhone = billingPhoneError;
+        isValid = false;
+      }
+    }
+
+    setValidationErrors(errors);
+    return isValid;
+  };
 
   // Set email from session when available
   useEffect(() => {
@@ -67,6 +222,12 @@ function CheckoutForm({
   const handlePayment = async () => {
     if (!stripe || !elements) return;
 
+    // Validate all fields before proceeding
+    const isValid = validateAllFields();
+    if (!isValid) {
+      return;
+    }
+
     setIsProcessing(true);
 
     try {
@@ -74,8 +235,10 @@ function CheckoutForm({
       const cardElement = elements.getElement(CardNumberElement);
       if (!cardElement) {
         setIsProcessing(false);
-        openCart();
-        router.push("/");
+        setValidationErrors((prev) => ({
+          ...prev,
+          card: "Card information is required",
+        }));
         return;
       }
 
@@ -159,8 +322,10 @@ function CheckoutForm({
 
       if (pmError) {
         setIsProcessing(false);
-        openCart();
-        router.push("/");
+        setValidationErrors((prev) => ({
+          ...prev,
+          card: pmError.message || "Invalid card information",
+        }));
         return;
       }
 
@@ -292,8 +457,11 @@ function CheckoutForm({
 
         if (confirmError) {
           setIsProcessing(false);
-          openCart();
-          router.push("/");
+          setValidationErrors((prev) => ({
+            ...prev,
+            card: confirmError.message || "Payment confirmation failed",
+          }));
+          toast.error(confirmError.message || "Payment confirmation failed");
           return;
         }
 
@@ -344,13 +512,29 @@ function CheckoutForm({
             </div>
 
             <div className={styles.TwoTwo}>
-              <input
-                className={styles.Input}
-                placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                readOnly={!!session?.user?.email}
-              />
+              <div>
+                <input
+                  className={`${styles.Input} ${validationErrors.email ? styles.InputError : ""}`}
+                  placeholder="Email address"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    clearError("email");
+                  }}
+                  onBlur={() => {
+                    const error = validateEmail(email);
+                    if (error) {
+                      setValidationErrors((prev) => ({ ...prev, email: error }));
+                    }
+                  }}
+                  readOnly={!!session?.user?.email}
+                />
+                {validationErrors.email && (
+                  <span className={styles.ErrorMessage}>
+                    {validationErrors.email}
+                  </span>
+                )}
+              </div>
               <label className={styles.CheckBox}>
                 <input type="checkbox" />
                 <p>Email me with news and offers.</p>
@@ -607,40 +791,82 @@ function CheckoutForm({
                     readOnly
                   />
                   <div className={styles.Row}>
-                    <input
-                      className={styles.Input}
-                      placeholder="First Name"
-                      value={shippingForm.firstName}
-                      onChange={(e) =>
-                        setShippingForm({
-                          ...shippingForm,
-                          firstName: e.target.value,
-                        })
-                      }
-                    />
-                    <input
-                      className={styles.Input}
-                      placeholder="Last Name"
-                      value={shippingForm.lastName}
-                      onChange={(e) =>
-                        setShippingForm({
-                          ...shippingForm,
-                          lastName: e.target.value,
-                        })
-                      }
-                    />
+                    <div style={{ flex: 1 }}>
+                      <input
+                        className={`${styles.Input} ${validationErrors.shippingFirstName ? styles.InputError : ""}`}
+                        placeholder="First Name"
+                        value={shippingForm.firstName}
+                        onChange={(e) => {
+                          setShippingForm({
+                            ...shippingForm,
+                            firstName: e.target.value,
+                          });
+                          clearError("shippingFirstName");
+                        }}
+                        onBlur={() => {
+                          const error = validateRequired(shippingForm.firstName, "First name");
+                          if (error) {
+                            setValidationErrors((prev) => ({ ...prev, shippingFirstName: error }));
+                          }
+                        }}
+                      />
+                      {validationErrors.shippingFirstName && (
+                        <span className={styles.ErrorMessage}>
+                          {validationErrors.shippingFirstName}
+                        </span>
+                      )}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <input
+                        className={`${styles.Input} ${validationErrors.shippingLastName ? styles.InputError : ""}`}
+                        placeholder="Last Name"
+                        value={shippingForm.lastName}
+                        onChange={(e) => {
+                          setShippingForm({
+                            ...shippingForm,
+                            lastName: e.target.value,
+                          });
+                          clearError("shippingLastName");
+                        }}
+                        onBlur={() => {
+                          const error = validateRequired(shippingForm.lastName, "Last name");
+                          if (error) {
+                            setValidationErrors((prev) => ({ ...prev, shippingLastName: error }));
+                          }
+                        }}
+                      />
+                      {validationErrors.shippingLastName && (
+                        <span className={styles.ErrorMessage}>
+                          {validationErrors.shippingLastName}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <input
-                    className={styles.Input}
-                    placeholder="House number, Street name"
-                    value={shippingForm.address}
-                    onChange={(e) =>
-                      setShippingForm({
-                        ...shippingForm,
-                        address: e.target.value,
-                      })
-                    }
-                  />
+                  <div>
+                    <input
+                      className={`${styles.Input} ${validationErrors.shippingAddress ? styles.InputError : ""}`}
+                      placeholder="House number, Street name"
+                      value={shippingForm.address}
+                      onChange={(e) => {
+                        setShippingForm({
+                          ...shippingForm,
+                          address: e.target.value,
+                        });
+                        clearError("shippingAddress");
+                      }}
+                      onBlur={() => {
+                        const error = validateRequired(shippingForm.address, "Address");
+                        if (error) {
+                          setValidationErrors((prev) => ({ ...prev, shippingAddress: error }));
+                        }
+                      }}
+                    />
+                    {validationErrors.shippingAddress && (
+                      <span className={styles.ErrorMessage}>
+                        {validationErrors.shippingAddress}
+                      </span>
+                    )}
+                  </div>
                   <input
                     className={styles.Input}
                     placeholder="Apartment, suite, etc. (optional)"
@@ -653,18 +879,32 @@ function CheckoutForm({
                     }
                   />
                   <div className={styles.Row}>
-                    <input
-                      className={styles.Input}
-                      placeholder="City"
-                      value={shippingForm.city}
-                      onChange={(e) =>
-                        setShippingForm({
-                          ...shippingForm,
-                          city: e.target.value,
-                        })
-                      }
-                    />
-                    <select className={styles.Select}>
+                    <div style={{ flex: 1 }}>
+                      <input
+                        className={`${styles.Input} ${validationErrors.shippingCity ? styles.InputError : ""}`}
+                        placeholder="City"
+                        value={shippingForm.city}
+                        onChange={(e) => {
+                          setShippingForm({
+                            ...shippingForm,
+                            city: e.target.value,
+                          });
+                          clearError("shippingCity");
+                        }}
+                        onBlur={() => {
+                          const error = validateRequired(shippingForm.city, "City");
+                          if (error) {
+                            setValidationErrors((prev) => ({ ...prev, shippingCity: error }));
+                          }
+                        }}
+                      />
+                      {validationErrors.shippingCity && (
+                        <span className={styles.ErrorMessage}>
+                          {validationErrors.shippingCity}
+                        </span>
+                      )}
+                    </div>
+                    <select className={styles.Select} style={{ flex: 1 }}>
                       <option>Dubai</option>
                       <option>Abu Dhabi</option>
                       <option>Sharjah</option>
@@ -674,17 +914,31 @@ function CheckoutForm({
                       <option>Fujairah</option>
                     </select>
                   </div>
-                  <input
-                    className={styles.Input}
-                    placeholder="Phone"
-                    value={shippingForm.phone}
-                    onChange={(e) =>
-                      setShippingForm({
-                        ...shippingForm,
-                        phone: e.target.value,
-                      })
-                    }
-                  />
+                  <div>
+                    <input
+                      className={`${styles.Input} ${validationErrors.shippingPhone ? styles.InputError : ""}`}
+                      placeholder="Phone"
+                      value={shippingForm.phone}
+                      onChange={(e) => {
+                        setShippingForm({
+                          ...shippingForm,
+                          phone: e.target.value,
+                        });
+                        clearError("shippingPhone");
+                      }}
+                      onBlur={() => {
+                        const error = validatePhone(shippingForm.phone);
+                        if (error) {
+                          setValidationErrors((prev) => ({ ...prev, shippingPhone: error }));
+                        }
+                      }}
+                    />
+                    {validationErrors.shippingPhone && (
+                      <span className={styles.ErrorMessage}>
+                        {validationErrors.shippingPhone}
+                      </span>
+                    )}
+                  </div>
                   {status === "authenticated" && (
                     <label className={styles.CheckBox}>
                       <input
@@ -747,6 +1001,11 @@ function CheckoutForm({
                     <CardCvcElement options={stripeElementStyle} />
                   </div>
                 </div>
+                {validationErrors.card && (
+                  <span className={styles.ErrorMessage}>
+                    {validationErrors.card}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -770,37 +1029,79 @@ function CheckoutForm({
                   readOnly
                 />
                 <div className={styles.Row}>
-                  <input
-                    className={styles.Input}
-                    placeholder="First Name"
-                    value={billingForm.firstName}
-                    onChange={(e) =>
-                      setBillingForm({
-                        ...billingForm,
-                        firstName: e.target.value,
-                      })
-                    }
-                  />
-                  <input
-                    className={styles.Input}
-                    placeholder="Last Name"
-                    value={billingForm.lastName}
-                    onChange={(e) =>
-                      setBillingForm({
-                        ...billingForm,
-                        lastName: e.target.value,
-                      })
-                    }
-                  />
+                  <div style={{ flex: 1 }}>
+                    <input
+                      className={`${styles.Input} ${validationErrors.billingFirstName ? styles.InputError : ""}`}
+                      placeholder="First Name"
+                      value={billingForm.firstName}
+                      onChange={(e) => {
+                        setBillingForm({
+                          ...billingForm,
+                          firstName: e.target.value,
+                        });
+                        clearError("billingFirstName");
+                      }}
+                      onBlur={() => {
+                        const error = validateRequired(billingForm.firstName, "First name");
+                        if (error) {
+                          setValidationErrors((prev) => ({ ...prev, billingFirstName: error }));
+                        }
+                      }}
+                    />
+                    {validationErrors.billingFirstName && (
+                      <span className={styles.ErrorMessage}>
+                        {validationErrors.billingFirstName}
+                      </span>
+                    )}
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <input
+                      className={`${styles.Input} ${validationErrors.billingLastName ? styles.InputError : ""}`}
+                      placeholder="Last Name"
+                      value={billingForm.lastName}
+                      onChange={(e) => {
+                        setBillingForm({
+                          ...billingForm,
+                          lastName: e.target.value,
+                        });
+                        clearError("billingLastName");
+                      }}
+                      onBlur={() => {
+                        const error = validateRequired(billingForm.lastName, "Last name");
+                        if (error) {
+                          setValidationErrors((prev) => ({ ...prev, billingLastName: error }));
+                        }
+                      }}
+                    />
+                    {validationErrors.billingLastName && (
+                      <span className={styles.ErrorMessage}>
+                        {validationErrors.billingLastName}
+                      </span>
+                    )}
+                  </div>
                 </div>
-                <input
-                  className={styles.Input}
-                  placeholder="House number, Street name"
-                  value={billingForm.address}
-                  onChange={(e) =>
-                    setBillingForm({ ...billingForm, address: e.target.value })
-                  }
-                />
+                <div>
+                  <input
+                    className={`${styles.Input} ${validationErrors.billingAddress ? styles.InputError : ""}`}
+                    placeholder="House number, Street name"
+                    value={billingForm.address}
+                    onChange={(e) => {
+                      setBillingForm({ ...billingForm, address: e.target.value });
+                      clearError("billingAddress");
+                    }}
+                    onBlur={() => {
+                      const error = validateRequired(billingForm.address, "Address");
+                      if (error) {
+                        setValidationErrors((prev) => ({ ...prev, billingAddress: error }));
+                      }
+                    }}
+                  />
+                  {validationErrors.billingAddress && (
+                    <span className={styles.ErrorMessage}>
+                      {validationErrors.billingAddress}
+                    </span>
+                  )}
+                </div>
                 <input
                   className={styles.Input}
                   placeholder="Apartment, suite, etc. (optional)"
@@ -813,15 +1114,29 @@ function CheckoutForm({
                   }
                 />
                 <div className={styles.Row}>
-                  <input
-                    className={styles.Input}
-                    placeholder="City"
-                    value={billingForm.city}
-                    onChange={(e) =>
-                      setBillingForm({ ...billingForm, city: e.target.value })
-                    }
-                  />
-                  <select className={styles.Select}>
+                  <div style={{ flex: 1 }}>
+                    <input
+                      className={`${styles.Input} ${validationErrors.billingCity ? styles.InputError : ""}`}
+                      placeholder="City"
+                      value={billingForm.city}
+                      onChange={(e) => {
+                        setBillingForm({ ...billingForm, city: e.target.value });
+                        clearError("billingCity");
+                      }}
+                      onBlur={() => {
+                        const error = validateRequired(billingForm.city, "City");
+                        if (error) {
+                          setValidationErrors((prev) => ({ ...prev, billingCity: error }));
+                        }
+                      }}
+                    />
+                    {validationErrors.billingCity && (
+                      <span className={styles.ErrorMessage}>
+                        {validationErrors.billingCity}
+                      </span>
+                    )}
+                  </div>
+                  <select className={styles.Select} style={{ flex: 1 }}>
                     <option>Dubai</option>
                     <option>Abu Dhabi</option>
                     <option>Sharjah</option>
@@ -831,14 +1146,28 @@ function CheckoutForm({
                     <option>Fujairah</option>
                   </select>
                 </div>
-                <input
-                  className={styles.Input}
-                  placeholder="Phone"
-                  value={billingForm.phone}
-                  onChange={(e) =>
-                    setBillingForm({ ...billingForm, phone: e.target.value })
-                  }
-                />
+                <div>
+                  <input
+                    className={`${styles.Input} ${validationErrors.billingPhone ? styles.InputError : ""}`}
+                    placeholder="Phone"
+                    value={billingForm.phone}
+                    onChange={(e) => {
+                      setBillingForm({ ...billingForm, phone: e.target.value });
+                      clearError("billingPhone");
+                    }}
+                    onBlur={() => {
+                      const error = validatePhone(billingForm.phone);
+                      if (error) {
+                        setValidationErrors((prev) => ({ ...prev, billingPhone: error }));
+                      }
+                    }}
+                  />
+                  {validationErrors.billingPhone && (
+                    <span className={styles.ErrorMessage}>
+                      {validationErrors.billingPhone}
+                    </span>
+                  )}
+                </div>
               </>
             )}
           </div>

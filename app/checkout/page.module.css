@@ -308,6 +308,18 @@
   color: #2f362a;
 }
 
+.InputError {
+  border-color: #dc2626 !important;
+}
+
+.ErrorMessage {
+  font-family: var(--lato);
+  font-size: 13px;
+  color: #dc2626;
+  margin-top: 4px;
+  display: block;
+}
+
 .CheckBox {
   display: flex;
   align-items: center;
