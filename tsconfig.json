@@ -30,7 +30,7 @@
     "**/*.tsx",
     "app/filter-product/page.jsx",
     ".next/dev/types/**/*.ts"
-  ],
+, "app/_context/_components/addToCartToast.jsx"  ],
   "exclude": [
     "node_modules",
     "app/_components"

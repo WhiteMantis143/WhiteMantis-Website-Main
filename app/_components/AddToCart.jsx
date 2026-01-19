@@ -18,14 +18,13 @@ const AddToCart = ({ product }) => {
       return;
     }
 
-    console.log(product)
-
     setLoading(true);
     try {
       await addItem(product.product_id, product.quantity || 1, {
         name: product.name, variation_id: product.variation_id,
         description: product.description,
         image: product.image,
+        tagline: product.tagline,
       });
       await refresh(); // Refresh cart to get updated data from server
     } catch (err) {

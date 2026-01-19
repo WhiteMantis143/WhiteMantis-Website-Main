@@ -344,6 +344,7 @@ const Lisiting = () => {
                   image: displayData.image,
                   description: product.description || product.short_description,
                   quantity: 1,
+                  tagline: product.tagline,
                 };
 
                 return (

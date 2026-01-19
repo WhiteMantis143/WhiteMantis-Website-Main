@@ -134,6 +134,8 @@ const StickyBar = ({ groupedChildren, product }) => {
         name: product?.name || 'Product',
         description: product?.description,
         image: finalImage,
+        quantity: qty,
+        tagline: tagline,
       });
 
       refresh();
