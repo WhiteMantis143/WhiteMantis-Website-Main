@@ -123,52 +123,53 @@ export default function Sidebar() {
               </div>
             </Link> */}
             {session && (
-            <div
-              className={styles.Logout}
-              onClick={() => setShowLogout(true)}
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+              <div
+                className={styles.Logout}
+                onClick={() => setShowLogout(true)}
               >
-                <path
-                  d="M1.57131 16C1.12357 16 0.749747 15.8458 0.449848 15.5375C0.149949 15.2292 0 14.8448 0 14.3845V1.6155C0 1.15517 0.149949 0.770833 0.449848 0.4625C0.749747 0.154167 1.12357 0 1.57131 0H7.79988V1H1.57131C1.42152 1 1.2843 1.06408 1.15964 1.19225C1.03497 1.32042 0.972644 1.4615 0.972644 1.6155V14.3845C0.972644 14.5385 1.03497 14.6796 1.15964 14.8077C1.2843 14.9359 1.42152 15 1.57131 15H7.79988V16H1.57131ZM12.1206 11.5385L11.4378 10.8193L13.6936 8.5H5.05021V7.5H13.6936L11.4378 5.18075L12.1206 4.4615L15.5623 8L12.1206 11.5385Z"
-                  fill="#6E736A"
-                />
-              </svg>
-              <p>Logout</p>
-            </div>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1.57131 16C1.12357 16 0.749747 15.8458 0.449848 15.5375C0.149949 15.2292 0 14.8448 0 14.3845V1.6155C0 1.15517 0.149949 0.770833 0.449848 0.4625C0.749747 0.154167 1.12357 0 1.57131 0H7.79988V1H1.57131C1.42152 1 1.2843 1.06408 1.15964 1.19225C1.03497 1.32042 0.972644 1.4615 0.972644 1.6155V14.3845C0.972644 14.5385 1.03497 14.6796 1.15964 14.8077C1.2843 14.9359 1.42152 15 1.57131 15H7.79988V16H1.57131ZM12.1206 11.5385L11.4378 10.8193L13.6936 8.5H5.05021V7.5H13.6936L11.4378 5.18075L12.1206 4.4615L15.5623 8L12.1206 11.5385Z"
+                    fill="#6E736A"
+                  />
+                </svg>
+                <p>Logout</p>
+              </div>
             )}
           </div>
         </div>
-        {showLogout && (
-          <div className={styles.LogoutOverlay}>
-            <div className={styles.LogoutPopup}>
-              <h2>ARE YOU SURE YOU WANT TO LOGOUT?</h2>
-              <p>You can always sign back in to access your specialty coffee profile.</p>
+      </div>
 
-              <div className={styles.LogoutActions}>
-                <button
-                  className={styles.CancelBtn}
-                  onClick={() => setShowLogout(false)}
-                >
-                  Cancel
-                </button>
+      {showLogout && (
+        <div className={styles.LogoutOverlay}>
+          <div className={styles.LogoutPopup}>
+            <h2>ARE YOU SURE YOU WANT TO LOGOUT?</h2>
+            <p>You can always sign back in to access your specialty coffee profile.</p>
 
-                <button
-                  className={styles.ConfirmBtn}
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
-              </div>
+            <div className={styles.LogoutActions}>
+              <button
+                className={styles.CancelBtn}
+                onClick={() => setShowLogout(false)}
+              >
+                Cancel
+              </button>
+
+              <button
+                className={styles.ConfirmBtn}
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 }

@@ -167,6 +167,7 @@ export async function POST(req: Request) {
     const meta: Record<string, any> = {
       ...(gender !== undefined && { gender }),
       ...(profileImage !== undefined && { profile_image: profileImage }),
+      ...(phone !== undefined && { phonenumber: phone }),
       ...extraMeta,
     };
 

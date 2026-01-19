@@ -20,7 +20,7 @@ const Navbar = () => {
   const [shopOpen, setShopOpen] = useState(false);
   const { data: session, status } = useSession();
   const dropdownRef = useRef(null);
-  const { isCartOpen, openCart, closeCart } = useCart();
+  const { isCartOpen, openCart, closeCart, items } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -74,16 +74,14 @@ const Navbar = () => {
               onMouseLeave={handleMouseLeave}
             >
               <div
-                className={`${styles.OurShops} ${
-                  pathname.startsWith("/shop") ? styles.active : ""
-                }`}
+                className={`${styles.OurShops} ${pathname.startsWith("/shop") ? styles.active : ""
+                  }`}
                 onClick={() => setShopOpen((prev) => !prev)}
               >
                 <p>Our Shop</p>
                 <svg
-                  className={`${styles.Arrow} ${
-                    shopOpen ? styles.ArrowOpen : ""
-                  }`}
+                  className={`${styles.Arrow} ${shopOpen ? styles.ArrowOpen : ""
+                    }`}
                   width="8"
                   height="5"
                   viewBox="0 0 8 5"
@@ -97,9 +95,8 @@ const Navbar = () => {
               </div>
 
               <div
-                className={`${styles.DummyMain} ${
-                  shopOpen ? styles.DummyMainOpen : ""
-                }`}
+                className={`${styles.DummyMain} ${shopOpen ? styles.DummyMainOpen : ""
+                  }`}
               >
                 <div className={styles.DummyMainCoantiner}>
                   <div className={styles.DummyLeft}>
@@ -246,15 +243,40 @@ const Navbar = () => {
             className={pathname === "/cart" ? styles.active : ""}
             style={{ cursor: "pointer" }}
           >
-            <p>Cart</p>
+            <p>
+              Cart{items.length > 0 && (
+                <span style={{ color: "#6c7a5f", fontSize: "15px", fontWeight: "bold" }}> ({items.length})</span>
+              )}
+            </p>
           </Link>
           {session && (
             <Link
               href="/account"
               className={pathname.startsWith("/account") ? styles.active : ""}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
             >
-              <p>Account</p>
+              {(session?.user?.profile_image?.url || session?.user?.image) ? (
+                <div style={{
+                  width: "32px",
+                  height: "32px",
+                  position: "relative",
+                  borderRadius: "50%",
+                  overflow: "hidden",
+                  border: "1px solid #6b7b5c",
+                  boxShadow: pathname.startsWith("/account") ? "0 0 0 2px #6b7b5c" : "none",
+                  transition: "box-shadow 0.2s ease"
+                }}>
+                  <Image
+                    src={session?.user?.profile_image?.url || session?.user?.image}
+                    alt="Profile"
+                    fill
+                    sizes="32px"
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+              ) : (
+                <p>Account</p>
+              )}
             </Link>
           )}
           {!session && (

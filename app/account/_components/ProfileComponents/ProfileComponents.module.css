@@ -111,6 +111,18 @@
   color: #6E736A;
 }
 
+.Field input:enabled,
+.Field select:enabled {
+  color: #2F362A;
+}
+
+.Field input:disabled,
+.Field select:disabled {
+  color: #6E736A;
+  -webkit-text-fill-color: #6E736A;
+  opacity: 1;
+}
+
 .Field span {
   cursor: pointer;
   margin-left: 12px;
@@ -163,12 +175,13 @@
   max-width: 60%;
   color: #2F362A;
 }
+
 .GuestNote {
   font-family: var(--lato);
   font-size: 15px;
   margin-bottom: 40px;
   font-weight: 400;
- 
+
   color: #2F362A;
 }
 
@@ -404,6 +417,10 @@
   font-size: var(--fs-22);
   font-weight: 500;
   color: #2F362A;
+  margin: 0;
+}
+
+.PersonalInfoSection .AddressHeader {
   margin-bottom: 30px;
 }
 

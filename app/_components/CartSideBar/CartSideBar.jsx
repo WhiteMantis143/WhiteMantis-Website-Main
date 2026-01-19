@@ -28,12 +28,12 @@ const CartSideBar = () => {
   const isCartEmpty = products.length === 0;
 
   const handleIncrease = async (product_id, variation_id) => {
-    await addItem(product_id, 1, { variation_id });
+    await addItem(product_id, 1, { variation_id, skipToast: true });
   };
 
   const handleDecrease = async (product_id, variation_id, currentQty) => {
     if (currentQty > 1) {
-      await addItem(product_id, -1, { variation_id });
+      await addItem(product_id, -1, { variation_id, skipToast: true });
     }
   };
 
@@ -212,7 +212,7 @@ const CartSideBar = () => {
                 </div>
                 <div className={styles.TopTwo}>
                   <div className={styles.TopTwoTop}>
-                    <h3>coupons and offers</h3>
+                    <h3>COUPONS AND OFFERS</h3>
                   </div>
                   <div className={styles.TopTwoBottom}>
                     {appliedCoupon ? (
@@ -354,7 +354,9 @@ const CartSideBar = () => {
                   </button>
                   <p
                     style={{
-                      fontSize: "18px",
+                      fontFamily: "--lato",
+                      fontSize: "15px",
+                      fontWeight: "400",
                       color: "#6E736A",
                       marginTop: "0px",
                     }}

@@ -65,6 +65,7 @@ export function CartProvider({ children }) {
   // ✅ FIXED addItem (pure optimistic, no overwrite)
   const addItem = useCallback(async (product_id, quantity = 1, extra = {}) => {
     let prevSnapshot;
+    const skipToast = extra.skipToast || false;
 
     setItems((prev) => {
       prevSnapshot = prev;
@@ -100,11 +101,13 @@ export function CartProvider({ children }) {
 
       console.log(extra)
 
-      addToCartToast({
-        name: `${extra.name} ${extra.tagline}` || "Product",
-        image: extra.image || "",
-        quantity: quantity,
-      }, openCart);
+      if (!skipToast) {
+        addToCartToast({
+          name: `${extra.name} ${extra.tagline}` || "Product",
+          image: extra.image || "",
+          quantity: quantity,
+        }, openCart);
+      }
       return { ok: true };
     } catch (err) {
       setItems(prevSnapshot);

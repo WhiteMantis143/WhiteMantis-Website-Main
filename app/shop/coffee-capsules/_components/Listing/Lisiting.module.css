@@ -21,6 +21,9 @@
   justify-content: left;
   flex-direction: column;
   gap: 31px;
+  position: sticky;
+  top: 120px;
+  align-self: flex-start;
   /* width: 100%; */
 }
 

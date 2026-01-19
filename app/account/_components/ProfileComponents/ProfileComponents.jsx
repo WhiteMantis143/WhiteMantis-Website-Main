@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import styles from "./ProfileComponents.module.css";
 import one from "./1.png";
+import { useSession } from "next-auth/react";
 
 const UAE_STATES = [
   "Abu Dhabi",
@@ -14,7 +15,11 @@ const UAE_STATES = [
 ];
 
 const ProfileComponents = ({ initialData }) => {
-  const [profile, setProfile] = useState(initialData.profile);
+  const { update } = useSession();
+  const [profile, setProfile] = useState({
+    ...initialData.profile,
+    phone: initialData.profile.metaData?.find((item) => item.key === "phonenumber")?.value || initialData.profile.phone
+  });
   const isGuestUser = !initialData.profile?.email;
 
   const [editMode, setEditMode] = useState(false);
@@ -43,7 +48,33 @@ const ProfileComponents = ({ initialData }) => {
 
   const [accountStatus, setAccountStatus] = useState(null);
 
+  // Validation helper functions from checkout logic
+  const validatePhone = (phoneValue) => {
+    if (!phoneValue || phoneValue.trim() === "") {
+      return "Phone number is required";
+    }
+    // UAE phone validation - matches backend validation
+    const cleanNumber = phoneValue.replace(/\D/g, '');
+    const uaeRegex = /^(?:00971|971|0)?(5[024568]|2|3|4|6|7|9)\d{7}$/;
+    const match = cleanNumber.match(uaeRegex);
+
+    if (!match) {
+      return "Invalid phone number";
+    }
+    return "";
+  };
+
+  // Validation states
+  const [errors, setErrors] = useState({});
+  const [addressErrors, setAddressErrors] = useState({});
+  const [addressGeneralError, setAddressGeneralError] = useState("");
+
   const handleProfileChange = (field, value) => {
+    // Clear errors when user types
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: null }));
+    }
+
     if (field === "name") {
       const parts = value.split(" ");
       const firstName = parts[0];
@@ -72,6 +103,25 @@ const ProfileComponents = ({ initialData }) => {
   };
 
   const saveProfile = async () => {
+    // Validation
+    const newErrors = {};
+    const fullName = `${profile.firstName || ""} ${profile.lastName || ""}`.trim();
+    if (!fullName) newErrors.name = "Name is required";
+
+    // Check if phone matches the initial data or is newly entered
+    const currentPhone = profile.phone || "";
+    if (!currentPhone && editMode) {
+      newErrors.phone = "Phone number is required";
+    } else if (currentPhone) {
+      const phoneError = validatePhone(currentPhone);
+      if (phoneError) newErrors.phone = phoneError;
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     // Determine gender from state or metadata
     const gender =
       profile.gender ||
@@ -120,6 +170,8 @@ const ProfileComponents = ({ initialData }) => {
       country: "United Arab Emirates (UAE)",
       state: "Dubai",
     });
+    setAddressErrors({});
+    setAddressGeneralError("");
     setShowAddressPopup(true);
   };
 
@@ -131,10 +183,33 @@ const ProfileComponents = ({ initialData }) => {
         addr.fullName ||
         `${addr.firstName || ""} ${addr.lastName || ""}`.trim(),
     });
+    setAddressErrors({});
+    setAddressGeneralError("");
     setShowEditAddressPopup(true);
   };
 
   const saveAddress = async () => {
+    // Validation
+    const newAddressErrors = {};
+    if (!addressForm.fullName?.trim()) {
+      newAddressErrors.fullName = "Full Name is required";
+    }
+    if (!addressForm.address?.trim()) {
+      newAddressErrors.address = "Address is required";
+    }
+
+    // Address Phone Validation
+    const phoneError = validatePhone(addressForm.phone);
+    if (phoneError) {
+      newAddressErrors.phone = phoneError;
+    }
+
+    if (Object.keys(newAddressErrors).length > 0) {
+      setAddressErrors(newAddressErrors);
+      // setAddressGeneralError("Please fill in all required fields.");
+      return;
+    }
+
     // Construct the payload for the SINGLE address
     const fullNameParts = (addressForm.fullName || "").split(" ");
     const firstName = fullNameParts[0];
@@ -202,6 +277,8 @@ const ProfileComponents = ({ initialData }) => {
     if (confirm("Are you sure you want to remove your profile picture?")) {
       const res = await updateProfileAPI({ profile_image: "" });
       if (res && res.success) {
+        // Update session
+        await update({ profile_image: null });
         window.location.reload();
       }
     }
@@ -297,8 +374,12 @@ const ProfileComponents = ({ initialData }) => {
                           const base64Image = reader.result;
                           const res = await updateProfileAPI({ base64Image });
                           if (res && res.success) {
-                            // Update profile image in state locally if possible
-                            // Or reload the page
+                            // Update session with new image
+                            const newImage = res.customer.meta_data.find(
+                              (m) => m.key === "profile_image"
+                            )?.value;
+
+                            await update({ profile_image: newImage });
                             window.location.reload();
                           }
                         };
@@ -320,7 +401,12 @@ const ProfileComponents = ({ initialData }) => {
                   Please login to manage your profile details.
                 </p>
               )}
-              <h4>PERSONAL INFORMATION</h4>
+              <div className={styles.AddressHeader}>
+                <h4>Personal Information</h4>
+                {!editMode && (
+                  <button onClick={() => setEditMode(true)}>Edit</button>
+                )}
+              </div>
 
               <div className={styles.Field}>
                 <input
@@ -335,21 +421,11 @@ const ProfileComponents = ({ initialData }) => {
                   disabled={!editMode || isGuestUser}
                   onChange={(e) => handleProfileChange("name", e.target.value)}
                 />
-
-                <span onClick={() => !isGuestUser && setEditMode(true)}>
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M1.41176 14.5882H2.59906L12.2334 4.95388L11.0461 3.76659L1.41176 13.4009V14.5882ZM0 16V12.8146L12.4146 0.405411C12.5569 0.276156 12.714 0.176314 12.8859 0.105882C13.058 0.0352941 13.2384 0 13.4271 0C13.6158 0 13.7985 0.0334907 13.9753 0.100471C14.1522 0.167451 14.3089 0.27396 14.4452 0.419999L15.5946 1.58376C15.7406 1.72008 15.8447 1.87694 15.9068 2.05435C15.9689 2.23176 16 2.40918 16 2.58659C16 2.77592 15.9677 2.95655 15.9031 3.12847C15.8384 3.30055 15.7356 3.45773 15.5946 3.6L3.18541 16H0ZM11.6294 4.37059L11.0461 3.76659L12.2334 4.95388L11.6294 4.37059Z"
-                      fill="#6E736A"
-                    />
-                  </svg>
-                </span>
+                {errors.name && (
+                  <p style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+                    {errors.name}
+                  </p>
+                )}
               </div>
 
               <div className={styles.Field}>
@@ -360,7 +436,7 @@ const ProfileComponents = ({ initialData }) => {
                       ? "Login to view email"
                       : "Enter your email address"
                   }
-                  disabled={!editMode || isGuestUser}
+                  disabled={true}
                   onChange={(e) => handleProfileChange("email", e.target.value)}
                 />
 
@@ -398,21 +474,17 @@ const ProfileComponents = ({ initialData }) => {
                       handleProfileChange("phone", e.target.value)
                     }
                   />
-
-                  <span onClick={() => !isGuestUser && setEditMode(true)}>
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+                  {errors.phone && (
+                    <p
+                      style={{
+                        color: "red",
+                        fontSize: "12px",
+                        marginTop: "5px",
+                      }}
                     >
-                      <path
-                        d="M1.41176 14.5882H2.59906L12.2334 4.95388L11.0461 3.76659L1.41176 13.4009V14.5882ZM0 16V12.8146L12.4146 0.405411C12.5569 0.276156 12.714 0.176314 12.8859 0.105882C13.058 0.0352941 13.2384 0 13.4271 0C13.6158 0 13.7985 0.0334907 13.9753 0.100471C14.1522 0.167451 14.3089 0.27396 14.4452 0.419999L15.5946 1.58376C15.7406 1.72008 15.8447 1.87694 15.9068 2.05435C15.9689 2.23176 16 2.40918 16 2.58659C16 2.77592 15.9677 2.95655 15.9031 3.12847C15.8384 3.30055 15.7356 3.45773 15.5946 3.6L3.18541 16H0ZM11.6294 4.37059L11.0461 3.76659L12.2334 4.95388L11.6294 4.37059Z"
-                        fill="#6E736A"
-                      />
-                    </svg>
-                  </span>
+                      {errors.phone}
+                    </p>
+                  )}
                 </div>
 
                 <div className={styles.Field}>
@@ -452,7 +524,10 @@ const ProfileComponents = ({ initialData }) => {
                   </button>
                   <button
                     className={styles.CancelBtn}
-                    onClick={() => setEditMode(false)}
+                    onClick={() => {
+                      setEditMode(false);
+                      setErrors({});
+                    }}
                   >
                     Cancel
                   </button>
@@ -681,6 +756,11 @@ const ProfileComponents = ({ initialData }) => {
                 setAddressForm({ ...addressForm, fullName: e.target.value })
               }
             />
+            {addressErrors.fullName && (
+              <p style={{ color: "red", fontSize: "12px", marginTop: "-10px", marginBottom: "10px" }}>
+                {addressErrors.fullName}
+              </p>
+            )}
 
             <input
               value="United Arab Emirates"
@@ -694,10 +774,18 @@ const ProfileComponents = ({ initialData }) => {
             <input
               placeholder="House number, Street name"
               value={addressForm.address || ""}
-              onChange={(e) =>
-                setAddressForm({ ...addressForm, address: e.target.value })
-              }
+              onChange={(e) => {
+                setAddressForm({ ...addressForm, address: e.target.value });
+                if (addressErrors.address) {
+                  setAddressErrors((prev) => ({ ...prev, address: "" }));
+                }
+              }}
             />
+            {addressErrors.address && (
+              <p style={{ color: "red", fontSize: "12px", marginTop: "-10px", marginBottom: "10px" }}>
+                {addressErrors.address}
+              </p>
+            )}
 
             <input
               placeholder="Apartment, suite, etc."
@@ -780,7 +868,7 @@ const ProfileComponents = ({ initialData }) => {
                 onChange={(e) =>
                   setAddressForm({
                     ...addressForm,
-                    phone: "+971 " + e.target.value.replace(/^(\+971\s?)/, ""),
+                    phone: "+971" + e.target.value.replace(/^(\+971\s?)/, ""),
                   })
                 }
                 style={{
@@ -794,6 +882,11 @@ const ProfileComponents = ({ initialData }) => {
                 }}
               />
             </div>
+            {addressErrors.phone && (
+              <p style={{ color: "red", fontSize: "12px", marginTop: "5px", marginBottom: "10px" }}>
+                {addressErrors.phone}
+              </p>
+            )}
 
             <label className={styles.CheckRow}>
               <input
@@ -810,7 +903,15 @@ const ProfileComponents = ({ initialData }) => {
             </label>
 
             <div className={styles.PopupActions}>
-              <button onClick={() => setShowAddressPopup(false)}>Cancel</button>
+              {addressGeneralError && (
+                <p style={{ color: "red", fontSize: "14px", marginBottom: "10px", width: "100%", textAlign: "right" }}>
+                  {addressGeneralError}
+                </p>
+              )}
+              <button onClick={() => {
+                setShowAddressPopup(false);
+                setAddressErrors({});
+              }}>Cancel</button>
               <button className={styles.SaveBtn} onClick={saveAddress}>
                 Save Address
               </button>
@@ -830,6 +931,12 @@ const ProfileComponents = ({ initialData }) => {
                 setAddressForm({ ...addressForm, fullName: e.target.value })
               }
             />
+            {addressErrors.fullName && (
+              <p style={{ color: "red", fontSize: "12px", marginTop: "-10px", marginBottom: "10px" }}>
+                {addressErrors.fullName}
+              </p>
+            )}
+
 
             <input
               // value="United Arab Emirates"
@@ -843,10 +950,18 @@ const ProfileComponents = ({ initialData }) => {
             <input
               placeholder="House number, Street name"
               value={addressForm.address || ""}
-              onChange={(e) =>
-                setAddressForm({ ...addressForm, address: e.target.value })
-              }
+              onChange={(e) => {
+                setAddressForm({ ...addressForm, address: e.target.value });
+                if (addressErrors.address) {
+                  setAddressErrors((prev) => ({ ...prev, address: "" }));
+                }
+              }}
             />
+            {addressErrors.address && (
+              <p style={{ color: "red", fontSize: "12px", marginTop: "-10px", marginBottom: "10px" }}>
+                {addressErrors.address}
+              </p>
+            )}
 
             <input
               placeholder="Apartment, suite, etc."
@@ -924,7 +1039,7 @@ const ProfileComponents = ({ initialData }) => {
                 onChange={(e) =>
                   setAddressForm({
                     ...addressForm,
-                    phone: "+971 " + e.target.value.replace(/^(\+971\s?)/, ""),
+                    phone: "+971" + e.target.value.replace(/^(\+971\s?)/, ""),
                   })
                 }
                 style={{
@@ -938,6 +1053,11 @@ const ProfileComponents = ({ initialData }) => {
                 }}
               />
             </div>
+            {addressErrors.phone && (
+              <p style={{ color: "red", fontSize: "12px", marginTop: "5px", marginBottom: "10px" }}>
+                {addressErrors.phone}
+              </p>
+            )}
 
             <label className={styles.CheckRow}>
               <input
@@ -954,7 +1074,15 @@ const ProfileComponents = ({ initialData }) => {
             </label>
 
             <div className={styles.PopupActions}>
-              <button onClick={() => setShowEditAddressPopup(false)}>
+              {addressGeneralError && (
+                <p style={{ color: "red", fontSize: "14px", marginBottom: "10px", width: "100%", textAlign: "right" }}>
+                  {addressGeneralError}
+                </p>
+              )}
+              <button onClick={() => {
+                setShowEditAddressPopup(false);
+                setAddressErrors({});
+              }}>
                 Cancel
               </button>
               <button className={styles.SaveBtn} onClick={saveAddress}>
