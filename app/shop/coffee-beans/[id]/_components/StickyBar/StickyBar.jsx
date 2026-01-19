@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./StickyBar.module.css";
-import { useCart } from "../../../../_context/CartContext";
+import { useCart } from "../../../../../_context/CartContext";
 import { useProductImage } from "../../_context/ProductImageContext";
 
 const StickyBar = ({ groupedChildren, product }) => {
@@ -175,7 +175,7 @@ const StickyBar = ({ groupedChildren, product }) => {
 
           <div className={styles.Center}>
             {/* Weight Selection Buttons */}
-            <div className={styles.WeightOptions}>
+            {/* <div className={styles.WeightOptions}>
               {weightOptions.map((w) => (
                 <button
                   key={w.label}
@@ -189,7 +189,7 @@ const StickyBar = ({ groupedChildren, product }) => {
                   {w.label}
                 </button>
               ))}
-            </div>
+            </div> */}
 
             <div className={styles.CountIncDec}>
               <button onClick={() => setQty((q) => Math.max(1, q - 1))}>

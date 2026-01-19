@@ -2,8 +2,8 @@ import React from "react";
 import styles from "./Recommendation.module.css";
 import Image from "next/image";
 import primg from "./1.png";
-import Wishlist from "../../../../_components/Whishlist";
-import AddToCart from "../../../../_components/AddToCart";
+import Wishlist from "../../../../../_components/Whishlist";
+import AddToCart from "../../../../../_components/AddToCart";
 
 const RECOMMENDATION_DATA = [
   {

@@ -1,7 +1,7 @@
 // app/.../product/[id]/page.jsx
 import React from "react";
 import { redirect } from "next/navigation";
-import { fetchProductById } from "../../../lib/woocommerce";
+import { fetchProductById } from "../../../../lib/woocommerce";
 
 import TopNavigation from "./_components/TopNavigation/TopNavigation";
 import ProductMain from "./_components/ProductMain/ProductMain";
