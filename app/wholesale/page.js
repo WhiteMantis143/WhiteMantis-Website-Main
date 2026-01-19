@@ -8,10 +8,13 @@ export default function Wholesale() {
   return (
     <>
       <Landing />
+      <div className="sectionPadding"></div>
       <Partner />
+      <div className="sectionPadding"></div>
       <Enquires />
+      <div className="sectionPadding"></div>
       <Begins />
-
+      <div className="sectionPadding"></div>
     </>
   );
 }

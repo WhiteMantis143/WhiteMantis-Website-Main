@@ -9,9 +9,11 @@ export default function contact() {
   return (
     <>
       <Landing />
-
+      <div className="sectionPadding"> </div>
       <ContactForm />
+      <div className="sectionPadding"> </div>
       <Location />
+      <div className="sectionPadding"> </div>
       {/* <Career />*/}
       {/* <MightFit /> */}
     </>

@@ -1,8 +1,6 @@
 .sectionWrapper {
   width: 100%;
-  padding: clamp(70px, calc(70px + (130 * ((100vw - 320px) / 1120))), 200px)
-    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px) 100px
-    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+  padding: 0px clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
 
   box-sizing: border-box;
   background: #ffffff;

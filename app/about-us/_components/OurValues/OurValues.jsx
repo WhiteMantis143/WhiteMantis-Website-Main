@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
 import styles from "./OurValues.module.css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -15,23 +15,26 @@ const OurValues = () => {
   const gridRef = useRef(null);
   const cardRef = useRef(null);
   const bgNextRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(null);
+  // console.log(isMobile);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 640);
-      ScrollTrigger.refresh();
     };
 
     handleResize(); // Initial check
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  });
+  }, []);
 
   useGSAP(
     () => {
+      if (isMobile === null) return;
+      let tl;
       if (!isMobile) {
         // --- DESKTOP ANIMATION ---
+        // console.log("Running Desktop Animation");
 
         // 1. Capture the initial state
         const state = Flip.getState(cardRef.current);
@@ -41,14 +44,15 @@ const OurValues = () => {
         cardRef.current.classList.add(styles.CardNew);
 
         // 3. Create the ScrollTrigger-driven timeline
-        const tl = gsap.timeline({
+        tl = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top top",
             end: "+=120%",
             scrub: 1,
             pin: true,
-            markers: false, // Set to true for debugging
+            markers: true, // Set to true for debugging
+            id: "desktop-st",
           },
         });
 
@@ -62,10 +66,10 @@ const OurValues = () => {
         tl.add(flipAnim, 0);
 
         const valuesContent = cardRef.current.querySelector(
-          `.${styles.ValuesContent}`
+          `.${styles.ValuesContent}`,
         );
         const visionContent = cardRef.current.querySelector(
-          `.${styles.VisionContent}`
+          `.${styles.VisionContent}`,
         );
 
         // We want to cross-fade: fade out Values, fade in Vision.
@@ -78,7 +82,7 @@ const OurValues = () => {
             opacity: 0,
             duration: 0.1,
           },
-          0.45
+          0.45,
         );
 
         // Animate Vision fading IN
@@ -88,12 +92,23 @@ const OurValues = () => {
             opacity: 1,
             duration: 0.1,
           },
-          0.45
+          0.45,
+        );
+        // Animate Vision fading IN (and Background)
+        tl.to(
+          bgNextRef.current,
+          {
+            opacity: 1,
+            duration: 0.1,
+          },
+          0.45,
         );
       } else {
         // --- MOBILE ANIMATION ---
+        // console.log("Running Mobile Animation");
 
         // 1. Capture the initial state
+
         const state = Flip.getState(cardRef.current);
 
         // 2. Change the state to the final one
@@ -101,14 +116,16 @@ const OurValues = () => {
         cardRef.current.classList.add(styles.CardNew);
 
         // 3. Create Timeline
-        const tl = gsap.timeline({
+        tl = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
-          start: "top top",
-    end: "+=35%",          
-    scrub: 1,           
-    anticipatePin: 1,     
-    invalidateOnRefresh: true,
+            start: "top top",
+            end: "+=10%",
+            scrub: 1,
+            markers: true,
+            // anticipatePin: 1,
+            invalidateOnRefresh: true,
+            id: "mobile-st",
           },
         });
 
@@ -122,18 +139,29 @@ const OurValues = () => {
         tl.add(flipAnim, 0);
 
         const valuesContent = cardRef.current.querySelector(
-          `.${styles.ValuesContent}`
+          `.${styles.ValuesContent}`,
         );
         const visionContent = cardRef.current.querySelector(
-          `.${styles.VisionContent}`
+          `.${styles.VisionContent}`,
         );
 
         // Cross-fade opacity synchronized with the flip
         tl.to(valuesContent, { opacity: 0, duration: 0.1 }, 0.45);
         tl.to(visionContent, { opacity: 1, duration: 0.1 }, 0.45);
+
+        // Animate Vision fading IN (and Background)
+        tl.to(
+          bgNextRef.current,
+          {
+            opacity: 1,
+            duration: 0.1,
+          },
+          0.45,
+        );
       }
 
       return () => {
+        if (tl) tl.kill();
         if (cardRef.current) {
           cardRef.current.classList.remove(styles.CardNew);
           cardRef.current.classList.add(styles.CardInitial);
@@ -141,19 +169,21 @@ const OurValues = () => {
 
           // Reset content opacity
           const valuesContent = cardRef.current.querySelector(
-            `.${styles.ValuesContent}`
+            `.${styles.ValuesContent}`,
           );
           const visionContent = cardRef.current.querySelector(
-            `.${styles.VisionContent}`
+            `.${styles.VisionContent}`,
           );
           if (valuesContent)
             gsap.set(valuesContent, { opacity: 1, clearProps: "all" });
           if (visionContent)
             gsap.set(visionContent, { opacity: 0, clearProps: "all" });
+          if (bgNextRef.current)
+            gsap.set(bgNextRef.current, { opacity: 0, clearProps: "all" });
         }
       };
     },
-    { dependencies: [isMobile], scope: sectionRef }
+    { dependencies: [isMobile], scope: sectionRef },
   );
 
   return (

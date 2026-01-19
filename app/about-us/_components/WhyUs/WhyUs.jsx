@@ -32,9 +32,7 @@ const WhyUs = () => {
               </div>
               <div className={styles.TextContainer}>
                 <h3>Sustainable & Ethical Sourcing </h3>
-                <p>
-                 Partnering with responsible farmers worldwide.
-                </p>
+                <p>Partnering with responsible farmers worldwide.</p>
               </div>
             </div>
             <div className={styles.Card}>
@@ -53,10 +51,8 @@ const WhyUs = () => {
                 <Image src={four} alt="Quality Assurance" />
               </div>
               <div className={styles.TextContainer}>
-                <h3>A Legacy of Quality  </h3>
-                <p>
-                 Building on a strong foundation since 2016
-                </p>
+                <h3>A Legacy of Quality </h3>
+                <p>Building on a strong foundation since 2016</p>
               </div>
             </div>
           </div>

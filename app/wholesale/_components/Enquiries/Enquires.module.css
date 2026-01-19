@@ -5,10 +5,7 @@
   width: 100%;
   height: 100%;
   background-color: #ffffff;
-  padding: clamp(0px, calc(0px + (0 * ((100vw - 320px) / 1120))), 0px)
-    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
-    clamp(80px, calc(80px + (40 * ((100vw - 320px) / 1120))), 120px)
-    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+  padding: 0px clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
 }
 .MainContainer {
   display: flex;
@@ -84,6 +81,12 @@
   cursor: pointer;
 }
 .Form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  /* border: 1px solid #2f362a; */
+}
+.FormGroup {
   display: flex;
   flex-direction: column;
   border: 1px solid #2f362a;

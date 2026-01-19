@@ -11,10 +11,15 @@ export default function AboutUs() {
     <>
       <div className="TopPaddingForMobile"></div>
       <Landing />
+      <div className="sectionPadding"></div>
       <OurPhilosophy />
+      <div className="sectionPadding"></div>
       <OurValues />
+      <div className="sectionPadding"></div>
       <WhyUs />
+      <div className="sectionPadding"></div>
       <Partnerships />
+      <div className="sectionPadding"></div>
       {/* <Recognitions /> */}
     </>
   );

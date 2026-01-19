@@ -26,7 +26,7 @@ const Landing = () => {
             </p>
           </div>
 
-          <Link href="/wholesale" className={styles.RightBottom}>
+          <Link href="#wholesaleEnquiry" className={styles.RightBottom}>
             <h4>Explore WHOLESALE </h4>
             <svg
               width="30"

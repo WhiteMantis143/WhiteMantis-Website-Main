@@ -22,7 +22,7 @@
 .BgNext {
   background-image: url("./1.jpg");
   opacity: 0;
-  z-index: 1;
+  z-index: 0.1;
 }
 
 .Grid {

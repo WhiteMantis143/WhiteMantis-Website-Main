@@ -4,10 +4,8 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  padding: clamp(70px, calc(70px + (80 * ((100vw - 320px) / 1120))), 150px)
-    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
-    clamp(70px, calc(70px + (5 * ((100vw - 320px) / 1120))), 75px)
-    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+  padding: 0px clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
+    0px clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
 
   background-color: #ffffff;
 }
@@ -90,65 +88,63 @@
   .MainContainer {
     gap: 30px;
   }
-  .Top h3{
+  .Top h3 {
     font-size: 20px;
   }
-  .Bottom{
+  .Bottom {
     flex-direction: column;
     gap: 30px;
   }
-  .Card{
-   
+  .Card {
     min-height: 375px;
     width: 100%;
     height: 100%;
     gap: 30px;
   }
-  .TextContainer{
+  .TextContainer {
     padding-left: 0px;
     gap: 15px;
     width: 100%;
   }
-  .TextContainer h3{
+  .TextContainer h3 {
     font-size: 20px;
   }
-    .TextContainer p{
-        font-size: 14px;
-    }
+  .TextContainer p {
+    font-size: 14px;
+  }
 }
-@media (min-width:641px) and (max-width: 920px) {
-    .TextContainer{
-        padding-left: 0px;
-    }
-    .TextContainer h3{
-        font-size: 18px;
-    }
-    .Main{
-        padding-left: 40px;
-        padding-right: 40px;
-    }
-    .ImageContainer img{
-        width: 100%;
-        height: 100%;
-        max-width: 200px;
-        min-height: 120px;
-    }
+@media (min-width: 641px) and (max-width: 920px) {
+  .TextContainer {
+    padding-left: 0px;
+  }
+  .TextContainer h3 {
+    font-size: 18px;
+  }
+  .Main {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .ImageContainer img {
+    width: 100%;
+    height: 100%;
+    max-width: 200px;
+    min-height: 120px;
+  }
 }
-@media (min-width:921px) and (max-width: 1440px) {
-    .TextContainer{
-        padding-left: 0px;
-    }
-    .TextContainer h3{
-        font-size: 18px;
-    }
-    .Main{
-        padding-left: 40px;
-        padding-right: 40px;
-    }
-    .ImageContainer img{
-        width: 100%;
-        height: 100%;
-        min-height: 180px;
-    }
+@media (min-width: 921px) and (max-width: 1440px) {
+  .TextContainer {
+    padding-left: 0px;
+  }
+  .TextContainer h3 {
+    font-size: 18px;
+  }
+  .Main {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .ImageContainer img {
+    width: 100%;
+    height: 100%;
+    min-height: 180px;
+  }
 }
-
