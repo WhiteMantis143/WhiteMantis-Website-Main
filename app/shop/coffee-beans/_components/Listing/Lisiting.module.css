@@ -102,13 +102,19 @@
   grid-template-columns: repeat(3, 1fr);
   row-gap: 121px;
   column-gap: 41px;
-  
 }
 .ProductCard {
   display: flex;
   flex-direction: column;
   height: 100%;
   gap: 24px;
+}
+.ProductCard:hover img {
+  transform: scale(1.05);
+}
+.ProductCard:hover .ProductImage {
+  /* transform: scale(1.05); */
+  border-color: #2f362a;
 }
 
 .ProductTop {
@@ -125,6 +131,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border: transparent 1px solid;
+  transition: all 0.2s ease-in-out;
 }
 
 .ProductImage img {
@@ -133,6 +141,7 @@
   max-width: 401px;
   max-height: 305px;
   object-fit: contain;
+  transition: all 0.2s ease-in-out;
 }
 
 /* .ProductTop img {
@@ -336,7 +345,10 @@
   overflow: hidden;
   opacity: 0;
   transform: translateY(-6px);
-  transition: max-height 0.35s ease, opacity 0.25s ease, transform 0.25s ease;
+  transition:
+    max-height 0.35s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
 }
 
 .open {
@@ -460,10 +472,10 @@
     flex-direction: column;
     gap: 24px;
   }
-.ProductImage img {
-    max-width:170px;
+  .ProductImage img {
+    max-width: 170px;
     max-height: 200px;
-}
+  }
   .LeftConatiner {
     display: none;
   }
@@ -474,7 +486,7 @@
     row-gap: 61px;
     column-gap: 10px;
   }
-  .WishlistIcon{
+  .WishlistIcon {
     right: 2px;
   }
   .ProductTop {
@@ -497,16 +509,16 @@
   .MobileFilterBtn {
     display: flex;
     align-items: center;
-   background-color: transparent;
-  cursor: pointer;
-  border: 1px solid #6e736a;
-   padding: 11.5px 10px;
-  color: #6E736A;
-  font-size: 15px;
-  max-width: 169px;
-  font-weight: 400;
-  font-family: var(--lato);
-  width: 100%;
+    background-color: transparent;
+    cursor: pointer;
+    border: 1px solid #6e736a;
+    padding: 11.5px 10px;
+    color: #6e736a;
+    font-size: 15px;
+    max-width: 169px;
+    font-weight: 400;
+    font-family: var(--lato);
+    width: 100%;
     gap: 5px;
   }
   .SortOptions {
@@ -515,7 +527,7 @@
     max-width: 169px;
     min-width: 169px;
   }
-  .RightTopRight{
+  .RightTopRight {
     width: 100%;
     align-items: baseline;
     justify-content: left;
@@ -533,7 +545,7 @@
   .RightConatiner {
     gap: 32px;
   }
-   .FilterBox{
+  .FilterBox {
     min-width: 120px;
   }
 }
@@ -573,14 +585,14 @@
   .MobileFilterBtn {
     display: flex;
     align-items: center;
-   background-color: transparent;
-  cursor: pointer;
-  border: 1px solid #6e736a;
-   padding: 11.5px 10px;
-  color: #6E736A;
-  font-size: 14px;
-  max-width: 169px;
-  width: 100%;
+    background-color: transparent;
+    cursor: pointer;
+    border: 1px solid #6e736a;
+    padding: 11.5px 10px;
+    color: #6e736a;
+    font-size: 14px;
+    max-width: 169px;
+    width: 100%;
     gap: 5px;
   }
   .SortOptions {
@@ -589,7 +601,7 @@
     max-width: 169px;
     min-width: 169px;
   }
-  .RightTopRight{
+  .RightTopRight {
     width: 100%;
     align-items: baseline;
     justify-content: left;
@@ -600,7 +612,6 @@
   .ProductCard {
     max-width: 350px;
   }
- 
 }
 @media (min-width: 941px) and (max-width: 1440px) {
   .main {
