@@ -8,6 +8,8 @@ import React, {
   useMemo,
 } from "react";
 import { useAuth } from "./AuthContext";
+import { addToCartToast } from "./_components/addToCartToast";
+import { toast } from "react-hot-toast";
 
 const CartContext = createContext(null);
 
@@ -73,7 +75,6 @@ export function CartProvider({ children }) {
           String(it.variation_id || 0) === String(extra.variation_id || 0);
 
         if (!isMatch) return it;
-
         return {
           ...it,
           quantity: (it.quantity || 0) + quantity,
@@ -97,6 +98,13 @@ export function CartProvider({ children }) {
         return { ok: false };
       }
 
+      console.log(extra)
+
+      addToCartToast({
+        name: `${extra.name} ${extra.tagline}` || "Product",
+        image: extra.image || "",
+        quantity: quantity,
+      }, openCart);
       return { ok: true };
     } catch (err) {
       setItems(prevSnapshot);
@@ -132,8 +140,10 @@ export function CartProvider({ children }) {
 
       const data = await res.json();
 
-      if (!data?.ok) {
+      if (data?.ok) {
+      } else {
         setItems(prevSnapshot);
+        toast.error("Failed to remove item");
       }
 
       return data;

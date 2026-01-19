@@ -139,7 +139,7 @@ function CheckoutForm({
           if (errorElement) {
             // Get the element's position
             const elementPosition = errorElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - 100; // 100px offset from top
+            const offsetPosition = elementPosition + window.pageYOffset - 100
 
             // Smooth scroll to position
             window.scrollTo({
