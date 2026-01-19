@@ -101,6 +101,7 @@
   height: 100%;
   max-width: 239px !important;
   max-height: 427px !important;
+  object-fit: contain;
   /* margin-left: 100px; */
   mix-blend-mode: multiply;
   /* filter: brightness(1.2) contrast(1.1); */
@@ -126,13 +127,12 @@
   justify-content: left;
   gap: 110px;
   width: 33.3%;
- 
 }
 .DetailsLeft {
   display: flex;
   flex-direction: column;
   justify-content: right;
-   text-align: right;
+  text-align: right;
   gap: 110px;
   width: 33.3%;
 }
@@ -141,6 +141,7 @@
   align-items: center;
   width: 33.3%;
   justify-content: center;
+  transform-style: preserve-3d;
 }
 .DetailsCenter {
   position: relative;

@@ -69,14 +69,6 @@ const ProductMain = ({ product }) => {
   const middleRef = useRef(null);
   const topLeftRef = useRef(null);
   const topRightRef = useRef(null);
-  const containerRef = useRef(null);
-
-  const leftRefDetails = useRef([]);
-  const rightRefDetails = useRef([]);
-
-  const polygonRefImage = useRef(null);
-
-  const topRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
   // Extract meta data values
   const metaData = product?.meta_data || [];
@@ -95,7 +87,7 @@ const ProductMain = ({ product }) => {
     "";
   const { leftDetails, rightDetails } = React.useMemo(
     () => getProductGroups(product),
-    [product],
+    [product]
   );
 
   // Use selectedImage from context, or fallback to product's first image
@@ -114,8 +106,8 @@ const ProductMain = ({ product }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+
   useEffect(() => {
-    // console.log("Bottom: ", polygonRef.current.getBoundingClientRect().bottom);
     let ctx;
 
     const init = async () => {
@@ -125,83 +117,111 @@ const ProductMain = ({ product }) => {
       // const isMobile = window.innerWidth <= 640; // Removed local declaration
 
       ctx = gsap.context(() => {
+        if (!detailsRef.current || !middleRef.current || !polygonRef.current)
+          return;
+
+        const leftItems = leftRef.current
+          ? Array.from(leftRef.current.children)
+          : [];
+        const rightItems = rightRef.current
+          ? Array.from(rightRef.current.children)
+          : [];
+
+        gsap.set([leftItems, rightItems], {
+          autoAlpha: 0,
+          y: 40,
+        });
+
+        gsap.set(polygonRef.current, {
+          autoAlpha: 0,
+          rotation: -45,
+          y: 80,
+          scale: 0.85,
+        });
+
+        gsap.set(middleRef.current, {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+        });
+
         const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: middleRef.current,
-            startTrigger: topRef.current,
-            start: () => `top ${topRef.current.getBoundingClientRect().top}px`,
-            endTrigger: polygonRef.current,
-            end: "center center",
-            anticipatePin: 1,
+            trigger: detailsRef.current,
 
-            markers: true,
-            pin: middleRef.current,
-            scrub: 1,
-            // defaults: { // defaults works on timeline, not scrollTrigger object directly unless mapped
-            //   duration: 1,
-            //   ease: "power3.out",
-            // },
+            // 🔥 FIX: different start/end for mobile
+            start: isMobile ? "top 65%" : "top 90%",
+            end: isMobile ? "top 20%" : "top 30%",
+            // markers: true,
+            scrub: isMobile ? 0.6 : 1,
+            invalidateOnRefresh: true,
           },
-          defaults: {
-            duration: 1,
+        });
+
+        tl.to(
+          middleRef.current,
+          {
+            y: () => {
+              const imgRect = middleRef.current.getBoundingClientRect();
+              const polyRect = polygonRef.current.getBoundingClientRect();
+
+              const polyY = gsap.getProperty(polygonRef.current, "y");
+
+              const imgCenter = imgRect.top + imgRect.height / 2;
+              const polyCenter = polyRect.top + polyRect.height / 2 - polyY;
+
+              return polyCenter - imgCenter;
+            },
+            scale: isMobile ? 0.6 : 0.95,
             ease: "none",
           },
-        });
+          0
+        );
 
-        gsap.set(leftRefDetails.current, { opacity: 0, x: 150 });
-        gsap.set(rightRefDetails.current, { opacity: 0, x: -150 });
-        gsap.set(polygonRefImage.current, {
-          rotateX: -360,
-          scale: 0,
-          transformStyle: "preserve-3d",
-          y: 200,
-        });
-
-        // Add animations to validity
         tl.to(
-          rightRefDetails.current,
+          polygonRef.current,
           {
-            opacity: 1,
-            x: 0,
-            duration: 1,
-            // ease: "power3.inOut",
-            stagger: 0.4,
+            autoAlpha: 1,
+            rotation: 0,
+            y: 0,
+            scale: 1,
+            ease: "power3.out",
           },
-          "<",
-        )
-          .to(
-            leftRefDetails.current,
-            {
-              opacity: 1,
-              x: 0,
-              duration: 1,
-              // ease: "power3.inOut",
-              stagger: 0.4,
-            },
-            "<",
-          )
-          .to(
-            middleRef.current,
-            {
-              scale: 1.2,
-              // y: -50,
-              duration: 1,
-              // ease: "power3.inOut",
-            },
-            "<",
-          )
-          .to(
-            polygonRefImage.current,
-            {
-              rotateX: 0,
-              duration: 1,
-              scale: 1,
-              y: 0,
-              // ease: "power3.inOut",
-            },
-            "<",
-          ); // Run at same time as previous animation
-      }, containerRef);
+          0
+        );
+
+        tl.to(
+          leftItems,
+          {
+            autoAlpha: 1,
+            y: 0,
+            stagger: 0.12,
+            ease: "power2.out",
+          },
+          0.1
+        );
+
+        tl.to(
+          rightItems,
+          {
+            autoAlpha: 1,
+            y: 0,
+            stagger: 0.12,
+            ease: "power2.out",
+          },
+          0.1
+        );
+
+        tl.to(
+          [topLeftRef.current, topRightRef.current],
+          {
+            autoAlpha: 0,
+            y: -30,
+            ease: "power2.out",
+          },
+          0
+        );
+      }, detailsRef);
     };
 
     init();
@@ -213,8 +233,8 @@ const ProductMain = ({ product }) => {
   }, [isMobile]);
   return (
     <div className={styles.main}>
-      <div className={styles.MainConatiner} ref={containerRef}>
-        <div className={styles.Top} ref={topRef}>
+      <div className={styles.MainConatiner}>
+        <div className={styles.Top}>
           <div className={styles.left} ref={topLeftRef}>
             <div className={styles.LeftTop}>
               <h1>{product?.name || "Product Name"}</h1>
@@ -253,18 +273,18 @@ const ProductMain = ({ product }) => {
         <div className={styles.DetailsSection} ref={detailsRef}>
           <div className={styles.DetailsLeft} ref={leftRef}>
             {leftDetails.map((item, i) => (
-              <div key={i} ref={(el) => (leftRefDetails.current[i] = el)}>
+              <div key={i}>
                 <h4>{item.title}</h4>
                 <p>{item.description || item.desc}</p>
               </div>
             ))}
           </div>
           <div className={styles.DetailsCenter} ref={polygonRef}>
-            <Image src={Polygon} alt="Polygon" ref={polygonRefImage} />
+            <Image src={Polygon} alt="Polygon" />
           </div>
           <div className={styles.DetailsRight} ref={rightRef}>
             {rightDetails.map((item, i) => (
-              <div key={i} ref={(el) => (rightRefDetails.current[i] = el)}>
+              <div key={i}>
                 <h4>{item.title}</h4>
                 <p>{item.description || item.desc}</p>
               </div>

@@ -13,7 +13,7 @@ export const addToCartToast = (product, openCart) => {
       return (
         <div
           className={`${styles.toastContainer} ${
-            isVisible ? styles.toastContainerVisible : styles.toastContainerExit
+            isVisible ? styles.toastContainerVisible : ""
           }`}
         >
           {/* Close button */}
