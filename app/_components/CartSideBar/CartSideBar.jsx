@@ -56,7 +56,7 @@ const CartSideBar = () => {
     router.push("/checkout?mode=cart");
   };
 
-  console.log(products);
+  // console.log(products);
 
   return (
     <>

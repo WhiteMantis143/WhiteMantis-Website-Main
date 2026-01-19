@@ -6,7 +6,7 @@ const VideoSection = ({ product }) => {
   const [videoUrl, setVideoUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("product", product);
+  // console.log("product", product);
 
   useEffect(() => {
     const fetchMedia = async () => {
@@ -57,12 +57,8 @@ const VideoSection = ({ product }) => {
       <div className={styles.overlay} />
 
       <div className={styles.content}>
-        <h3 className={styles.title}>
-          {product?.title || ""}
-        </h3>
-        <p className={styles.text}>
-          {product?.description || ""}
-        </p>
+        <h3 className={styles.title}>{product?.title || ""}</h3>
+        <p className={styles.text}>{product?.description || ""}</p>
       </div>
     </section>
   );

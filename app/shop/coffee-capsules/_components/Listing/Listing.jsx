@@ -79,7 +79,7 @@ const Lisiting = () => {
     // Category Filter
     if (selectedCategories.length > 0) {
       result = result.filter((product) =>
-        product.categories?.some((cat) => selectedCategories.includes(cat.id))
+        product.categories?.some((cat) => selectedCategories.includes(cat.id)),
       );
     }
 
@@ -126,7 +126,7 @@ const Lisiting = () => {
       for (const child of children) {
         // Try to find 250g weight first (legacy logic)
         let vOption = child.variation_options?.find(
-          (v) => v.attributes?.attribute_pa_weight === "250g"
+          (v) => v.attributes?.attribute_pa_weight === "250g",
         );
 
         // If not found, looking for capsule or just take the first logical variation
@@ -171,8 +171,9 @@ const Lisiting = () => {
               {openMenus[cat.slug] ? <span>✕</span> : <span>▾</span>}
             </div>
             <div
-              className={`${styles.AnimatedBox} ${openMenus[cat.slug] ? styles.open : ""
-                }`}
+              className={`${styles.AnimatedBox} ${
+                openMenus[cat.slug] ? styles.open : ""
+              }`}
             >
               <div className={styles.FilterOptions}>
                 {renderCategories(cat.children)}
@@ -320,7 +321,7 @@ const Lisiting = () => {
                   const children = Object.values(product.children);
                   for (const child of children) {
                     let vOption = child.variation_options?.find(
-                      (v) => v.attributes?.attribute_pa_weight === "250g"
+                      (v) => v.attributes?.attribute_pa_weight === "250g",
                     );
 
                     // Fallback for capsules or other types
@@ -353,10 +354,7 @@ const Lisiting = () => {
                       {/* <div className={styles.WishlistIcon}>
                         <Wishlist product={product} />
                       </div> */}
-                      <Link
-                        href={productUrl}
-                        className={styles.ProductImage}
-                      >
+                      <Link href={productUrl} className={styles.ProductImage}>
                         {displayData.image ? (
                           <Image
                             src={displayData.image}
@@ -380,7 +378,7 @@ const Lisiting = () => {
                             <h4>AED {displayData.price}</h4>
                             {displayData.sale_price &&
                               displayData.sale_price !==
-                              displayData.regular_price && (
+                                displayData.regular_price && (
                                 <p className={styles.OldPrice}>
                                   AED {displayData.regular_price}
                                 </p>
@@ -389,9 +387,7 @@ const Lisiting = () => {
                           <div className={styles.Line}></div>
                           <div className={styles.ProductName}>
                             <h3>{`${product.name} ${product.tagline}`}</h3>
-                            <p>
-                              {product.tasting_notes_description}
-                            </p>
+                            <p>{product.tasting_notes_description}</p>
                           </div>
                         </div>
                       </Link>
