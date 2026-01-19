@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Validate address
+   
     if (!address?.shipping) {
       return NextResponse.json(
         { success: false, message: "Invalid Address" },
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Validate cart data (should be passed from stripe checkout with discounts already applied)
+    
     if (!cart || !cart.products || cart.products.length === 0) {
       return NextResponse.json(
         { success: false, message: "Cart is empty" },
@@ -56,7 +56,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Save address to user profile metadata if requested
     if (address?.saveAddress && address.shipping && session?.user) {
       try {
         const formattedAddress = {
@@ -82,7 +81,7 @@ export async function POST(req: NextRequest) {
             },
             body: JSON.stringify({
               ...formattedAddress,
-              // No address_id implies CREATE
+            
             }),
           },
         );
@@ -97,7 +96,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Build line items from cart (prices already have discounts applied)
+   
     const line_items = cart.products.map((item: any) => ({
       product_id: item.product_id,
       variation_id: item.variation_id || undefined,
@@ -106,7 +105,7 @@ export async function POST(req: NextRequest) {
       total: String(item.price.product_subtotal),
     }));
 
-    // Build payload based on session and deliveryOption
+
     let payload: any;
 
     if (session?.user) {
@@ -424,15 +423,12 @@ export async function POST(req: NextRequest) {
         `${process.env.WC_CONSUMER_KEY}:${process.env.WC_CONSUMER_SECRET}`,
       ).toString("base64");
 
-    // Generate guest access token for non-logged-in users
     let guestAccessToken = null;
     if (!session?.user) {
-      // Create a unique token for guest access
       guestAccessToken = Buffer.from(
         `${Date.now()}-${Math.random().toString(36).substring(2, 15)}`,
       ).toString("base64");
 
-      // Add token to metadata
       if (!payload.meta_data) {
         payload.meta_data = [];
       }
@@ -479,7 +475,7 @@ export async function POST(req: NextRequest) {
         {
           success: true,
           orderData,
-          guestAccessToken, // Return token to be used in redirect URL
+          guestAccessToken, 
           message: "Order created successfully",
         },
         { status: 200 },
