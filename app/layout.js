@@ -26,6 +26,25 @@ export const metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+  openGraph: {
+    title: "WhiteMantis",
+    description: "WhiteMantis",
+    images: [
+      {
+        url: "/social-thumbnail.png",
+        width: 1200,
+        height: 630,
+        alt: "WhiteMantis",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "WhiteMantis",
+    description: "WhiteMantis",
+    images: ["/social-thumbnail.png"],
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -37,7 +56,6 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <CartProvider>
-
             <GlobalLoader />
             <Navbar />
             <NavbarMobile />
