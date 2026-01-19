@@ -43,13 +43,13 @@ const Shop = () => {
               href="/shop/coffee-dripbags"
               style={{ textDecoration: "none", color: "inherit" }}
             >
-              <div className={styles.Two}>
-                <div className={styles.TwoTop}>
-                  <div className={styles.TwoTopTop}>
+              <div className={styles.One}>
+                <div className={styles.OneTop}>
+                  <div className={styles.OneTopTop}>
                     <h4>02</h4>
                     <h4>Coffee Drips</h4>
                   </div>
-                  <div className={styles.TwoTopBottom}>
+                  <div className={styles.OneTopBottom}>
                     <p>
                       Single-serve drip bags designed for easy, no-equipment
                       brewing. Enjoy a balanced, clean cup anywhere, just add
@@ -58,7 +58,7 @@ const Shop = () => {
                     <h5>Shop now</h5>
                   </div>
                 </div>
-                <div className={styles.TwoBottom}>
+                <div className={styles.OneBottom}>
                   <Image src={two} alt="sample" />
                 </div>
               </div>
@@ -67,13 +67,13 @@ const Shop = () => {
               href="/shop/coffee-capsules"
               style={{ textDecoration: "none", color: "inherit" }}
             >
-              <div className={styles.Three}>
-                <div className={styles.ThreeTop}>
-                  <div className={styles.ThreeTopTop}>
+              <div className={styles.One}>
+                <div className={styles.OneTop}>
+                  <div className={styles.OneTopTop}>
                     <h4>03</h4>
                     <h4>Coffee Capsules</h4>
                   </div>
-                  <div className={styles.ThreeTopBottom}>
+                  <div className={styles.OneTopBottom}>
                     <p>
                       Precision-packed capsules crafted for consistent
                       extraction and smooth flavor. Perfect for quick,
@@ -83,7 +83,7 @@ const Shop = () => {
                   </div>
                 </div>
 
-                <div className={styles.ThreeBottom}>
+                <div className={styles.OneBottom}>
                   <Image src={three} alt="sample" />
                 </div>
               </div>

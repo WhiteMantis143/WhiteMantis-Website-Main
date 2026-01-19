@@ -155,10 +155,15 @@ const Coffees = () => {
 
         <div className={styles.Right}>
           <div className={styles.Embla} ref={emblaRef}>
-            <div className={styles.EmblaContainer} style={{ cursor: "pointer" }}>
+            <div
+              className={styles.EmblaContainer}
+              style={{ cursor: "pointer" }}
+            >
               {coffeeData.map((item, index) => (
                 <div
-                  onClick={() => router.push(`/products/${item.slug}-${item.id}`)}
+                  onClick={() =>
+                    router.push(`/products/${item.slug}-${item.id}`)
+                  }
                   className={styles.EmblaSlide}
                   key={`coffee-${item.title.replace(/\s+/g, "-").toLowerCase()}`}
                 >
@@ -259,4 +264,3 @@ const Coffees = () => {
 };
 
 export default Coffees;
-

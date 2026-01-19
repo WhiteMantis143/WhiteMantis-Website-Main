@@ -5,10 +5,8 @@
   width: 100%;
   height: 100%;
   background-color: #ffffff;
-  padding: clamp(70px, calc(70px + (80 * ((100vw - 320px) / 1120))), 150px)
-    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
-    clamp(70px, calc(70px + (80 * ((100vw - 320px) / 1120))), 150px)
-    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+  padding: 0px clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
+    0px clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
 }
 .MainConatiner {
   display: flex;
@@ -34,9 +32,8 @@
   display: flex;
   justify-content: left;
 }
-.One,
-.Two,
-.Three {
+
+.One {
   display: flex;
   flex-direction: column;
   justify-content: left;
@@ -52,26 +49,28 @@
     clamp(17px, calc(17px + (9 * ((100vw - 320px) / 1120))), 26px);
 
   border: 1px solid #2f362a4d;
+  transition: all 0.2s ease-in-out;
 }
-.OneTop,
-.TwoTop,
-.ThreeTop {
+.One:hover {
+  cursor: pointer;
+  border: 1px solid #2f362a;
+}
+.One:hover img {
+  transform: scale(1.05);
+}
+.OneTop {
   display: flex;
   justify-content: left;
   flex-direction: column;
   gap: clamp(15px, calc(15px + (15 * ((100vw - 320px) / 1120))), 30px);
 }
-.OneTopTop,
-.TwoTopTop,
-.ThreeTopTop {
+.OneTopTop {
   display: flex;
   justify-content: left;
   flex-direction: row;
   gap: clamp(10px, calc(10px + (5 * ((100vw - 320px) / 1120))), 15px);
 }
-.OneTopTop h4,
-.TwoTopTop h4,
-.ThreeTopTop h4 {
+.OneTopTop h4 {
   font-size: var(--fs-22);
   font-family: var(--lexend);
   color: #2f362a;
@@ -79,17 +78,13 @@
   white-space: nowrap;
   text-transform: uppercase;
 }
-.OneTopBottom,
-.TwoTopBottom,
-.ThreeTopBottom {
+.OneTopBottom {
   display: flex;
   justify-content: left;
   flex-direction: column;
   gap: 16px;
 }
-.OneTopBottom h5,
-.TwoTopBottom h5,
-.ThreeTopBottom h5 {
+.OneTopBottom h5 {
   font-size: 15px;
   font-family: var(--lato);
   color: #6e736a;
@@ -97,29 +92,24 @@
   text-decoration: underline;
   cursor: pointer;
 }
-.OneTopBottom p,
-.TwoTopBottom p,
-.ThreeTopBottom p {
+.OneTopBottom p {
   font-size: 15px;
   font-weight: 400;
   width: 70%;
   color: #6e736a;
   font-family: var(--lato);
 }
-.OneBottom,
-.TwoBottom,
-.ThreeBottom {
+.OneBottom {
   display: flex;
   justify-content: left;
   overflow: hidden;
 }
-.OneBottom img,
-.ThreeBottom img,
-.TwoBottom img {
+.OneBottom img {
   width: 100%;
   height: 100%;
   max-width: 500px;
   max-height: 450px;
+  transition: all 0.2s ease-in-out;
 }
 @media (max-width: 920px) {
   .main {

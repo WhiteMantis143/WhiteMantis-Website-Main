@@ -10,8 +10,8 @@ import { useCart } from "../../_context/CartContext";
 
 const Navbar = () => {
   const closeShopDropdown = () => {
-  setShopOpen(false);
-};
+    setShopOpen(false);
+  };
 
   const pathname = usePathname();
 
@@ -26,7 +26,7 @@ const Navbar = () => {
     const handleScroll = () => {
       const currentPosition = window.pageYOffset;
       setIsScrollingDown(
-        currentPosition > scrollPosition && currentPosition > 50
+        currentPosition > scrollPosition && currentPosition > 50,
       );
       setScrollPosition(currentPosition);
     };
@@ -35,18 +35,20 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrollPosition]);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShopOpen(false);
-      }
-    };
+  const timeoutRef = useRef(null);
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setShopOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setShopOpen(false);
+    }, 200);
+  };
 
   return (
     <div className={`${styles.Main} ${isScrollingDown ? styles.hide : ""}`}>
@@ -68,7 +70,8 @@ const Navbar = () => {
             <div
               className={styles.OurShopWrapper}
               ref={dropdownRef}
-              onMouseEnter={() => setShopOpen(true)}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
               <div
                 className={`${styles.OurShops} ${
@@ -94,8 +97,9 @@ const Navbar = () => {
               </div>
 
               <div
-                className={styles.DummyMain}
-                style={{ display: shopOpen ? "block" : "none" }}
+                className={`${styles.DummyMain} ${
+                  shopOpen ? styles.DummyMainOpen : ""
+                }`}
               >
                 <div className={styles.DummyMainCoantiner}>
                   <div className={styles.DummyLeft}>
@@ -115,13 +119,22 @@ const Navbar = () => {
                           <h4>Coffee</h4>
                         </div>
                         <div className={styles.DummyLeftTwoLeftBottom}>
-                          <Link href="/shop/coffee-beans" onClick={closeShopDropdown}>
+                          <Link
+                            href="/shop/coffee-beans"
+                            onClick={closeShopDropdown}
+                          >
                             <p>Coffee Beans</p>
                           </Link>
-                          <Link href="/shop/coffee-dripbags" onClick={closeShopDropdown}>
+                          <Link
+                            href="/shop/coffee-dripbags"
+                            onClick={closeShopDropdown}
+                          >
                             <p>Coffee Drip bags</p>
                           </Link>
-                          <Link href="/shop/coffee-capsules" onClick={closeShopDropdown}>
+                          <Link
+                            href="/shop/coffee-capsules"
+                            onClick={closeShopDropdown}
+                          >
                             <p>Coffee Capsules</p>
                           </Link>
                         </div>

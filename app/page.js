@@ -6,10 +6,11 @@ import Shop from "./_components/Home/Shop/Shop";
 import Subscribe from "./_components/Home/Subscribe/Subscribe";
 import TheRoster from "./_components/Home/TheRoster/TheRoster";
 import ErrorHandler from "./_components/ErrorHandler";
-
+import Partnerships from "./about-us/_components/Partnerships/Partnerships";
 
 export const metadata = {
-  title: "White Mantis Specialty Coffee Roasters | Built on Craft, Driven by Community",
+  title:
+    "White Mantis Specialty Coffee Roasters | Built on Craft, Driven by Community",
   description:
     "Experience premium specialty coffee in Dubai. Shop our curated selection of coffee beans, drips, and capsules.",
   keywords: [
@@ -19,7 +20,6 @@ export const metadata = {
     "coffee capsules",
     "white mantis coffee",
     "coffee subscription",
-   
   ],
 };
 
@@ -31,11 +31,18 @@ export default function Home() {
       </Suspense>
 
       <Landing />
+      <div className="sectionPadding"></div>
       <Coffees />
+      <div className="sectionPadding"></div>
       <Shop />
       {/* <Subscribe /> */}
+      <div className="sectionPadding"></div>
       <Community />
+      <div className="sectionPadding"></div>
+      <Partnerships />
+      <div className="sectionPadding"></div>
       <TheRoster />
+      <div className="sectionPadding"></div>
     </>
   );
 }

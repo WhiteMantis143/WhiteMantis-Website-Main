@@ -21,6 +21,11 @@
   --fs-20: clamp(0.88rem, 0.38vi + 0.79rem, 1.25rem);
   --fs-60: clamp(1.75rem, 2.03vi + 1.32rem, 3.75rem);
   --fs-120: clamp(2.25rem, 5.32vi + 1.12rem, 7.5rem);
+  --sectionPadding: clamp(
+    70px,
+    calc(70px + (80 * ((100vw - 320px) / 1120))),
+    150px
+  );
 }
 
 * {
@@ -56,4 +61,8 @@ a {
   .TopPaddingForMobile {
     padding-top: 108px;
   }
+}
+
+.sectionPadding {
+  height: var(--sectionPadding);
 }

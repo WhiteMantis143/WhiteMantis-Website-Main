@@ -6,6 +6,7 @@
     clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
     clamp(6px, calc(6px + (0 * ((100vw - 320px) / 1120))), 6px)
     clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
+  border-bottom: 1px solid #2f362a66;
 
   position: fixed;
   top: 0;
@@ -88,6 +89,19 @@
   background-color: #ffffff;
   border-top: 0.5px solid #2f362a66;
   z-index: 99;
+
+  /* Animation */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.4s ease;
+  pointer-events: none;
+}
+
+.DummyMainOpen {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
   pointer-events: auto;
 }
 .OurShopWrapper {
