@@ -1,276 +1,192 @@
-.Main {
+.main {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
-  padding: 0px clamp(0px, calc(24px + (-24 * ((100vw - 320px) / 1120))), 24px)
-    0px clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
-  /* padding: clamp(80px, calc(80px + (80 * ((100vw - 320px) / 1120))), 160px)
-    clamp(0px, calc(24px + (-24 * ((100vw - 320px) / 1120))), 24px)
-    clamp(80px, calc(80px + (80 * ((100vw - 320px) / 1120))), 160px)
-    clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px); */
-
   background-color: #ffffff;
+  padding: 0px clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
+    0px clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px);
 }
-
-.MainContainer {
+.MainConatiner {
   display: flex;
   justify-content: left;
-  align-items: center;
+  flex-direction: column;
+  gap: clamp(30px, calc(30px + (45 * ((100vw - 320px) / 1120))), 75px);
+
   width: 100%;
   height: 100%;
-  gap: clamp(44px, calc(44px + (63 * ((100vw - 320px) / 1120))), 107px);
-
-  flex-direction: row;
 }
-
-.Left {
+.Top {
   display: flex;
   justify-content: left;
-  flex-direction: column;
-  height: 100%;
-  gap: clamp(24px, calc(24px + (97 * ((100vw - 320px) / 1120))), 121px);
 }
-
-.LeftTop {
-  display: flex;
-  justify-content: left;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 307px;
-}
-
-.LeftTop h3 {
-  font-family: var(--lexend);
+.Top h3 {
   font-size: var(--fs-22);
-  font-weight: 500;
+  font-family: var(--lexend);
   color: #2f362a;
+  font-weight: 500;
   text-transform: uppercase;
 }
-
-.LeftTop p {
-  font-family: var(--lato);
-  font-size: 15px;
-  color: #6e736a;
-  font-weight: 400;
-}
-
-.LeftBottom {
+.Botttom {
   display: flex;
   justify-content: left;
-  flex-direction: row;
-  gap: 12px;
 }
 
-.LeftBottom svg {
-  width: 100%;
-  max-width: 46px;
-  cursor: pointer;
-  height: 100%;
-  max-height: 46px;
-}
-
-.Right {
+.One {
   display: flex;
-  justify-content: left;
-  flex-direction: row;
-  gap: 40px;
-}
-
-.Card {
-  display: flex;
-  justify-content: left;
   flex-direction: column;
-  gap: 24px;
+  justify-content: left;
+  width: 100%;
+  height: 100%;
+  max-width: 554px;
+  max-height: 748px;
+  gap: clamp(60px, calc(60px + (60 * ((100vw - 320px) / 1120))), 120px);
+
+  padding: clamp(17px, calc(17px + (15 * ((100vw - 320px) / 1120))), 32px)
+    clamp(17px, calc(17px + (11 * ((100vw - 320px) / 1120))), 28px)
+    clamp(17px, calc(17px + (15 * ((100vw - 320px) / 1120))), 32px)
+    clamp(17px, calc(17px + (9 * ((100vw - 320px) / 1120))), 26px);
+
+  border: 1px solid #2f362a4d;
+  transition: all 0.2s ease-in-out;
 }
-.Card:hover .ProductImage {
+.One:hover {
   cursor: pointer;
   border: 1px solid #2f362a;
 }
-.Card:hover img {
-  /* cursor: pointer; */
-  /* border: 1px solid #2f362a; */
+.One:hover img {
   transform: scale(1.05);
 }
-
-.ProductImage {
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 3 / 4;
-  background-color: #f8f8f8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid transparent;
-  transition: all 0.3s ease-in-out;
-}
-
-.ProductImage img {
-  width: 100%;
-  height: 100%;
-  max-width: 401px;
-  max-height: 305px;
-  object-fit: contain;
-  transition: all 0.2s ease-in-out;
-}
-
-.CardTop {
+.OneTop {
   display: flex;
   justify-content: left;
   flex-direction: column;
-  position: relative;
+  gap: clamp(15px, calc(15px + (15 * ((100vw - 320px) / 1120))), 30px);
 }
-
-.LinkSvg {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-}
-
-.CardBottom {
+.OneTopTop {
   display: flex;
   justify-content: left;
-  flex-direction: column;
-  gap: 4px;
+  flex-direction: row;
+  gap: clamp(10px, calc(10px + (5 * ((100vw - 320px) / 1120))), 15px);
 }
-
-.CardBottom h3 {
-  font-size: 15px;
-  font-family: var(--lato);
+.OneTopTop h4 {
+  font-size: var(--fs-22);
+  font-family: var(--lexend);
   color: #2f362a;
-  font-weight: 400;
+  font-weight: 500;
+  white-space: nowrap;
+  text-transform: uppercase;
 }
-
-.CardBottom p {
+.OneTopBottom {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 16px;
+}
+.OneTopBottom h5 {
   font-size: 15px;
   font-family: var(--lato);
   color: #6e736a;
   font-weight: 400;
+  text-decoration: underline;
+  cursor: pointer;
 }
-
-.Embla {
+.OneTopBottom p {
+  font-size: 15px;
+  font-weight: 400;
+  width: 70%;
+  color: #6e736a;
+  font-family: var(--lato);
+}
+.OneBottom {
+  display: flex;
+  justify-content: left;
   overflow: hidden;
 }
-
-.EmblaContainer {
-  display: flex;
-  gap: 40px;
+.OneBottom img {
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  max-height: 450px;
+  transition: all 0.2s ease-in-out;
 }
-
-.EmblaSlide {
-  flex: 0 0 auto;
-  width: 25%;
-}
-
-.MobileArrows {
-  display: none;
-}
-
 @media (max-width: 640px) {
-  .Main {
-    padding: 0px 24px;
+  .main {
+    padding: 0px 24px 0px 24px;
   }
-
-  .MainContainer {
+  .MainConatiner {
+    gap: 30px;
+  }
+  .Top h3 {
+    font-size: 20px;
+  }
+  .Botttom {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 44px;
+    gap: 30px;
   }
-
-  .Left {
-    gap: 24px;
-  }
-
-  .LeftTop {
-    max-width: 100%;
-  }
-
-  .LeftBottom {
-    display: none;
-  }
-
-  .MobileArrows {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-   
-  }
-
-  .MobileArrows svg {
-    max-width: 25px;
-    max-height: 25px;
-    cursor: pointer;
-  }
-
-  .Right {
-    width: 100%;
-  }
-
-  .Embla {
-    width: 100%;
-  }
-
-  .EmblaContainer {
-    gap: 24px;
-  }
-
-  .EmblaSlide {
-    flex: 0 0 85%;
-  }
-
-  .ProdImge img {
-    max-width: 100%;
-    max-height: none;
-  }
-
-  .LeftBottom svg {
-    max-width: 25px;
-    max-height: 25px;
-  }
-}
-
-@media (min-width: 641px) and (max-width: 1200px) {
-  .Main {
-    padding: 0px 40px;
-  }
-
-  .MainContainer {
+  .One,
+  .Two,
+  .Three {
+    padding: 17px 17px 17px 17px;
     gap: 60px;
   }
-
-  .Left {
-    gap: 48px;
+  .OneTopTop h4,
+  .TwoTopTop h4,
+  .ThreeTopTop h4 {
+    font-size: 20px;
   }
-
-  .Right {
+  .OneTopBottom p,
+  .TwoTopBottom p,
+  .ThreeTopBottom p {
+    width: 85%;
+    font-size: 15px;
+  }
+  .OneBottom img,
+  .TwoBottom img,
+  .ThreeBottom img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* max-width: 320px; */
+    max-height: 288px;
   }
-
-  .EmblaContainer {
-    gap: 32px;
+}
+@media (min-width: 641px) and (max-width: 920px) {
+  .MainConatiner {
+    gap: 30px;
   }
-
-  .EmblaSlide {
-    flex: 0 0 auto;
+  .Top h3 {
+    font-size: 20px;
   }
-
-  .ProductImage img {
-    max-width: 530px;
-    max-height: 280px;
+  .Botttom {
+    flex-direction: column;
+    gap: 30px;
   }
-  .Card{
+  .One,
+  .Two,
+  .Three {
+    padding: 17px 17px 17px 17px;
+    gap: 60px;
+  }
+  .OneTopTop h4,
+  .TwoTopTop h4,
+  .ThreeTopTop h4 {
+    font-size: 20px;
+  }
+  .OneTopBottom p,
+  .TwoTopBottom p,
+  .ThreeTopBottom p {
+    width: 85%;
+    font-size: 15px;
+  }
+  .OneBottom img,
+  .TwoBottom img,
+  .ThreeBottom img {
     width: 100%;
-    max-width: 530px;
-    min-width: 170px;
-  }
-  .LinkSvg{
-    right: 0px;
-    top: 0px;
-  }
-  .LinkSvg svg{
-    width: 20px;
-    height: 20px;
+    height: 100%;
+    object-fit: cover;
+    /* max-width: 320px; */
+    max-height: 288px;
   }
 }
