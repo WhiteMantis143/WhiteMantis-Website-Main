@@ -189,6 +189,13 @@
     color: #6E736A;
 }
 
+.CouponError {
+  font-family: var(--lato);
+  font-size: 14px;
+  font-weight: 400;
+  color: #dc2626; 
+  margin-top: -8px;
+}
 
 @media (max-width: 640px) {
   .sidebar {

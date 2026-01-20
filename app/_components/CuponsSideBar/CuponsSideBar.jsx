@@ -8,6 +8,8 @@ const CuponsSideBar = ({ isOpen, onClose }) => {
   const [couponList, setCouponList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [inputCode, setInputCode] = useState("");
+  const [couponError, setCouponError] = useState("");
+
 
   useEffect(() => {
     if (isOpen) {
@@ -29,15 +31,21 @@ const CuponsSideBar = ({ isOpen, onClose }) => {
       setLoading(false);
     }
   };
+const handleApply = async (code) => {
+  if (!code) return;
 
-  const handleApply = async (code) => {
-    if (!code) return;
-    const res = await applyCoupon(code);
-    if (res?.ok) {
-      onClose();
-      setInputCode("");
-    }
-  };
+  setCouponError(""); 
+
+  const res = await applyCoupon(code);
+
+  if (res?.ok) {
+    onClose();
+    setInputCode("");
+  } else {
+    setCouponError("Coupon code is invalid or not applicable");
+  }
+};
+
 
   return (
     <aside className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
@@ -71,6 +79,9 @@ const CuponsSideBar = ({ isOpen, onClose }) => {
           />
           <button onClick={() => handleApply(inputCode)}>Apply</button>
         </div>
+        {couponError && (
+  <p className={styles.CouponError}>{couponError}</p>
+)}
 
         <div className={styles.CouponsList}>
           <div className={styles.CouponsHeader}>

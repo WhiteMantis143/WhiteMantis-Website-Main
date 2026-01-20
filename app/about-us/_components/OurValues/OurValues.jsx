@@ -51,7 +51,7 @@ const OurValues = () => {
             end: "+=120%",
             scrub: 1,
             pin: true,
-            markers: true, // Set to true for debugging
+            markers: false, // Set to true for debugging
             id: "desktop-st",
           },
         });

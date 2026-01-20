@@ -145,8 +145,8 @@
   background: transparent;
   font-size: 15px;
   font-family: var(--lato);
-  font-weight: 400;
-  color: #6c7a5f;
+  font-weight: 700;
+  color: #6C7A5F;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -160,8 +160,9 @@
   border-right: 1px solid #2f362a4d;
   display: flex;
   align-items: center;
+  font-weight: 700;
   justify-content: center;
-  font-size: 15px;
+  font-size: 13px;
   color: #6c7a5f;
 }
 

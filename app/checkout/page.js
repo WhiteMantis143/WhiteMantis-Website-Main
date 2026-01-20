@@ -21,6 +21,7 @@ import {
   CardCvcElement,
   CardNumberElement,
 } from "@stripe/react-stripe-js";
+import Link from "next/link";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
@@ -90,7 +91,7 @@ function CheckoutForm({
       return "Phone number is required";
     }
     // UAE phone validation - matches backend validation
-    const cleanNumber = phoneValue.replace(/\D/g, '');
+    const cleanNumber = phoneValue.replace(/\D/g, "");
     const uaeRegex = /^(?:00971|971|0)?(5[024568]|2|3|4|6|7|9)\d{7}$/;
     const match = cleanNumber.match(uaeRegex);
 
@@ -116,18 +117,18 @@ function CheckoutForm({
   const scrollToFirstError = (errors) => {
     // Define the order of fields to check
     const fieldOrder = [
-      'email',
-      'shippingFirstName',
-      'shippingLastName',
-      'shippingAddress',
-      'shippingCity',
-      'shippingPhone',
-      'billingFirstName',
-      'billingLastName',
-      'billingAddress',
-      'billingCity',
-      'billingPhone',
-      'card'
+      "email",
+      "shippingFirstName",
+      "shippingLastName",
+      "shippingAddress",
+      "shippingCity",
+      "shippingPhone",
+      "billingFirstName",
+      "billingLastName",
+      "billingAddress",
+      "billingCity",
+      "billingPhone",
+      "card",
     ];
 
     // Find the first field with an error
@@ -139,12 +140,12 @@ function CheckoutForm({
           if (errorElement) {
             // Get the element's position
             const elementPosition = errorElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - 100
+            const offsetPosition = elementPosition + window.pageYOffset - 100;
 
             // Smooth scroll to position
             window.scrollTo({
               top: offsetPosition,
-              behavior: 'smooth'
+              behavior: "smooth",
             });
 
             // Focus after scroll completes
@@ -476,9 +477,9 @@ function CheckoutForm({
           type: checkoutMode,
           ...(checkoutMode === "subscription"
             ? {
-              subscriptionProductId: subscriptionId,
-              subscriptionProductVariationId: variationId,
-            }
+                subscriptionProductId: subscriptionId,
+                subscriptionProductVariationId: variationId,
+              }
             : {}),
         },
         deliveryOption: delivery,
@@ -577,7 +578,10 @@ function CheckoutForm({
                   onBlur={() => {
                     const error = validateEmail(email);
                     if (error) {
-                      setValidationErrors((prev) => ({ ...prev, email: error }));
+                      setValidationErrors((prev) => ({
+                        ...prev,
+                        email: error,
+                      }));
                     }
                   }}
                   readOnly={!!session?.user?.email}
@@ -598,25 +602,13 @@ function CheckoutForm({
           <div className={styles.Three}>
             <div className={styles.HeaderRow}>
               <h3>DELIVERY</h3>
-              <svg
-                width="10"
-                height="6"
-                viewBox="0 0 10 6"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M5 0L0 5L1.41 6.41L5 2.83L8.59 6.41L10 5L5 0Z"
-                  fill="#2F362A"
-                  transform="rotate(180 5 3)"
-                />
-              </svg>
             </div>
 
             <div className={styles.ThreeTwo}>
               <div
-                className={`${styles.ThreeRow} ${delivery === "ship" ? styles.Active : ""
-                  }`}
+                className={`${styles.ThreeRow} ${
+                  delivery === "ship" ? styles.Active : ""
+                }`}
                 onClick={() => setDelivery("ship")}
               >
                 <div className={styles.RowLeft}>
@@ -656,8 +648,9 @@ function CheckoutForm({
               </div>
 
               <div
-                className={`${styles.ThreeRow} ${delivery === "pickup" ? styles.Active : ""
-                  }`}
+                className={`${styles.ThreeRow} ${
+                  delivery === "pickup" ? styles.Active : ""
+                }`}
                 onClick={() => setDelivery("pickup")}
               >
                 <div className={styles.RowLeft}>
@@ -707,8 +700,9 @@ function CheckoutForm({
                       {savedAddresses.map((addr) => (
                         <div
                           key={addr.id}
-                          className={`${styles.AddressCard} ${selectedAddressId === addr.id ? styles.Selected : ""
-                            }`}
+                          className={`${styles.AddressCard} ${
+                            selectedAddressId === addr.id ? styles.Selected : ""
+                          }`}
                           onClick={() => {
                             setSelectedAddressId(addr.id);
                             setShowNewAddressForm(false);
@@ -857,9 +851,15 @@ function CheckoutForm({
                           clearError("shippingFirstName");
                         }}
                         onBlur={() => {
-                          const error = validateRequired(shippingForm.firstName, "First name");
+                          const error = validateRequired(
+                            shippingForm.firstName,
+                            "First name",
+                          );
                           if (error) {
-                            setValidationErrors((prev) => ({ ...prev, shippingFirstName: error }));
+                            setValidationErrors((prev) => ({
+                              ...prev,
+                              shippingFirstName: error,
+                            }));
                           }
                         }}
                       />
@@ -882,9 +882,15 @@ function CheckoutForm({
                           clearError("shippingLastName");
                         }}
                         onBlur={() => {
-                          const error = validateRequired(shippingForm.lastName, "Last name");
+                          const error = validateRequired(
+                            shippingForm.lastName,
+                            "Last name",
+                          );
                           if (error) {
-                            setValidationErrors((prev) => ({ ...prev, shippingLastName: error }));
+                            setValidationErrors((prev) => ({
+                              ...prev,
+                              shippingLastName: error,
+                            }));
                           }
                         }}
                       />
@@ -908,9 +914,15 @@ function CheckoutForm({
                         clearError("shippingAddress");
                       }}
                       onBlur={() => {
-                        const error = validateRequired(shippingForm.address, "Address");
+                        const error = validateRequired(
+                          shippingForm.address,
+                          "Address",
+                        );
                         if (error) {
-                          setValidationErrors((prev) => ({ ...prev, shippingAddress: error }));
+                          setValidationErrors((prev) => ({
+                            ...prev,
+                            shippingAddress: error,
+                          }));
                         }
                       }}
                     />
@@ -945,9 +957,15 @@ function CheckoutForm({
                           clearError("shippingCity");
                         }}
                         onBlur={() => {
-                          const error = validateRequired(shippingForm.city, "City");
+                          const error = validateRequired(
+                            shippingForm.city,
+                            "City",
+                          );
                           if (error) {
-                            setValidationErrors((prev) => ({ ...prev, shippingCity: error }));
+                            setValidationErrors((prev) => ({
+                              ...prev,
+                              shippingCity: error,
+                            }));
                           }
                         }}
                       />
@@ -982,7 +1000,10 @@ function CheckoutForm({
                       onBlur={() => {
                         const error = validatePhone(shippingForm.phone);
                         if (error) {
-                          setValidationErrors((prev) => ({ ...prev, shippingPhone: error }));
+                          setValidationErrors((prev) => ({
+                            ...prev,
+                            shippingPhone: error,
+                          }));
                         }
                       }}
                     />
@@ -1095,9 +1116,15 @@ function CheckoutForm({
                         clearError("billingFirstName");
                       }}
                       onBlur={() => {
-                        const error = validateRequired(billingForm.firstName, "First name");
+                        const error = validateRequired(
+                          billingForm.firstName,
+                          "First name",
+                        );
                         if (error) {
-                          setValidationErrors((prev) => ({ ...prev, billingFirstName: error }));
+                          setValidationErrors((prev) => ({
+                            ...prev,
+                            billingFirstName: error,
+                          }));
                         }
                       }}
                     />
@@ -1120,9 +1147,15 @@ function CheckoutForm({
                         clearError("billingLastName");
                       }}
                       onBlur={() => {
-                        const error = validateRequired(billingForm.lastName, "Last name");
+                        const error = validateRequired(
+                          billingForm.lastName,
+                          "Last name",
+                        );
                         if (error) {
-                          setValidationErrors((prev) => ({ ...prev, billingLastName: error }));
+                          setValidationErrors((prev) => ({
+                            ...prev,
+                            billingLastName: error,
+                          }));
                         }
                       }}
                     />
@@ -1139,13 +1172,22 @@ function CheckoutForm({
                     placeholder="House number, Street name"
                     value={billingForm.address}
                     onChange={(e) => {
-                      setBillingForm({ ...billingForm, address: e.target.value });
+                      setBillingForm({
+                        ...billingForm,
+                        address: e.target.value,
+                      });
                       clearError("billingAddress");
                     }}
                     onBlur={() => {
-                      const error = validateRequired(billingForm.address, "Address");
+                      const error = validateRequired(
+                        billingForm.address,
+                        "Address",
+                      );
                       if (error) {
-                        setValidationErrors((prev) => ({ ...prev, billingAddress: error }));
+                        setValidationErrors((prev) => ({
+                          ...prev,
+                          billingAddress: error,
+                        }));
                       }
                     }}
                   />
@@ -1173,13 +1215,22 @@ function CheckoutForm({
                       placeholder="City"
                       value={billingForm.city}
                       onChange={(e) => {
-                        setBillingForm({ ...billingForm, city: e.target.value });
+                        setBillingForm({
+                          ...billingForm,
+                          city: e.target.value,
+                        });
                         clearError("billingCity");
                       }}
                       onBlur={() => {
-                        const error = validateRequired(billingForm.city, "City");
+                        const error = validateRequired(
+                          billingForm.city,
+                          "City",
+                        );
                         if (error) {
-                          setValidationErrors((prev) => ({ ...prev, billingCity: error }));
+                          setValidationErrors((prev) => ({
+                            ...prev,
+                            billingCity: error,
+                          }));
                         }
                       }}
                     />
@@ -1211,7 +1262,10 @@ function CheckoutForm({
                     onBlur={() => {
                       const error = validatePhone(billingForm.phone);
                       if (error) {
-                        setValidationErrors((prev) => ({ ...prev, billingPhone: error }));
+                        setValidationErrors((prev) => ({
+                          ...prev,
+                          billingPhone: error,
+                        }));
                       }
                     }}
                   />
@@ -1236,10 +1290,16 @@ function CheckoutForm({
             <div className={styles.PageLinks}>
               <p>Refund policy</p>
               <p>Shipping</p>
-              <p>Privacy policy</p>
+              <Link href="/privacy-policy">
+                <p>Privacy policy</p>
+              </Link>
+
               <p>Terms of service</p>
+
               <p>Cancellations</p>
-              <p>Contact</p>
+              <Link href="/contact">
+                <p>Contact</p>
+              </Link>
             </div>
           </div>
         </div>
@@ -1539,7 +1599,7 @@ function CheckoutContent() {
         (acc, item) =>
           acc +
           parseFloat(item.price?.final_price || item.price || 0) *
-          (item.quantity || 1),
+            (item.quantity || 1),
         0,
       );
     }

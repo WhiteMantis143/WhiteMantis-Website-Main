@@ -608,6 +608,43 @@
   color: #2f362a;
 }
 
+.CheckBox input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid #9b9b9b;
+  border-radius: 0px; 
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+
+.CheckBox input[type="checkbox"]:hover {
+  border-color: #2f362a;
+}
+
+
+.CheckBox input[type="checkbox"]:checked {
+  background-color: #2f7a3f;
+  border-color: #2f7a3f;
+}
+
+
+.CheckBox input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 4px;
+  height: 8px;
+  border: solid #ffffff;
+  border-width: 0 0px 0px 0;
+  transform: rotate(45deg);
+}
+
 @media (max-width: 640px) {
   .Main {
     padding: 80px 24px;
@@ -776,6 +813,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  justify-content: right;
   padding: 12px 0;
   background: none;
   border: none;
