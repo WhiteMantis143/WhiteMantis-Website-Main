@@ -1,14 +1,37 @@
+'use client';
 import React from "react";
 import styles from "./TopNavigation.module.css";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const TopNavigation = () => {
+  const pathname = usePathname();
+
+  const segments = pathname.split("/").filter(Boolean);
+
+  const categorySlug = segments[1] || "";
+  const productSlug = segments[2] || "";
+
+  const formatSlug = (slug) =>
+    slug
+      .replace(/-\d+$/, "")
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+      const getFirstWord = (slug) => {
+  const formatted = formatSlug(slug);
+  return formatted.split(" ")[0];
+};
+
+
   return (
     <>
       <div className={styles.main}>
         <div className={styles.MainContainer}>
           <div className={styles.Top}>
             <div className={styles.Home}>
-              <p>home</p>
+              <Link href="/">
+                <p>home</p>
+              </Link>
             </div>
             <div className={styles.SeparatorSvg}>
               <svg
@@ -25,7 +48,9 @@ const TopNavigation = () => {
               </svg>
             </div>
             <div className={styles.Shop}>
-              <p>Shop</p>
+              <Link href="/shop">
+                <p>Shop</p>
+              </Link>
             </div>
             <div className={styles.SeparatorSvg}>
               <svg
@@ -42,7 +67,9 @@ const TopNavigation = () => {
               </svg>
             </div>
             <div className={styles.CatName}>
-              <p>Coffee Beans</p>
+              <Link href={`/shop/${categorySlug}`}>
+                <p>{formatSlug(categorySlug)}</p>
+              </Link>
             </div>
             <div className={styles.SeparatorSvg}>
               <svg
@@ -59,7 +86,8 @@ const TopNavigation = () => {
               </svg>
             </div>
             <div className={styles.ProductName}>
-              <p>Ethiopia Hamasho</p>
+            <p>{getFirstWord(productSlug)}</p>
+
             </div>
           </div>
           <div className={styles.line}></div>

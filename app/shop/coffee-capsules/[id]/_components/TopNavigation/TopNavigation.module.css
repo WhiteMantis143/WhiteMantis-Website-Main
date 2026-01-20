@@ -26,10 +26,16 @@
     gap: 14.4px;
     align-items: center;
 }
+.Top a{
+    text-decoration: none;
+
+}
 .Home p, .Shop p, .CatName p{
     font-family: var(--lato);
     font-size: 15px;
     font-weight: 400;
+    white-space: nowrap;
+   
     cursor: pointer;
     color: #6E736A;
 }
@@ -57,5 +63,10 @@
 @media (min-width: 641px) and (max-width: 10240px) {
   .main{
    padding-top: 140px;
+  }
+}
+@media (max-width: 340px) {
+  .Top p{
+    white-space: normal;
   }
 }
