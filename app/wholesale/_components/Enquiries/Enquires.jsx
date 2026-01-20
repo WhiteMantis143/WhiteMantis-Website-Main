@@ -18,6 +18,8 @@ const Enquires = () => {
   });
   const [loading, setLoading] = useState(false);
   const [otherCategory, setOtherCategory] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
+  const [responseError, setResponseError] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,6 +43,8 @@ const Enquires = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setResponseMessage("");
+    setResponseError(false);
 
     if (
       !formData.businessName ||
@@ -68,7 +72,11 @@ const Enquires = () => {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        console.log("Enquiry submitted successfully!");
+        setResponseError(false);
+        setResponseMessage(
+          "Thank you! Your wholesale enquiry has been submitted.",
+        );
+
         setFormData({
           businessName: "",
           contactName: "",
@@ -79,13 +87,21 @@ const Enquires = () => {
           categories: [],
           message: "",
         });
+
         setOtherCategory("");
+
+        // auto-hide message after 3 seconds (same UX as contact form)
+        setTimeout(() => {
+          setResponseMessage("");
+        }, 3000);
       } else {
-        console.error(data.message || "Failed to submit enquiry");
+        setResponseError(true);
+        setResponseMessage(data.message || "Failed to submit enquiry");
       }
     } catch (error) {
       console.error("Submission error:", error);
-      console.error("Something went wrong. Please try again.");
+      setResponseError(true);
+      setResponseMessage("Network error. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -226,13 +242,24 @@ const Enquires = () => {
                 />
               </div>
               <div className={styles.SubButton}>
-                <button
-                  type="submit"
-                  className={styles.SubmitButton}
-                  disabled={loading}
-                >
-                  {loading ? "Submitting..." : "Submit"}
-                </button>
+                <div className={styles.SubmitWrap}>
+                  <button
+                    type="submit"
+                    className={styles.SubmitButton}
+                    disabled={loading}
+                  >
+                    {loading ? "Submitting..." : "Submit"}
+                  </button>
+
+                  {responseMessage && (
+                    <div
+                      className={styles.ResponseMessage}
+                      data-error={responseError}
+                    >
+                      {responseMessage}
+                    </div>
+                  )}
+                </div>
               </div>
             </form>
           </div>

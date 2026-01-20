@@ -100,6 +100,24 @@
   font-size: 14px;
   color: #2f362a;
 }
+.SubmitWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; 
+}
+
+.ResponseMessage {
+  margin-top: 12px;
+  font-family: var(--lato);
+  font-size: 14px;
+  color: #197b5b;
+}
+
+
+.ResponseMessage[data-error="true"] {
+  color: crimson;
+}
+
 .Form textarea {
   border: none;
   /* border-bottom: 1px solid #2f362a; */
