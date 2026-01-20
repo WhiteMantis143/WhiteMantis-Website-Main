@@ -20,6 +20,7 @@
 .Left {
   display: flex;
   justify-content: left;
+  width: 100%;
 }
 .Left img {
   width: auto;
@@ -32,6 +33,7 @@
   display: flex;
   justify-content: left;
   flex-direction: column;
+  width: 100%;
   gap: clamp(24px, calc(24px + (8 * ((100vw - 320px) / 1120))), 32px);
 }
 .RightTop {
@@ -192,7 +194,7 @@ textarea::placeholder {
 }
 @media (max-width: 640px) {
   .Main {
-    padding: 0px 24px 80px 24px;
+    padding: 0px 24px 0px 24px;
   }
   .MainContainer {
     flex-direction: column;
@@ -201,13 +203,14 @@ textarea::placeholder {
     align-items: baseline;
     overflow: hidden;
   }
-  .LeftContainer {
+  .Left {
     max-width: 100%;
   }
-  .LeftContainer img {
-    height: auto;
+  .Left img {
+    height: 100%;
     width: 100%;
     max-width: 100%;
+    max-height: 400px;
     object-fit: cover;
   }
 
@@ -236,6 +239,7 @@ textarea::placeholder {
     align-items: center;
     justify-content: center;
     gap: 64px;
+    height: 100%;
   }
 
   .Left {
@@ -248,13 +252,15 @@ textarea::placeholder {
   .Left img {
     width: 100%;
     max-width: 420px;
-    height: auto;
+    height: 540px;
+    max-height: 540px;
     object-fit: cover;
   }
 
   .Right {
     flex: 1;
     max-width: 420px;
+    height: 100%;
   }
 
   .RightBottom .Form {

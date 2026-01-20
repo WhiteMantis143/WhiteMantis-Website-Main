@@ -116,6 +116,17 @@ const Lisiting = () => {
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + ITEMS_PER_LOAD);
   };
+  useEffect(() => {
+    if (isMobileFiltersOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileFiltersOpen]);
 
   // Helper to get variation data (Functionality)
   const getDisplayData = (product) => {
@@ -170,8 +181,9 @@ const Lisiting = () => {
               {openMenus[cat.slug] ? <span>✕</span> : <span>▾</span>}
             </div>
             <div
-              className={`${styles.AnimatedBox} ${openMenus[cat.slug] ? styles.open : ""
-                }`}
+              className={`${styles.AnimatedBox} ${
+                openMenus[cat.slug] ? styles.open : ""
+              }`}
             >
               <div className={styles.FilterOptions}>
                 {renderCategories(cat.children)}
@@ -352,10 +364,7 @@ const Lisiting = () => {
                       {/* <div className={styles.WishlistIcon}>
                         <Wishlist product={product} />
                       </div> */}
-                      <Link
-                        href={productUrl}
-                        className={styles.ProductImage}
-                      >
+                      <Link href={productUrl} className={styles.ProductImage}>
                         {displayData.image ? (
                           <Image
                             src={displayData.image}
@@ -379,7 +388,7 @@ const Lisiting = () => {
                             <h4>AED {displayData.price}</h4>
                             {displayData.sale_price &&
                               displayData.sale_price !==
-                              displayData.regular_price && (
+                                displayData.regular_price && (
                                 <p className={styles.OldPrice}>
                                   AED {displayData.regular_price}
                                 </p>
@@ -414,15 +423,25 @@ const Lisiting = () => {
         </div>
 
         {isMobileFiltersOpen && (
-          <div className={styles.MobileFilters} ref={mobileFiltersRef}>
-            <div className={styles.MobileFilterHeader}>
-              <p>Filters</p>
-              <span onClick={() => setIsMobileFiltersOpen(false)}>✕</span>
+          <>
+            {/* Background overlay */}
+            <div
+              className={styles.MobileFilterOverlay}
+              onClick={() => setIsMobileFiltersOpen(false)}
+            />
+
+            {/* Filter drawer */}
+            <div className={styles.MobileFilters} ref={mobileFiltersRef}>
+              <div className={styles.MobileFilterHeader}>
+                <p>Filters</p>
+                <span onClick={() => setIsMobileFiltersOpen(false)}>✕</span>
+              </div>
+
+              <div className={styles.LeftBottom}>
+                {renderCategories(productsCategories)}
+              </div>
             </div>
-            <div className={styles.LeftBottom}>
-              {renderCategories(productsCategories)}
-            </div>
-          </div>
+          </>
         )}
       </div>
     </div>

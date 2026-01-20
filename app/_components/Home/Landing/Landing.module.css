@@ -121,7 +121,7 @@ padding-right: clamp(24px, calc(24px + (102 * ((100vw - 320px) / 1120))), 125px)
   font-size: 20px;
  }
  .BottomText p{
-  width: 70%;
+  width: 98%;
   font-size: 14px;
  }
  .Content{
@@ -131,5 +131,8 @@ padding-right: clamp(24px, calc(24px + (102 * ((100vw - 320px) / 1120))), 125px)
   padding-top:150px;
   padding-bottom: 30px;
   height: 100svh;
+ }
+ .RightBottomText{
+  display: none;
  }
 }

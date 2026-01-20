@@ -98,6 +98,17 @@ const Lisiting = () => {
 
     return result;
   }, [allProducts, selectedCategories, sortType]);
+  useEffect(() => {
+    if (isMobileFiltersOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileFiltersOpen]);
 
   // 5. Handlers
   const handleToggleCategory = (id) => {
@@ -400,15 +411,25 @@ const Lisiting = () => {
         </div>
 
         {isMobileFiltersOpen && (
-          <div className={styles.MobileFilters} ref={mobileFiltersRef}>
-            <div className={styles.MobileFilterHeader}>
-              <p>Filters</p>
-              <span onClick={() => setIsMobileFiltersOpen(false)}>✕</span>
+          <>
+            {/* Background overlay */}
+            <div
+              className={styles.MobileFilterOverlay}
+              onClick={() => setIsMobileFiltersOpen(false)}
+            />
+
+            {/* Filter drawer */}
+            <div className={styles.MobileFilters} ref={mobileFiltersRef}>
+              <div className={styles.MobileFilterHeader}>
+                <p>Filters</p>
+                <span onClick={() => setIsMobileFiltersOpen(false)}>✕</span>
+              </div>
+
+              <div className={styles.LeftBottom}>
+                {renderCategories(productsCategories)}
+              </div>
             </div>
-            <div className={styles.LeftBottom}>
-              {renderCategories(productsCategories)}
-            </div>
-          </div>
+          </>
         )}
       </div>
     </div>

@@ -167,6 +167,7 @@
   font-size: 15px;
   font-weight: 400;
   color: #6e736a;
+ 
 }
 .DummyLine {
   width: 100%;
@@ -197,6 +198,7 @@
   font-size: var(--fs-22);
   font-weight: 500;
   color: #6e736a;
+  
 }
 .DummyLeftTwoLeftBottom,
 .DummyLeftTwoRightBottom {
@@ -212,6 +214,7 @@
   font-weight: 400;
   color: #6e736a;
   cursor: pointer;
+  
 }
 .DummyRight {
   display: flex;
@@ -246,12 +249,14 @@
   font-size: var(--fs-22);
   font-weight: 500;
   color: #ffffff;
+  
 }
 .DummyRightOneTop p {
   font-family: var(--lato);
   font-size: 15px;
   font-weight: 400;
   color: #ffffff;
+   cursor: pointer;
 }
 .DummyRightOneBottom,
 .DummyRightTwoBottom {

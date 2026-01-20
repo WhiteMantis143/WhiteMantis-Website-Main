@@ -465,6 +465,31 @@
   align-items: center;
   justify-content: center;
 }
+.FilterOptions input[type="checkbox"] {
+
+ 
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 13px;
+  height: 13px;
+
+  border: 1px solid #6e736a;
+  border-radius: 0; 
+
+  background: #ffffff;
+  cursor: pointer;
+
+  display: inline-grid;
+  place-content: center;
+}
+.MobileFilterOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45); 
+  z-index: 900; 
+}
 
 @media (max-width: 640px) {
   .main {
@@ -474,11 +499,14 @@
   .MainContainer {
     flex-direction: column;
     gap: 24px;
+    
   }
+
   .ProductImage img {
     max-width: 170px;
     max-height: 200px;
   }
+
   .LeftConatiner {
     display: none;
   }
@@ -489,9 +517,11 @@
     row-gap: 61px;
     column-gap: 10px;
   }
+
   .WishlistIcon {
     right: 2px;
   }
+
   .ProductTop {
     width: 100%;
   }
@@ -505,6 +535,7 @@
     width: 100%;
     padding: 12px 0;
   }
+
   .Subscribe {
     display: none;
   }
@@ -516,7 +547,7 @@
     cursor: pointer;
     border: 1px solid #6e736a;
     padding: 11.5px 10px;
-    color: #6e736a;
+    color: #6E736A;
     font-size: 15px;
     max-width: 169px;
     font-weight: 400;
@@ -524,30 +555,52 @@
     width: 100%;
     gap: 5px;
   }
+
   .SortOptions {
     padding: 11.5px 10px;
     width: 100%;
     max-width: 169px;
     min-width: 169px;
   }
-  .RightTopRight {
-    width: 100%;
-    align-items: baseline;
-    justify-content: left;
-  }
+  .RightTop {
+  position: sticky;
+  top: 73px; 
+  z-index: 30;
+  background: #ffffff;
+  padding-bottom: 10px;
+}
+
+.RightTopRight {
+ display: flex;
+  z-index: 30;
+
+  width: 100%;
+  align-items: baseline;
+  justify-content: left;
+
+  background: #ffffff;
+  padding-bottom: 10px;
+}
+
+
   .SortBy p {
     display: none;
   }
+
   .RightTopLeft {
     display: none;
   }
+
   .ProductCard {
     width: 100%;
     max-width: 170px;
   }
+
   .RightConatiner {
     gap: 32px;
+   
   }
+
   .FilterBox {
     min-width: 120px;
   }
@@ -604,10 +657,22 @@
     max-width: 169px;
     min-width: 169px;
   }
+   .RightTop {
+  position: sticky;
+  top: 73px; 
+  z-index: 30;
+  background: #ffffff;
+  padding-bottom: 10px;
+}
   .RightTopRight {
-    width: 100%;
-    align-items: baseline;
-    justify-content: left;
+   display: flex;
+  z-index: 30;
+
+  width: 100%;
+  align-items: baseline;
+  justify-content: left;
+
+  background: #ffffff;
   }
   .RightTopLeft {
     display: none;

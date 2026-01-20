@@ -86,7 +86,7 @@
 
 @media (max-width: 600px) {
   .sectionWrapper {
-    padding: 12px;
+    padding: 0px 24px 0px 24px;
   }
   .title {
     margin-left: 4px;

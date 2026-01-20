@@ -58,7 +58,7 @@
 }
 @media (max-width: 640px) {
   .Main {
-    padding: 0px 24px 80px 24px;
+    padding: 0px 24px 0px 24px;
   }
 
   .MainContainer {

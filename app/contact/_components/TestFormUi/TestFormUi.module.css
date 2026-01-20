@@ -59,9 +59,7 @@
 }
 
 
-.selectWrap {
-  position: relative;
-}
+
 
 .selectWrap::after {
   content: "";
@@ -102,6 +100,45 @@
   font-size: 16px;
   cursor: pointer;
 }
+.formBox select {
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+/* .formBox select:focus {
+  background-color: #f7f8f5;
+  border-bottom-color: #2f362a;
+} */
+
+
+.selectWrap {
+  position: relative;
+}
+.selectWrap.open::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+.open::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+
+/* Arrow */
+.selectWrap::after {
+  content: "";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid #9aa08f;
+  pointer-events: none;
+
+  transition: transform 0.25s ease;
+}
+
 
 
 @media (max-width: 768px) {

@@ -16,15 +16,15 @@ const ContactForm = () => {
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
   const [responseError, setResponseError] = useState(false);
+  const [enquiryOpen, setEnquiryOpen] = useState(false);
+  const enquiryOptions = ["General", "Support", "Partnership", "Careers"];
 
-const ENDPOINT = "/api/website/contact";
-
+  const ENDPOINT = "/api/website/contact";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setResponseMessage("");
     setResponseError(false);
-
 
     if (!fullName.trim() || !email.trim()) {
       setResponseError(true);
@@ -51,7 +51,9 @@ const ENDPOINT = "/api/website/contact";
       const json = await res.json();
       if (!res.ok || (json && json.success === false)) {
         setResponseError(true);
-        setResponseMessage((json && json.message) || "Submission failed. Please try again.");
+        setResponseMessage(
+          (json && json.message) || "Submission failed. Please try again.",
+        );
       } else {
         setResponseError(false);
         setResponseMessage("Thank you! Your message has been submitted.");
@@ -65,12 +67,11 @@ const ENDPOINT = "/api/website/contact";
       setResponseError(true);
       setResponseMessage("Network error. Please try again.");
     } finally {
-        
-          try {
-            window.setTimeout(() => {
-              setResponseMessage("");
-            }, 3000);
-          } catch (e) {}
+      try {
+        window.setTimeout(() => {
+          setResponseMessage("");
+        }, 3000);
+      } catch (e) {}
       setLoading(false);
     }
   };
@@ -126,18 +127,26 @@ const ENDPOINT = "/api/website/contact";
                   />
                 </div>
 
-                <div className={testStyles.selectWrap}>
-                  <select
-                    value={enquiryType}
-                    onChange={(e) => setEnquiryType(e.target.value)}
-                  >
-                    <option value="">Please select enquiry type</option>
-                    <option value="General">General</option>
-                    <option value="Support">Support</option>
-                    <option value="Partnership">Partnership</option>
-                    <option value="Careers">Careers</option>
-                  </select>
-                </div>
+            <div
+  className={`${testStyles.selectWrap} ${
+    enquiryOpen ? testStyles.open : ""
+  }`}
+>
+  <select
+    value={enquiryType}
+    onClick={() => setEnquiryOpen((prev) => !prev)}
+    onChange={(e) => {
+      setEnquiryType(e.target.value);
+      setEnquiryOpen(false);
+    }}
+  >
+    <option value="">Please select enquiry type</option>
+    <option value="General">General</option>
+    <option value="Support">Support</option>
+    <option value="Partnership">Partnership</option>
+    <option value="Careers">Careers</option>
+  </select>
+</div>
 
                 <textarea
                   placeholder="Write your message here."

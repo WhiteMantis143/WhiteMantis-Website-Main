@@ -49,7 +49,9 @@
   margin-bottom: 16px;
   /* padding-top: 16px; */
 }
-
+.MenuHeader img{
+  display: none;
+}
 .SectionHeader {
   width: 100%;
   background: none;
@@ -110,9 +112,130 @@
   flex-direction: column;
   gap: 16px;
 }
+.CartIconWrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.CartBadge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+
+  background-color: #6c7a5f;
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--lato);
+
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  line-height: 1;
+}
+
 @media (min-width: 1300px) {
   .Navbar,
   .MenuWrapper {
     display: none;
   }
+}
+.LogoutLink {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--lato);
+
+  text-decoration: none;
+  color: #6e736a;
+  font-size: 14px;
+
+  text-align: left;
+  cursor: pointer;
+}
+
+.LogoutLink:hover {
+  color: #2f362a;
+}
+
+
+.LogoutOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 200000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.LogoutPopup {
+  background: #ffffff;
+  width: 90%;
+  max-width: 320px;
+
+  padding: 24px;
+  border-radius: 8px;
+
+  text-align: center;
+}
+
+.LogoutPopup h2 {
+  font-family: var(--lexend);
+  font-size: 20px;
+  font-weight: 500;
+  color: #2F362A;
+  text-transform: uppercase;
+
+  margin-bottom: 8px;
+}
+
+.LogoutPopup p {
+  font-family: var(--lato);
+  font-size: 15px;
+  color: #6E736A;
+  font-weight: 400;
+  line-height: 1.4;
+
+  margin-bottom: 20px;
+}
+
+.LogoutActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.CancelBtn,
+.ConfirmBtn {
+  flex: 1;
+  padding: 10px 0;
+
+  font-family: var(--lato);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+
+.CancelBtn {
+  background: transparent;
+  border: 1px solid #6C7A5F;
+  color: #6C7A5F;
+}
+
+.ConfirmBtn {
+  background: #6C7A5F;
+  border:none;
+  color: #FFFFFF;
 }

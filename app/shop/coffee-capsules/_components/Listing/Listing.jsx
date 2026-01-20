@@ -117,6 +117,17 @@ const Lisiting = () => {
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + ITEMS_PER_LOAD);
   };
+useEffect(() => {
+  if (isMobileFiltersOpen) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+
+  return () => {
+    document.body.style.overflow = "";
+  };
+}, [isMobileFiltersOpen]);
 
   // Helper to get variation data (Functionality)
   const getDisplayData = (product) => {
@@ -412,17 +423,27 @@ const Lisiting = () => {
           </div>
         </div>
 
-        {isMobileFiltersOpen && (
-          <div className={styles.MobileFilters} ref={mobileFiltersRef}>
-            <div className={styles.MobileFilterHeader}>
-              <p>Filters</p>
-              <span onClick={() => setIsMobileFiltersOpen(false)}>✕</span>
-            </div>
-            <div className={styles.LeftBottom}>
-              {renderCategories(productsCategories)}
-            </div>
-          </div>
-        )}
+       {isMobileFiltersOpen && (
+  <>
+    {/* Background overlay */}
+    <div
+      className={styles.MobileFilterOverlay}
+      onClick={() => setIsMobileFiltersOpen(false)}
+    />
+
+    {/* Filter drawer */}
+    <div className={styles.MobileFilters} ref={mobileFiltersRef}>
+      <div className={styles.MobileFilterHeader}>
+        <p>Filters</p>
+        <span onClick={() => setIsMobileFiltersOpen(false)}>✕</span>
+      </div>
+
+      <div className={styles.LeftBottom}>
+        {renderCategories(productsCategories)}
+      </div>
+    </div>
+  </>
+)}
       </div>
     </div>
   );

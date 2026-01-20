@@ -71,6 +71,11 @@ const Landing = () => {
                 </div>
                 <div className={styles.RightContainerBottomSocials}>
                   <div className={styles.socialOne}>
+                    <a
+                    href="https://www.instagram.com/whitemantis.ae?igsh=cHl5NnQ3ZDY4OGNt"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <p>Instagram </p>
                     <svg
                       width="8"
@@ -84,6 +89,7 @@ const Landing = () => {
                         stroke="#6C7A5F"
                       />
                     </svg>
+                    </a>
                   </div>
 
                   {/* <div className={styles.InstaMobile}>
