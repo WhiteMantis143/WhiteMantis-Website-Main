@@ -10,6 +10,8 @@ import NavbarMobile from "./_components/Navbar/NavbarMobile";
 import { CartProvider } from "./_context/CartContext";
 import GlobalLoader from "./_components/GlobalLoader/GlobalLoader";
 import { Toaster } from "react-hot-toast";
+import SmoothScrollProvider from "./_providers/SmoothScrollProvider";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,6 +58,7 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning
       >
         <Providers>
+          <SmoothScrollProvider>
           <CartProvider>
             <Toaster
               position="top-right"
@@ -74,6 +77,7 @@ export default function RootLayout({ children }) {
             <CartSideBar />
             <NewsLetter />
           </CartProvider>
+          </SmoothScrollProvider>
         </Providers>
       </body>
     </html>

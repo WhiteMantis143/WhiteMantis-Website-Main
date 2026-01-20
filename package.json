@@ -13,6 +13,7 @@
     "@react-pdf/renderer": "^4.3.2",
     "@stripe/react-stripe-js": "^5.4.1",
     "@stripe/stripe-js": "^8.6.0",
+    "@studio-freight/lenis": "^1.0.42",
     "@types/node": "24.10.0",
     "@types/react": "19.2.2",
     "@vercel/analytics": "^1.6.1",
