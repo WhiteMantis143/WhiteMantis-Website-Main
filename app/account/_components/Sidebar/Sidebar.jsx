@@ -40,10 +40,11 @@ export default function Sidebar() {
           <div className={styles.Bottom}>
             <Link href="/account/profile" className={styles.Link}>
               <div
-                className={`${styles.Profile} ${pathname === "/account" || pathname === "/account/profile"
-                  ? styles.active
-                  : ""
-                  }`}
+                className={`${styles.Profile} ${
+                  pathname === "/account" || pathname === "/account/profile"
+                    ? styles.active
+                    : ""
+                }`}
               >
                 <svg
                   width="16"
@@ -62,8 +63,9 @@ export default function Sidebar() {
             </Link>
             <Link href="/account/orders" className={styles.Link}>
               <div
-                className={`${styles.Orders} ${pathname.startsWith("/account/orders") ? styles.active : ""
-                  }`}
+                className={`${styles.Orders} ${
+                  pathname.startsWith("/account/orders") ? styles.active : ""
+                }`}
               >
                 <svg
                   width="15"
@@ -150,7 +152,10 @@ export default function Sidebar() {
         <div className={styles.LogoutOverlay}>
           <div className={styles.LogoutPopup}>
             <h2>ARE YOU SURE YOU WANT TO LOGOUT?</h2>
-            <p>You can always sign back in to access your specialty coffee profile.</p>
+            <p>
+              You can always sign back in to access your specialty coffee
+              profile.
+            </p>
 
             <div className={styles.LogoutActions}>
               <button
@@ -160,10 +165,7 @@ export default function Sidebar() {
                 Cancel
               </button>
 
-              <button
-                className={styles.ConfirmBtn}
-                onClick={handleLogout}
-              >
+              <button className={styles.ConfirmBtn} onClick={handleLogout}>
                 Logout
               </button>
             </div>

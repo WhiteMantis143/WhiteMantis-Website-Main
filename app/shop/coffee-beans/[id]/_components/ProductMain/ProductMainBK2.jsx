@@ -6,7 +6,6 @@ import productImg from "./1.png";
 import Polygon from "./polygon.png";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import Observer from "gsap/Observer";
 // Helper function to extract meta data value by key
 const getMetaValue = (metaData, key) => {
   if (!Array.isArray(metaData)) return null;
@@ -123,75 +122,87 @@ const ProductMain = ({ product }) => {
       // const { gsap } = await import("gsap");
       // const { ScrollTrigger } = await import("gsap/ScrollTrigger");
       gsap.registerPlugin(ScrollTrigger);
-      gsap.registerPlugin(Observer);
       // const isMobile = window.innerWidth <= 640; // Removed local declaration
 
       ctx = gsap.context(() => {
-        const tl = gsap.timeline({ paused: true });
-        tl.timeScale(0.4);
-
-        // console.log("Timeline active: ", tl.isActive());
-
-        tl.fromTo(
-          [topLeftRef.current, topRightRef.current],
-          { opacity: 0, y: -500 },
-          { opacity: 1, y: 0 },
-          0,
-        );
-
-        tl.fromTo(
-          [leftRef.current, rightRef.current],
-          { opacity: 1, y: 0 },
-          { opacity: 0, y: 500 },
-          0,
-        );
-        tl.fromTo(
-          [leftRefDetails.current],
-          { opacity: 1, x: 0 },
-          { opacity: 0, x: 200, stagger: 0.1 },
-          0,
-        );
-        tl.fromTo(
-          [rightRefDetails.current],
-          { opacity: 1, x: 0 },
-          { opacity: 0, x: -200, stagger: 0.1 },
-          0,
-        );
-        tl.fromTo(
-          [polygonRefImage.current],
-          {
-            rotateX: 0,
-            scale: 1,
-            y: 0,
-            origin: "center center",
-            perspective: 1000,
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: middleRef.current,
+            startTrigger: topRef.current,
+            start: () => `top ${topRef.current.getBoundingClientRect().top}px`,
+            endTrigger: polygonRef.current,
+            end: "center center",
+            anticipatePin: 1,
+            markers: true,
+            pin: middleRef.current,
+            scrub: true,
           },
-          { rotateX: -180, scale: 0.5, y: 600 },
-          0,
-        );
-
-        // Check scroll position for initial state
-        if (window.scrollY > 100) {
-          tl.progress(0);
-        } else {
-          tl.progress(1);
-        }
-
-        Observer.create({
-          target: containerRef.current,
-          type: "wheel,touch",
-          onUp: (self) => {
-            // console.log("Up in this section");
-            tl.play();
-          },
-          onDown: (self) => {
-            // console.log("Down in this section");
-            tl.reverse();
-          },
-          tolerance: 10,
-          // wheelSpeed: -1,
-          // preventDefault: ,
         });
+
+        gsap.set(leftRefDetails.current, { opacity: 0, x: 150 });
+        gsap.set(rightRefDetails.current, { opacity: 0, x: -150 });
+        gsap.set(detailsRef.current, { opacity: 0, y: 0 });
+        gsap.set(polygonRefImage.current, {
+          rotateX: -360,
+          scale: 0,
+          transformStyle: "preserve-3d",
+          y: 200,
+        });
+
+        // Add animations to validity
+        tl.to(
+          rightRefDetails.current,
+          {
+            opacity: 1,
+            x: 0,
+            // duration: 1,
+            // ease: "power3.inOut",
+            stagger: 0.4,
+          },
+          "<",
+        )
+          .to(
+            leftRefDetails.current,
+            {
+              opacity: 1,
+              x: 0,
+              // duration: 1,
+              // ease: "power3.inOut",
+              stagger: 0.4,
+            },
+            "<",
+          )
+          .to(
+            middleRef.current,
+            {
+              scale: 1.2,
+              // y: -50,
+              // duration: 1,
+              // ease: "power3.inOut",
+            },
+            "<",
+          )
+          .to(
+            polygonRefImage.current,
+            {
+              rotateX: 0,
+              // duration: 1,
+              scale: 1,
+              y: 0,
+              // ease: "power3.inOut",
+            },
+            "<",
+          )
+          .to(
+            detailsRef.current,
+            {
+              opacity: 1,
+              y: 0,
+              // duration: 1,
+              // ease: "power3.inOut",
+            },
+            "<",
+          ); // Run at same time as previous animation
       }, containerRef);
     };
 
