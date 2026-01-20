@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import React, { useState, useEffect, Suspense } from "react";
 import Image from "next/image";
 import Logo from "./logo.png";
+import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -143,11 +144,7 @@ function AuthPageContent() {
                     </p>
                   </div>
                   <div className={styles.RightTopOneBottomBottom}>
-                    {error && (
-                      <p className={styles.errorMessage}>
-                        {error}
-                      </p>
-                    )}
+                    {error && <p className={styles.errorMessage}>{error}</p>}
                     <input
                       type="email"
                       placeholder="Email Address"
@@ -164,7 +161,9 @@ function AuthPageContent() {
               <div className={styles.RightTopTwo}>
                 <p>
                   By continuing, you agree to our{" "}
-                  <span className={styles.Tnc}>Terms & Privacy Policy</span>
+                  <Link href="/terms-and-conditions" className={styles.Tnc}>
+                    Terms & Privacy Policy
+                  </Link>
                 </p>
                 <button
                   className={styles.ctacontinue}
@@ -187,6 +186,7 @@ function AuthPageContent() {
                 <button
                   onClick={handleGoogleSignIn}
                   disabled={loading}
+                  className={styles.googleButton}
                   style={{
                     background: "transparent",
                     border: "none",
@@ -227,6 +227,8 @@ function AuthPageContent() {
                       </clipPath>
                     </defs>
                   </svg>
+                 <p>Sign in with Google</p>
+
                 </button>
               </div>
             </div>
