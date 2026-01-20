@@ -6,6 +6,10 @@ import Image from "next/image";
 import coffeImg from "./1.png";
 import useEmblaCarousel from "embla-carousel-react";
 import { useRouter } from "next/navigation";
+import StarBorder from "../../StarBorder/StarBorder";
+
+
+
 
 const coffeeData = [
   {
@@ -59,6 +63,7 @@ const Coffees = () => {
   const [canScrollPrev, setCanScrollPrev] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
   const router = useRouter();
+const [hoveredIndex, setHoveredIndex] = React.useState(null);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
@@ -160,47 +165,96 @@ const Coffees = () => {
               style={{ cursor: "pointer" }}
             >
               {coffeeData.map((item, index) => (
-                <div
-                  onClick={() =>
-                    router.push(`/shop/coffee-beans/${item.slug}-${item.id}`)
-                  }
-                  className={styles.EmblaSlide}
-                  key={`coffee-${item.title.replace(/\s+/g, "-").toLowerCase()}`}
-                >
-                  <div className={styles.Card}>
-                    <div className={styles.CardTop}>
-                      <div className={styles.LinkSvg}>
-                        <svg
-                          width="30"
-                          height="30"
-                          viewBox="0 0 30 30"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect
-                            x="0.5"
-                            y="-0.5"
-                            width="29"
-                            height="29"
-                            transform="matrix(1 0 0 -1 0 29)"
-                            stroke="#6C7A5F"
-                          />
-                          <path
-                            d="M21.0029 20.2479H19.0039V11.5562L9.41838 21.2598L8.00904 19.8331L17.5945 10.1295H9.00857V8.10583H21.0029V20.2479Z"
-                            fill="#6C7A5F"
-                          />
-                        </svg>
-                      </div>
+               <div
+  onClick={() =>
+    router.push(`/shop/coffee-beans/${item.slug}-${item.id}`)
+  }
+  onMouseEnter={() => setHoveredIndex(index)}
+  onMouseLeave={() => setHoveredIndex(null)}
+  className={styles.EmblaSlide}
+  key={`coffee-${item.title.replace(/\s+/g, "-").toLowerCase()}`}
+>
 
-                      <div className={styles.ProductImage}>
-                        <Image
-                          src={item.img}
-                          alt={item.title}
-                          width={300}
-                          height={300}
-                        />
-                      </div>
-                    </div>
+                  <div className={styles.Card}>
+          <div className={styles.CardTop}>
+  {hoveredIndex === index ? (
+    <StarBorder
+      color="#6C7A5F"
+      thickness={0.7}
+      speed={2.2}
+    >
+      <div className={styles.ProductImageWrapper}>
+        <div className={styles.LinkSvg}>
+          <svg
+            width="30"
+            height="30"
+            viewBox="0 0 30 30"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="0.5"
+              y="-0.5"
+              width="29"
+              height="29"
+              transform="matrix(1 0 0 -1 0 29)"
+              stroke="#6C7A5F"
+            />
+            <path
+              d="M21.0029 20.2479H19.0039V11.5562L9.41838 21.2598L8.00904 19.8331L17.5945 10.1295H9.00857V8.10583H21.0029V20.2479Z"
+              fill="#6C7A5F"
+            />
+          </svg>
+        </div>
+
+        <div className={styles.ProductImage}>
+          <Image
+            src={item.img}
+            alt={item.title}
+            width={300}
+            height={300}
+          />
+        </div>
+      </div>
+    </StarBorder>
+  ) : (
+    <div className={styles.ProductImageWrapper}>
+      <div className={styles.LinkSvg}>
+        <svg
+          width="30"
+          height="30"
+          viewBox="0 0 30 30"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            x="0.5"
+            y="-0.5"
+            width="29"
+            height="29"
+            transform="matrix(1 0 0 -1 0 29)"
+            stroke="#6C7A5F"
+          />
+          <path
+            d="M21.0029 20.2479H19.0039V11.5562L9.41838 21.2598L8.00904 19.8331L17.5945 10.1295H9.00857V8.10583H21.0029V20.2479Z"
+            fill="#6C7A5F"
+          />
+        </svg>
+      </div>
+
+      <div className={styles.ProductImage}>
+        <Image
+          src={item.img}
+          alt={item.title}
+          width={300}
+          height={300}
+        />
+      </div>
+    </div>
+  )}
+</div>
+
+
 
                     <div className={styles.CardBottom}>
                       <h3>{item.title}</h3>

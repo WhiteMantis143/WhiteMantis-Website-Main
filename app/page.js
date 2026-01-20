@@ -21,6 +21,31 @@ export const metadata = {
     "white mantis coffee",
     "coffee subscription",
   ],
+  openGraph: {
+    title:
+      "White Mantis Specialty Coffee Roasters | Built on Craft, Driven by Community",
+    description:
+      "Experience premium specialty coffee in Dubai. Shop our curated selection of coffee beans, drips, and capsules.",
+    url: "https://www.whitemantis.ae/",
+    images: [
+      {
+        url: "/social-thumbnail.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "White Mantis Specialty Coffee Roasters | Built on Craft, Driven by Community",
+    description:
+      "Experience premium specialty coffee in Dubai.",
+    images: ["/social-thumbnail.png"],
+  },
+  
 };
 
 export default function Home() {
