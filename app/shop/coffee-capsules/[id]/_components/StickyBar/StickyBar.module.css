@@ -304,6 +304,9 @@
   .Popup {
     width: 90%;
   }
+  .SubscribeCta {
+    display: none;
+  }
 }
 
 

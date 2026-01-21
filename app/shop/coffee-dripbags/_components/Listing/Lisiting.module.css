@@ -120,6 +120,7 @@
   grid-template-columns: repeat(3, 1fr);
   row-gap: 121px;
   column-gap: 41px;
+
 }
 
 .ProductCard {
@@ -127,15 +128,6 @@
   flex-direction: column;
   height: 100%;
   gap: 24px;
-}
-
-.ProductCard:hover img {
-  transform: scale(1.05);
-}
-
-.ProductCard:hover .ProductImage {
-  /* transform: scale(1.05); */
-  border-color: #2f362a;
 }
 
 .ProductTop {
@@ -153,8 +145,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: transparent 1px solid;
-  transition: all 0.2s ease-in-out;
 }
 
 .ProductImage img {
@@ -163,7 +153,6 @@
   max-width: 401px;
   max-height: 305px;
   object-fit: contain;
-  transition: all 0.2s ease-in-out;
 }
 
 /* .ProductTop img {
@@ -247,13 +236,15 @@
   display: flex;
   justify-content: left;
   flex-direction: row;
+  width: 100%;
 }
 
 .Subscribe {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 12px 67px;
+  padding: 12px 20px;
+  width: 100%;
   background-color: #ffffff;
   cursor: pointer;
   font-weight: 500;
@@ -384,10 +375,7 @@
   overflow: hidden;
   opacity: 0;
   transform: translateY(-6px);
-  transition:
-    max-height 0.35s ease,
-    opacity 0.25s ease,
-    transform 0.25s ease;
+  transition: max-height 0.35s ease, opacity 0.25s ease, transform 0.25s ease;
 }
 
 .open {
@@ -505,20 +493,14 @@
   align-items: center;
   justify-content: center;
 }
-
 .FilterOptions input[type="checkbox"] {
-
-
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
 
   width: 13px;
   height: 13px;
-
   border: 1px solid #6e736a;
-  border-radius: 0;
-
   background: #ffffff;
   cursor: pointer;
 
@@ -526,11 +508,22 @@
   place-content: center;
 }
 
+.FilterOptions input[type="checkbox"]:checked {
+  background-color: #6c7a5f;
+  border-color: #6c7a5f;
+}
+
+.FilterOptions input[type="checkbox"]:checked::after {
+  content: "✓";
+  font-size: 10px;
+  color: #ffffff;
+}
+
 .MobileFilterOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 900;
+  background: rgba(0, 0, 0, 0.45); 
+  z-index: 900; 
 }
 
 @media (max-width: 640px) {
@@ -541,7 +534,7 @@
   .MainContainer {
     flex-direction: column;
     gap: 24px;
-
+    
   }
 
   .ProductImage img {
@@ -604,26 +597,25 @@
     max-width: 169px;
     min-width: 169px;
   }
-
   .RightTop {
-    position: sticky;
-    top: 73px;
-    z-index: 30;
-    background: #ffffff;
-    padding-bottom: 10px;
-  }
+  position: sticky;
+  top: 73px; 
+  z-index: 30;
+  background: #ffffff;
+  padding-bottom: 10px;
+}
 
-  .RightTopRight {
-    display: flex;
-    z-index: 30;
+.RightTopRight {
+ display: flex;
+  z-index: 30;
 
-    width: 100%;
-    align-items: baseline;
-    justify-content: left;
+  width: 100%;
+  align-items: baseline;
+  justify-content: left;
 
-    background: #ffffff;
-    padding-bottom: 10px;
-  }
+  background: #ffffff;
+  padding-bottom: 10px;
+}
 
 
   .SortBy p {
@@ -641,7 +633,7 @@
 
   .RightConatiner {
     gap: 32px;
-
+   
   }
 
   .FilterBox {
@@ -689,7 +681,7 @@
     cursor: pointer;
     border: 1px solid #6e736a;
     padding: 11.5px 10px;
-    color: #6e736a;
+    color: #6E736A;
     font-size: 14px;
     max-width: 169px;
     width: 100%;
@@ -704,22 +696,21 @@
   }
 
   .RightTop {
-    position: sticky;
-    top: 73px;
-    z-index: 30;
-    background: #ffffff;
-    padding-bottom: 10px;
-  }
-
+  position: sticky;
+  top: 73px; 
+  z-index: 30;
+  background: #ffffff;
+  padding-bottom: 10px;
+}
   .RightTopRight {
-    display: flex;
-    z-index: 30;
+   display: flex;
+  z-index: 30;
 
-    width: 100%;
-    align-items: baseline;
-    justify-content: left;
+  width: 100%;
+  align-items: baseline;
+  justify-content: left;
 
-    background: #ffffff;
+  background: #ffffff;
   }
 
   .RightTopLeft {
@@ -729,6 +720,7 @@
   .ProductCard {
     max-width: 350px;
   }
+
 }
 
 @media (min-width: 941px) and (max-width: 1440px) {
@@ -757,8 +749,16 @@
     max-width: 300px;
   }
 
+    .ProductActions {
+    flex-direction: column;
+     gap: 10px; 
+     
+  }
   .Subscribe {
-    display: none;
+    display: flex;
+    width: 100%;
+    flex-shrink: 0;
+    min-height: 44px;
   }
 }
 
@@ -783,8 +783,18 @@
   .MobileFilterBtn {
     display: none;
   }
+  .ProductActions {
+    flex-direction: column;
+     gap: 10px; 
+     
+  }
+  .Subscribe {
+    display: flex;
+    width: 100%;
+    flex-shrink: 0;
+    min-height: 44px;
+  }
 }
-
 
 /* Subscription Popup Styles */
 .PopupOverlay {
@@ -811,7 +821,6 @@
     opacity: 0;
     transform: scale(0.96);
   }
-
   to {
     opacity: 1;
     transform: scale(1);
@@ -826,7 +835,7 @@
   margin-bottom: 8px;
 }
 
-.Popup>p {
+.Popup > p {
   font-family: var(--lato);
   font-size: 14px;
   color: #6e736a;

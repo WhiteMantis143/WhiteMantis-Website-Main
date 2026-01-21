@@ -4,11 +4,18 @@ import { useRouter } from "next/navigation";
 import styles from "./StickyBar.module.css";
 import { useCart } from "../../../../../_context/CartContext";
 import { useProductImage } from "../../_context/ProductImageContext";
+import SubscriptionPopupCapsules from "../../../_components/Listing/SubscriptionPopupCapsules";
+
+
 
 const StickyBar = ({ groupedChildren, product }) => {
   const router = useRouter();
   const { addItem, refresh } = useCart();
   const { setSelectedImage } = useProductImage();
+  const [showSubscribePopup, setShowSubscribePopup] = useState(false);
+const [frequencyArray, setFrequencyArray] = useState([]);
+const [quantityArray, setQuantityArray] = useState([]);
+
 
   // Parse simple and subscription products
   const simpleProduct = useMemo(() =>
@@ -31,7 +38,7 @@ const StickyBar = ({ groupedChildren, product }) => {
   // State management
   const [selectedWeight, setSelectedWeight] = useState(null);
   const [qty, setQty] = useState(1);
-  const [showSubscribe, setShowSubscribe] = useState(false);
+
   const [selectedFrequency, setSelectedFrequency] = useState(null);
   const [selectedQuantity, setSelectedQuantity] = useState(null);
   const [selectedSubWeight, setSelectedSubWeight] = useState(null);
@@ -136,6 +143,39 @@ const StickyBar = ({ groupedChildren, product }) => {
       console.error('Failed to add to cart', error);
     }
   };
+const handleOpenSubscribePopup = () => {
+  if (!subscriptionProduct) return;
+
+  const frequencies = new Set();
+  const quantities = new Set();
+
+  subscriptionProduct.variation_options.forEach((variation) => {
+    frequencies.add(
+      variation.attributes["attribute_pa_simple-subscription-frequenc"]
+    );
+    quantities.add(
+      variation.attributes["attribute_pa_simple-subscription-quantity"]
+    );
+  });
+
+  const freqArray = Array.from(frequencies).sort();
+  const qtyArray = Array.from(quantities).sort();
+
+  setFrequencyArray(freqArray);
+  setQuantityArray(qtyArray);
+
+  const defaultFrequency = freqArray[0] || null;
+const defaultQuantity = qtyArray[0] || null;
+
+setSelectedFrequency(defaultFrequency);
+setSelectedQuantity(defaultQuantity);
+
+// ⏳ wait for state to settle, then open popup
+requestAnimationFrame(() => {
+  setShowSubscribePopup(true);
+});
+
+};
 
   // Handle subscription checkout
   const handleSubscription = () => {
@@ -211,7 +251,7 @@ const StickyBar = ({ groupedChildren, product }) => {
               {subscriptionProduct && (
                 <button
                   className={styles.SubscribeCta}
-                  onClick={() => setShowSubscribe(true)}
+  onClick={handleOpenSubscribePopup}
                 >
                   <span>Subscribe &amp; save</span>
 
@@ -248,79 +288,20 @@ const StickyBar = ({ groupedChildren, product }) => {
         </div>
       </div>
 
-      {showSubscribe && subscriptionProduct && (
-        <div className={styles.PopupOverlay}>
-          <div className={styles.Popup}>
-            <h3>Subscribe</h3>
-            <p>Choose your subscription preferences</p>
+<SubscriptionPopupCapsules
+  open={showSubscribePopup}
+  onClose={() => setShowSubscribePopup(false)}
+  subscriptionProduct={subscriptionProduct}
+  frequencies={frequencyArray}
+  quantities={quantityArray}
+  selectedFrequency={selectedFrequency}
+  selectedQuantity={selectedQuantity}
+  onSelectFrequency={setSelectedFrequency}
+  onSelectQuantity={setSelectedQuantity}
+  onConfirm={handleSubscription}   // ✅ THIS WAS MISSING
+/>
 
-            {/* Frequency Selection */}
-            <div className={styles.SubscriptionSection}>
-              <h4>Delivery Frequency</h4>
-              <div className={styles.FrequencyOptions}>
-                {subscriptionOptions.frequencies.map((freq) => (
-                  <button
-                    key={freq}
-                    className={
-                      selectedFrequency === freq
-                        ? styles.ActiveFrequency
-                        : styles.FrequencyBtn
-                    }
-                    onClick={() => setSelectedFrequency(freq)}
-                  >
-                    {getFrequencyLabel(freq)}
-                  </button>
-                ))}
-              </div>
-            </div>
 
-            {/* Quantity Selection */}
-            <div className={styles.SubscriptionSection}>
-              <h4>Bags per Delivery</h4>
-              <div className={styles.FrequencyOptions}>
-                {subscriptionOptions.quantities.map((quantity) => (
-                  <button
-                    key={quantity}
-                    className={
-                      selectedQuantity === quantity
-                        ? styles.ActiveFrequency
-                        : styles.FrequencyBtn
-                    }
-                    onClick={() => setSelectedQuantity(quantity)}
-                  >
-                    {quantity} {quantity === '1' ? 'bag' : 'bags'}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Price Display */}
-            {subscriptionVariation && (
-              <div className={styles.PopupPrice}>
-                <div>AED {subscriptionVariation.price.toFixed(2)} / delivery</div>
-                {subscriptionVariation.subscription_discount > 0 && (
-                  <div className={styles.Discount}>
-                    Save {subscriptionVariation.subscription_discount}%
-                  </div>
-                )}
-              </div>
-            )}
-
-            <div className={styles.PopupActions}>
-              <button
-                className={styles.PopupCancel}
-                onClick={() => setShowSubscribe(false)}
-              >
-                Cancel
-              </button>
-
-              <button onClick={() => handleSubscription()} className={styles.PopupConfirm}>
-                Confirm Subscription
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };

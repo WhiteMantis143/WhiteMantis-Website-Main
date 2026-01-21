@@ -1,11 +1,9 @@
-/* Steps.module.css - updated for image swap-on-line-reach logic */
-
-/* container */
 .main {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: stretch;
+   overflow: hidden;
   box-sizing: border-box;
 }
 
@@ -14,7 +12,6 @@
   display: flex;
   flex-direction: column;
 }
-
 
 .TopSection {
   width: 100%;
@@ -30,7 +27,6 @@
   display: block;
 }
 
-/* layered images */
 .layerImg {
   position: absolute;
   inset: 0;
@@ -39,31 +35,32 @@
   object-fit: cover;
   display: block;
   will-change: opacity, transform;
-  opacity: 0; /* default hidden; JS controls visibility */
+  opacity: 0;
 }
 .layerTop {
   z-index: 2;
 }
 
-/* bottom area styling */
 .BottomSection {
   display: flex;
   flex-direction: column;
-  padding: 62px 125px;
-  gap: 40px;
+  padding: clamp(28px, calc(28px + (34 * ((100vw - 320px) / 1120))), 62px)
+    clamp(31px, calc(31px + (94 * ((100vw - 320px) / 1120))), 125px);
+
+  gap: clamp(20px, calc(20px + (20 * ((100vw - 320px) / 1120))), 40px);
+
   background-color: #6c7a5f;
   box-sizing: border-box;
 }
 .BottomTop h3 {
-  font-family: "Lexend", sans-serif;
-  font-weight: 600;
-  font-size: 18px;
+  font-family: var(--lexend);
+  font-weight: 500;
+  font-size: var(--fs-22);
   color: #ffffff;
-  margin: 0 0 10px 0;
+  margin: 0 0 0px 0;
   letter-spacing: 0.6px;
 }
 
-/* grid for steps */
 .BottomBottomWrapper {
   width: 100%;
   display: flex;
@@ -74,38 +71,39 @@
 .BottomBottomTop {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 360px));
-  gap: 75px;
+  gap: clamp(70px, calc(70px + (5 * ((100vw - 320px) / 1120))), 75px);
+
   align-items: start;
   position: relative;
 }
 
-/* individual step box */
 .stepBox {
   display: flex;
   flex-direction: column;
   gap: 12px;
   max-width: 360px;
-  transition: opacity 0.25s linear, transform 0.25s linear;
+  transition:
+    opacity 0.25s linear,
+    transform 0.25s linear;
   box-sizing: border-box;
 }
 .stepBox h3 {
-  font-family: "Lexend", sans-serif;
+  font-family: var(--lexend);
   font-weight: 500;
-  font-size: 20px;
+  font-size: var(--fs-22);
   color: #ffffff;
   margin: 0;
 }
 .stepBox p {
-  font-family: "Lato", sans-serif;
+  font-family: var(--lato);
   font-weight: 400;
-  font-size: 14px;
+  font-size: 15px;
   color: #ffffff;
   line-height: 1.35;
   margin: 0;
   opacity: 0.95;
 }
 
-/* TIMELINE area */
 .timeline {
   position: relative;
   width: 100%;
@@ -118,7 +116,6 @@
   box-sizing: border-box;
 }
 
-/* baseline: subtle dim line behind */
 .timelineBaseline {
   content: "";
   position: absolute;
@@ -126,19 +123,18 @@
   right: 17px;
   top: 50%;
   height: 2px;
-  background: rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.12);
   transform: translateY(-50%);
   z-index: 0;
   border-radius: 1px;
 }
 
-/* active line: width controlled in px by JS */
 .timelineActive {
   position: absolute;
   left: 17px;
   top: 50%;
   height: 2px;
-  background: rgba(255,255,255,0.95);
+  background: rgba(255, 255, 255, 0.95);
   transform: translateY(-50%);
   z-index: 2;
   border-radius: 1px;
@@ -146,50 +142,160 @@
   will-change: width;
 }
 
-/* dot */
 .dot {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  border: 2px solid #ffffff;
-  background: #6c7a5f;
+  background: #ffffff;
+  border: none;
   z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
   justify-self: start;
   margin-left: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
-  transition: transform 0.25s linear, opacity 0.25s linear;
-}
-.dot::after {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #ffffff;
-  display: block;
-  box-shadow: 0 0 2px rgba(255,255,255,0.6);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+  transition:
+    transform 0.25s linear,
+    opacity 0.25s linear;
 }
 
-/* Responsive adjustments */
-@media (max-width: 900px) {
-  .BottomSection { padding: 48px 40px; }
-  .BottomBottomTop { grid-template-columns: repeat(2, minmax(0, 260px)); gap: 32px; }
-  .timeline { grid-template-columns: repeat(2, minmax(0, 260px)); gap: 32px; height: 36px; }
-  .TopImage { height: 300px; }
-  .dot { width: 16px; height: 16px; margin-left: 8px; }
-  .dot::after { width: 5px; height: 5px; }
-  .timelineActive, .timelineBaseline { left: 16px; right: 16px; }
-}
+@media (max-width: 640px) {
+  .BottomSection {
+    padding: 28px 31px 78px 31px;
+  }
+  .BottomTop h3, .stepBox h3 {
+    font-size: 20px;
+  }
+  .stepBox p {
+    font-size: 14px;
+  }
 
-@media (max-width: 560px) {
-  .BottomSection { padding: 28px 20px; }
-  .BottomBottomTop { grid-template-columns: 1fr; gap: 24px; }
-  .timeline { grid-template-columns: 1fr; gap: 24px; height: 32px; }
-  .TopImage { height: 200px; }
-  .dot { width: 14px; height: 14px; margin-left: 6px; }
-  .dot::after { width: 5px; height: 5px; }
-  .timelineActive, .timelineBaseline { left: 13px; right: 13px; }
-  .stepBox { max-width: 100%; }
+  .BottomBottomWrapper {
+    flex-direction: column;
+    position: relative;
+  }
+  .main{
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .BottomBottomTop {
+    position: relative;
+    grid-template-columns: 1fr;
+    gap: 69px;
+  }
+
+  .stepBox {
+    padding-left: 36px;
+    max-width: 100%;
+  }
+
+  .timeline {
+    position: absolute;
+    align-items: flex-start;
+    left: 14px;
+    top: 0;
+    width: 2px;
+    height: calc(100% - 16px);
+  }
+
+  .timelineBaseline {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+
+  .timelineActive {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 0;
+    transform: translateX(-50%);
+    transform-origin: top center;
+  }
+
+  .dot {
+    width: 14px;
+    height: 14px;
+    margin-left: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+@media (min-width: 641px) and (max-width: 1240px) {
+   .BottomSection {
+    padding: 28px 31px 78px 31px;
+  }
+  .main{
+    overflow: hidden;
+  }
+  .BottomTop h3, .stepBox h3 {
+    font-size: 20px;
+  }
+  .stepBox p {
+    font-size: 14px;
+  }
+
+  .BottomBottomWrapper {
+    flex-direction: column;
+    position: relative;
+  }
+  .main{
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .BottomBottomTop {
+    position: relative;
+    grid-template-columns: 1fr;
+    gap: 69px;
+  }
+
+  .stepBox {
+    padding-left: 36px;
+    max-width: 100%;
+  }
+
+  .timeline {
+    position: absolute;
+    align-items: flex-start;
+    left: 14px;
+    top: 0;
+    width: 2px;
+    height: calc(100% - 16px);
+  }
+
+  .timelineBaseline {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+
+  .timelineActive {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 0;
+    transform: translateX(-50%);
+    transform-origin: top center;
+  }
+
+  .dot {
+    width: 14px;
+    height: 14px;
+    margin-left: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }

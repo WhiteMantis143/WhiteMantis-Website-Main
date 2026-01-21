@@ -211,14 +211,14 @@ const Navbar = () => {
               </div>
             </Link> */}
 
-            {/* <Link
+            <Link
               href="/subscription"
               className={pathname === "/subscription" ? styles.active : ""}
             >
               <div className={styles.Subscriptionpg}>
                 <p>Subscription</p>
               </div>
-            </Link> */}
+            </Link>
           </div>
         </div>
 

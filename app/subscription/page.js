@@ -1,17 +1,25 @@
 import Landing from "./_components/Landing/Landing";
 import Subscribe from "./_components/Subscribe/Subscribe";
-import Roster from "./_components/Roster/Roster";
+
 import FaqSection from "./_components/FaqSection/FaqSection";
-import Steps from "./_components/Steps/Steps";
+
+import StepsRender from "./_components/Steps/StepsRender";
+import SubToday from "./_components/SubToday/SubToday";
 
 export default function Subscription() {
   return (
     <>
+     {/* <div className="TopPaddingForMobile"></div>
       <Landing />
+      <div className="sectionPadding"></div>
       <Subscribe />
-      <Steps />
-      <Roster />
-      <FaqSection />
+      <div className="sectionPadding"></div>
+      <StepsRender /> */}
+      <div className="sectionPadding"></div>
+      <SubToday />
+      <div className="sectionPadding"></div>
+      {/* <FaqSection />
+      <div className="sectionPadding"></div> */}
     </>
   );
 }

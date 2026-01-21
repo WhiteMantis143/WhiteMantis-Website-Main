@@ -4,34 +4,38 @@ import { useRouter } from "next/navigation";
 import styles from "./StickyBar.module.css";
 import { useCart } from "../../../../../_context/CartContext";
 import { useProductImage } from "../../_context/ProductImageContext";
+import SubscriptionPopupDrip from "../../../_components/Listing/SubscriptionPopupDrip";
 
 const StickyBar = ({ groupedChildren, product }) => {
   const router = useRouter();
   const { addItem, refresh } = useCart();
   const { setSelectedImage } = useProductImage();
+  const [showSubscribePopup, setShowSubscribePopup] = useState(false);
+  const [frequencyArray, setFrequencyArray] = useState([]);
+  const [quantityArray, setQuantityArray] = useState([]);
 
   // Parse simple and subscription products
-  const simpleProduct = useMemo(() =>
-    groupedChildren?.find(p => p.type === 'variable'),
-    [groupedChildren]
+  const simpleProduct = useMemo(
+    () => groupedChildren?.find((p) => p.type === "variable"),
+    [groupedChildren],
   );
 
-  const subscriptionProduct = useMemo(() =>
-    groupedChildren?.find(p => p.type === 'variable-subscription'),
-    [groupedChildren]
+  const subscriptionProduct = useMemo(
+    () => groupedChildren?.find((p) => p.type === "variable-subscription"),
+    [groupedChildren],
   );
 
   // Extract tagline from product metadata
   const tagline = useMemo(() => {
-    if (!product?.meta_data) return '';
-    const taglineMeta = product.meta_data.find(m => m.key === 'tagline');
-    return taglineMeta?.value || '';
+    if (!product?.meta_data) return "";
+    const taglineMeta = product.meta_data.find((m) => m.key === "tagline");
+    return taglineMeta?.value || "";
   }, [product]);
 
   // State management
   const [selectedWeight, setSelectedWeight] = useState(null);
   const [qty, setQty] = useState(1);
-  const [showSubscribe, setShowSubscribe] = useState(false);
+
   const [selectedFrequency, setSelectedFrequency] = useState(null);
   const [selectedQuantity, setSelectedQuantity] = useState(null);
   const [selectedSubWeight, setSelectedSubWeight] = useState(null);
@@ -39,27 +43,32 @@ const StickyBar = ({ groupedChildren, product }) => {
   // Extract weight options from simple product
   const weightOptions = useMemo(() => {
     if (!simpleProduct?.variation_options) return [];
-    return simpleProduct.variation_options.map(variation => ({
+    return simpleProduct.variation_options.map((variation) => ({
       label: variation.attributes.attribute_pa_weight,
-      variation: variation
+      variation: variation,
     }));
   }, [simpleProduct]);
 
   // Extract subscription options
   const subscriptionOptions = useMemo(() => {
-    if (!subscriptionProduct?.variation_options) return { frequencies: [], quantities: [] };
+    if (!subscriptionProduct?.variation_options)
+      return { frequencies: [], quantities: [] };
 
     const frequencies = new Set();
     const quantities = new Set();
 
-    subscriptionProduct.variation_options.forEach(variation => {
-      frequencies.add(variation.attributes['attribute_pa_simple-subscription-frequenc']);
-      quantities.add(variation.attributes['attribute_pa_simple-subscription-quantity']);
+    subscriptionProduct.variation_options.forEach((variation) => {
+      frequencies.add(
+        variation.attributes["attribute_pa_simple-subscription-frequenc"],
+      );
+      quantities.add(
+        variation.attributes["attribute_pa_simple-subscription-quantity"],
+      );
     });
 
     return {
       frequencies: Array.from(frequencies).sort(),
-      quantities: Array.from(quantities).sort()
+      quantities: Array.from(quantities).sort(),
     };
   }, [subscriptionProduct]);
 
@@ -74,7 +83,13 @@ const StickyBar = ({ groupedChildren, product }) => {
     if (subscriptionOptions.quantities.length > 0 && !selectedQuantity) {
       setSelectedQuantity(subscriptionOptions.quantities[0]);
     }
-  }, [weightOptions, subscriptionOptions, selectedWeight, selectedFrequency, selectedQuantity]);
+  }, [
+    weightOptions,
+    subscriptionOptions,
+    selectedWeight,
+    selectedFrequency,
+    selectedQuantity,
+  ]);
 
   // Update image when weight selection changes
   useEffect(() => {
@@ -93,20 +108,27 @@ const StickyBar = ({ groupedChildren, product }) => {
 
   // Find matching subscription variation
   const subscriptionVariation = useMemo(() => {
-    if (!subscriptionProduct?.variation_options || !selectedFrequency || !selectedQuantity) {
+    if (
+      !subscriptionProduct?.variation_options ||
+      !selectedFrequency ||
+      !selectedQuantity
+    ) {
       return null;
     }
 
-    return subscriptionProduct.variation_options.find(variation =>
-      variation.attributes['attribute_pa-simple-subscription-frequenc'] === selectedFrequency &&
-      variation.attributes['attribute_pa_simple-subscription-quantity'] === selectedQuantity
+    return subscriptionProduct.variation_options.find(
+      (variation) =>
+        variation.attributes["attribute_pa_simple-subscription-frequenc"] ===
+          selectedFrequency &&
+        variation.attributes["attribute_pa_simple-subscription-quantity"] ===
+          selectedQuantity,
     );
   }, [subscriptionProduct, selectedFrequency, selectedQuantity]);
 
   // Format frequency label
   const getFrequencyLabel = (freq) => {
-    if (freq === '2-week') return 'Every 2 weeks';
-    if (freq === '4-week') return 'Every 4 weeks';
+    if (freq === "2-week") return "Every 2 weeks";
+    if (freq === "4-week") return "Every 4 weeks";
     return freq;
   };
 
@@ -118,13 +140,14 @@ const StickyBar = ({ groupedChildren, product }) => {
 
     try {
       const variationImage = selectedWeight.variation.image;
-      const finalImage = typeof variationImage === 'string'
-        ? variationImage
-        : variationImage?.src || product?.images?.[0]?.src;
+      const finalImage =
+        typeof variationImage === "string"
+          ? variationImage
+          : variationImage?.src || product?.images?.[0]?.src;
 
       await addItem(simpleProduct?.id, qty, {
         variation_id: selectedWeight.variation.id,
-        name: product?.name || 'Product',
+        name: product?.name || "Product",
         description: product?.description,
         image: finalImage,
         quantity: qty,
@@ -133,20 +156,52 @@ const StickyBar = ({ groupedChildren, product }) => {
 
       refresh();
     } catch (error) {
-      console.error('Failed to add to cart', error);
+      console.error("Failed to add to cart", error);
     }
+  };
+  const handleOpenSubscribePopup = () => {
+    if (!subscriptionProduct) return;
+
+    const frequencies = new Set();
+    const quantities = new Set();
+
+    subscriptionProduct.variation_options.forEach((variation) => {
+      frequencies.add(
+        variation.attributes["attribute_pa_simple-subscription-frequenc"],
+      );
+      quantities.add(
+        variation.attributes["attribute_pa_simple-subscription-quantity"],
+      );
+    });
+
+    const freqArray = Array.from(frequencies).sort();
+    const qtyArray = Array.from(quantities).sort();
+
+    setFrequencyArray(freqArray);
+    setQuantityArray(qtyArray);
+
+    const defaultFrequency = freqArray[0] || null;
+    const defaultQuantity = qtyArray[0] || null;
+
+    setSelectedFrequency(defaultFrequency);
+    setSelectedQuantity(defaultQuantity);
+
+    // ⏳ wait for state to settle, then open popup
+    requestAnimationFrame(() => {
+      setShowSubscribePopup(true);
+    });
   };
 
   // Handle subscription checkout
   const handleSubscription = () => {
     if (!subscriptionProduct || !subscriptionVariation) {
-      console.error('Please select all subscription options');
+      console.error("Please select all subscription options");
       return;
     }
 
     // Navigate to checkout with subscription details
     const params = new URLSearchParams({
-      mode: 'subscription',
+      mode: "subscription",
       subscriptionId: subscriptionProduct.id.toString(),
       variationId: subscriptionVariation.id.toString(),
     });
@@ -196,7 +251,7 @@ const StickyBar = ({ groupedChildren, product }) => {
                 disabled={qty >= 5}
                 style={{
                   opacity: qty >= 5 ? 0.5 : 1,
-                  cursor: qty >= 5 ? 'not-allowed' : 'pointer',
+                  cursor: qty >= 5 ? "not-allowed" : "pointer",
                 }}
               >
                 +
@@ -211,7 +266,7 @@ const StickyBar = ({ groupedChildren, product }) => {
               {subscriptionProduct && (
                 <button
                   className={styles.SubscribeCta}
-                  onClick={() => setShowSubscribe(true)}
+                  onClick={handleOpenSubscribePopup}
                 >
                   <span>Subscribe &amp; save</span>
 
@@ -239,88 +294,29 @@ const StickyBar = ({ groupedChildren, product }) => {
                 </button>
               )}
 
-              <button className={styles.AddtoCartPriceCta} onClick={handleBuyNow}>
+              <button
+                className={styles.AddtoCartPriceCta}
+                onClick={handleBuyNow}
+              >
                 Buy for AED {simplePrice.toFixed(2)}
               </button>
-
             </div>
           </div>
         </div>
       </div>
 
-      {showSubscribe && subscriptionProduct && (
-        <div className={styles.PopupOverlay}>
-          <div className={styles.Popup}>
-            <h3>Subscribe</h3>
-            <p>Choose your subscription preferences</p>
-
-            {/* Frequency Selection */}
-            <div className={styles.SubscriptionSection}>
-              <h4>Delivery Frequency</h4>
-              <div className={styles.FrequencyOptions}>
-                {subscriptionOptions.frequencies.map((freq) => (
-                  <button
-                    key={freq}
-                    className={
-                      selectedFrequency === freq
-                        ? styles.ActiveFrequency
-                        : styles.FrequencyBtn
-                    }
-                    onClick={() => setSelectedFrequency(freq)}
-                  >
-                    {getFrequencyLabel(freq)}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Quantity Selection */}
-            <div className={styles.SubscriptionSection}>
-              <h4>Bags per Delivery</h4>
-              <div className={styles.FrequencyOptions}>
-                {subscriptionOptions.quantities.map((quantity) => (
-                  <button
-                    key={quantity}
-                    className={
-                      selectedQuantity === quantity
-                        ? styles.ActiveFrequency
-                        : styles.FrequencyBtn
-                    }
-                    onClick={() => setSelectedQuantity(quantity)}
-                  >
-                    {quantity} {quantity === '1' ? 'bag' : 'bags'}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Price Display */}
-            {subscriptionVariation && (
-              <div className={styles.PopupPrice}>
-                <div>AED {subscriptionVariation.price.toFixed(2)} / delivery</div>
-                {subscriptionVariation.subscription_discount > 0 && (
-                  <div className={styles.Discount}>
-                    Save {subscriptionVariation.subscription_discount}%
-                  </div>
-                )}
-              </div>
-            )}
-
-            <div className={styles.PopupActions}>
-              <button
-                className={styles.PopupCancel}
-                onClick={() => setShowSubscribe(false)}
-              >
-                Cancel
-              </button>
-
-              <button onClick={() => handleSubscription()} className={styles.PopupConfirm}>
-                Confirm Subscription
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <SubscriptionPopupDrip
+        open={showSubscribePopup}
+        onClose={() => setShowSubscribePopup(false)}
+        subscriptionProduct={subscriptionProduct}
+        frequencies={frequencyArray}
+        quantities={quantityArray}
+        selectedFrequency={selectedFrequency}
+        selectedQuantity={selectedQuantity}
+        onSelectFrequency={setSelectedFrequency}
+        onSelectQuantity={setSelectedQuantity}
+        onConfirm={handleSubscription}
+      />
     </>
   );
 };

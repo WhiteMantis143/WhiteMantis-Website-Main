@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Wishlist from "../../../../_components/Whishlist";
 import AddToCart from "../../../../_components/AddToCart";
+import SubscriptionPopupDrip from "./SubscriptionPopupDrip";
 
 const slugify = (text) =>
   text
@@ -174,11 +175,13 @@ const Lisiting = () => {
   // Subscription Handlers
   const handleOpenSubscribePopup = (product) => {
     const subscriptionProduct = product.children
-      ? Object.values(product.children).find(child => child.type === 'variable-subscription')
+      ? Object.values(product.children).find(
+          (child) => child.type === "variable-subscription",
+        )
       : null;
 
     if (!subscriptionProduct) {
-      console.error('No subscription product found');
+      console.error("No subscription product found");
       return;
     }
 
@@ -187,9 +190,13 @@ const Lisiting = () => {
     const frequencies = new Set();
     const quantities = new Set();
 
-    subscriptionProduct.variation_options?.forEach(variation => {
-      frequencies.add(variation.attributes['attribute_pa_simple-subscription-frequenc']);
-      quantities.add(variation.attributes['attribute_pa_simple-subscription-quantity']);
+    subscriptionProduct.variation_options?.forEach((variation) => {
+      frequencies.add(
+        variation.attributes["attribute_pa_simple-subscription-frequenc"],
+      );
+      quantities.add(
+        variation.attributes["attribute_pa_simple-subscription-quantity"],
+      );
     });
 
     const freqArray = Array.from(frequencies).sort();
@@ -202,22 +209,25 @@ const Lisiting = () => {
 
   const handleSubscriptionCheckout = () => {
     if (!selectedProduct || !selectedFrequency || !selectedQuantity) {
-      console.error('Please select all subscription options');
+      console.error("Please select all subscription options");
       return;
     }
 
-    const variation = selectedProduct.subscription.variation_options?.find(v =>
-      v.attributes['attribute_pa_simple-subscription-frequenc'] === selectedFrequency &&
-      v.attributes['attribute_pa_simple-subscription-quantity'] === selectedQuantity
+    const variation = selectedProduct.subscription.variation_options?.find(
+      (v) =>
+        v.attributes["attribute_pa_simple-subscription-frequenc"] ===
+          selectedFrequency &&
+        v.attributes["attribute_pa_simple-subscription-quantity"] ===
+          selectedQuantity,
     );
 
     if (!variation) {
-      console.error('No matching variation found');
+      console.error("No matching variation found");
       return;
     }
 
     const params = new URLSearchParams({
-      mode: 'subscription',
+      mode: "subscription",
       subscriptionId: selectedProduct.subscription.id.toString(),
       variationId: variation.id.toString(),
     });
@@ -226,8 +236,8 @@ const Lisiting = () => {
   };
 
   const getFrequencyLabel = (freq) => {
-    if (freq === '2-week') return 'Every 2 weeks';
-    if (freq === '4-week') return 'Every 4 weeks';
+    if (freq === "2-week") return "Every 2 weeks";
+    if (freq === "4-week") return "Every 4 weeks";
     return freq;
   };
 
@@ -250,8 +260,9 @@ const Lisiting = () => {
               {openMenus[cat.slug] ? <span>✕</span> : <span>▾</span>}
             </div>
             <div
-              className={`${styles.AnimatedBox} ${openMenus[cat.slug] ? styles.open : ""
-                }`}
+              className={`${styles.AnimatedBox} ${
+                openMenus[cat.slug] ? styles.open : ""
+              }`}
             >
               <div className={styles.FilterOptions}>
                 {renderCategories(cat.children)}
@@ -456,7 +467,7 @@ const Lisiting = () => {
                             <h4>AED {displayData.price}</h4>
                             {displayData.sale_price &&
                               displayData.sale_price !==
-                              displayData.regular_price && (
+                                displayData.regular_price && (
                                 <p className={styles.OldPrice}>
                                   AED {displayData.regular_price}
                                 </p>
@@ -472,14 +483,17 @@ const Lisiting = () => {
                       <div className={styles.ProductActions}>
                         <AddToCart product={cartProduct} />
                         {/* Subscribe button with popup functionality - only show if subscription product exists */}
-                        {product.children && Object.values(product.children).some(child => child.type === 'variable-subscription') && (
-                          <button
-                            className={styles.Subscribe}
-                            onClick={() => handleOpenSubscribePopup(product)}
-                          >
-                            Subscribe
-                          </button>
-                        )}
+                        {product.children &&
+                          Object.values(product.children).some(
+                            (child) => child.type === "variable-subscription",
+                          ) && (
+                            <button
+                              className={styles.Subscribe}
+                              onClick={() => handleOpenSubscribePopup(product)}
+                            >
+                              Subscribe
+                            </button>
+                          )}
                       </div>
                     </div>
                   </div>
@@ -520,79 +534,43 @@ const Lisiting = () => {
         )}
 
         {/* Subscription Popup */}
-        {showSubscribePopup && selectedProduct && (
-          <div className={styles.PopupOverlay}>
-            <div className={styles.Popup}>
-              <h3>Subscribe</h3>
-              <p>Choose your subscription preferences</p>
-
-              <div className={styles.SubscriptionSection}>
-                <h4>Delivery Frequency</h4>
-                <div className={styles.FrequencyOptions}>
-                  {selectedProduct.subscription.variation_options &&
-                    [...new Set(selectedProduct.subscription.variation_options.map(v => v.attributes['attribute_pa_simple-subscription-frequenc']))].sort().map((freq) => (
-                      <button
-                        key={freq}
-                        className={selectedFrequency === freq ? styles.ActiveFrequency : styles.FrequencyBtn}
-                        onClick={() => setSelectedFrequency(freq)}
-                      >
-                        {getFrequencyLabel(freq)}
-                      </button>
-                    ))}
-                </div>
-              </div>
-
-              <div className={styles.SubscriptionSection}>
-                <h4>Bags per Delivery</h4>
-                <div className={styles.FrequencyOptions}>
-                  {selectedProduct.subscription.variation_options &&
-                    [...new Set(selectedProduct.subscription.variation_options.map(v => v.attributes['attribute_pa_simple-subscription-quantity']))].sort().map((quantity) => (
-                      <button
-                        key={quantity}
-                        className={selectedQuantity === quantity ? styles.ActiveFrequency : styles.FrequencyBtn}
-                        onClick={() => setSelectedQuantity(quantity)}
-                      >
-                        {quantity} {quantity === '1' ? 'bag' : 'bags'}
-                      </button>
-                    ))}
-                </div>
-              </div>
-
-              {(() => {
-                const variation = selectedProduct.subscription.variation_options?.find(v =>
-                  v.attributes['attribute_pa_simple-subscription-frequenc'] === selectedFrequency &&
-                  v.attributes['attribute_pa_simple-subscription-quantity'] === selectedQuantity
-                );
-
-                if (!variation) return null;
-
-                const discount = variation.subscription_details?.subscription_discount || 0;
-                const originalPrice = variation.price;
-                const discountedPrice = originalPrice - (originalPrice * discount / 100);
-
-                return (
-                  <div className={styles.PopupPrice}>
-                    <div>AED {discountedPrice.toFixed(2)} / delivery</div>
-                    {discount > 0 && (
-                      <div className={styles.Discount}>
-                        Save {discount}% <span style={{ textDecoration: 'line-through', fontSize: '0.8em', marginLeft: '5px', color: '#999' }}>AED {originalPrice.toFixed(2)}</span>
-                      </div>
-                    )}
-                  </div>
-                )
-              })()}
-
-              <div className={styles.PopupActions}>
-                <button className={styles.PopupCancel} onClick={() => setShowSubscribePopup(false)}>
-                  Cancel
-                </button>
-                <button onClick={handleSubscriptionCheckout} className={styles.PopupConfirm}>
-                  Confirm Subscription
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        <SubscriptionPopupDrip
+          open={showSubscribePopup}
+          onClose={() => setShowSubscribePopup(false)}
+          frequencies={
+            selectedProduct?.subscription?.variation_options
+              ? [
+                  ...new Set(
+                    selectedProduct.subscription.variation_options.map(
+                      (v) =>
+                        v.attributes[
+                          "attribute_pa_simple-subscription-frequenc"
+                        ],
+                    ),
+                  ),
+                ].sort()
+              : []
+          }
+          quantities={
+            selectedProduct?.subscription?.variation_options
+              ? [
+                  ...new Set(
+                    selectedProduct.subscription.variation_options.map(
+                      (v) =>
+                        v.attributes[
+                          "attribute_pa_simple-subscription-quantity"
+                        ],
+                    ),
+                  ),
+                ].sort()
+              : []
+          }
+          selectedFrequency={selectedFrequency}
+          selectedQuantity={selectedQuantity}
+          onSelectFrequency={setSelectedFrequency}
+          onSelectQuantity={setSelectedQuantity}
+          priceLabel="Subscribe - AED 46 (Save Approx. 17%)"
+        />
       </div>
     </div>
   );

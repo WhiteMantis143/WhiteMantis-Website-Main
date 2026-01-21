@@ -5,7 +5,7 @@ import Image from "next/image";
 const Subscribe = () => {
   return (
     <>
-      <div className={styles.main}>
+      <div className={styles.main} id="Subscriptions">
         <div className={styles.MainContainer}>
           <div className={styles.Top}>
             <h3>Why Subscribe to White mantis?</h3>
@@ -152,10 +152,10 @@ const Subscribe = () => {
               </div>
             </div>
           </div>
-          <div className={styles.Bottom}>
+          {/* <div className={styles.Bottom}>
             <p>Ready to Commit to Coffee Excellence?</p>
             <button className={styles.Button}>Subscribe and Sip better</button>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

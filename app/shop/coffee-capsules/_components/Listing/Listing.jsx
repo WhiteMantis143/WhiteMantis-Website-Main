@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Wishlist from "../../../../_components/Whishlist";
 import AddToCart from "../../../../_components/AddToCart";
+import SubscriptionPopupCapsules from "./SubscriptionPopupCapsules";
 
 /* ---------------- SLUG HELPER ---------------- */
 const slugify = (text) =>
@@ -40,6 +41,9 @@ const Lisiting = () => {
   const [selectedFrequency, setSelectedFrequency] = useState(null);
   const [selectedQuantity, setSelectedQuantity] = useState(null);
   const [selectedSubWeight, setSelectedSubWeight] = useState(null);
+  const [frequencyArray, setFrequencyArray] = useState([]);
+const [quantityArray, setQuantityArray] = useState([]);
+
 
   // UI Ref for Mobile Filters
   const mobileFiltersRef = useRef(null);
@@ -193,12 +197,16 @@ const Lisiting = () => {
       quantities.add(variation.attributes['attribute_pa_simple-subscription-quantity']);
     });
 
-    const freqArray = Array.from(frequencies).sort();
-    const qtyArray = Array.from(quantities).sort();
+  const freqArray = Array.from(frequencies).sort();
+const qtyArray = Array.from(quantities).sort();
 
-    setSelectedFrequency(freqArray[0] || null);
-    setSelectedQuantity(qtyArray[0] || null);
-    setShowSubscribePopup(true);
+setFrequencyArray(freqArray);
+setQuantityArray(qtyArray);
+
+setSelectedFrequency(freqArray[0] || null);
+setSelectedQuantity(qtyArray[0] || null);
+setShowSubscribePopup(true);
+
   };
 
   const handleSubscriptionCheckout = () => {
@@ -520,80 +528,20 @@ const Lisiting = () => {
           </>
         )}
 
-        {/* Subscription Popup */}
-        {showSubscribePopup && selectedProduct && (
-          <div className={styles.PopupOverlay}>
-            <div className={styles.Popup}>
-              <h3>Subscribe</h3>
-              <p>Choose your subscription preferences</p>
+    <SubscriptionPopupCapsules
+  open={showSubscribePopup}
+  onClose={() => setShowSubscribePopup(false)}
+  subscriptionProduct={selectedProduct?.subscription}
+  frequencies={frequencyArray}
+  quantities={quantityArray}
+  selectedFrequency={selectedFrequency}
+  selectedQuantity={selectedQuantity}
+  onSelectFrequency={setSelectedFrequency}
+  onSelectQuantity={setSelectedQuantity}
+   onConfirm={handleSubscriptionCheckout} 
+/>
 
-              <div className={styles.SubscriptionSection}>
-                <h4>Delivery Frequency</h4>
-                <div className={styles.FrequencyOptions}>
-                  {selectedProduct.subscription.variation_options &&
-                    [...new Set(selectedProduct.subscription.variation_options.map(v => v.attributes['attribute_pa_simple-subscription-frequenc']))].sort().map((freq) => (
-                      <button
-                        key={freq}
-                        className={selectedFrequency === freq ? styles.ActiveFrequency : styles.FrequencyBtn}
-                        onClick={() => setSelectedFrequency(freq)}
-                      >
-                        {getFrequencyLabel(freq)}
-                      </button>
-                    ))}
-                </div>
-              </div>
 
-              <div className={styles.SubscriptionSection}>
-                <h4>Bags per Delivery</h4>
-                <div className={styles.FrequencyOptions}>
-                  {selectedProduct.subscription.variation_options &&
-                    [...new Set(selectedProduct.subscription.variation_options.map(v => v.attributes['attribute_pa_simple-subscription-quantity']))].sort().map((quantity) => (
-                      <button
-                        key={quantity}
-                        className={selectedQuantity === quantity ? styles.ActiveFrequency : styles.FrequencyBtn}
-                        onClick={() => setSelectedQuantity(quantity)}
-                      >
-                        {quantity} {quantity === '1' ? 'bag' : 'bags'}
-                      </button>
-                    ))}
-                </div>
-              </div>
-
-              {(() => {
-                const variation = selectedProduct.subscription.variation_options?.find(v =>
-                  v.attributes['attribute_pa_simple-subscription-frequenc'] === selectedFrequency &&
-                  v.attributes['attribute_pa_simple-subscription-quantity'] === selectedQuantity
-                );
-
-                if (!variation) return null;
-
-                const discount = variation.subscription_details?.subscription_discount || 0;
-                const originalPrice = variation.price;
-                const discountedPrice = originalPrice - (originalPrice * discount / 100);
-
-                return (
-                  <div className={styles.PopupPrice}>
-                    <div>AED {discountedPrice.toFixed(2)} / delivery</div>
-                    {discount > 0 && (
-                      <div className={styles.Discount}>
-                        Save {discount}% <span style={{ textDecoration: 'line-through', fontSize: '0.8em', marginLeft: '5px', color: '#999' }}>AED {originalPrice.toFixed(2)}</span>
-                      </div>
-                    )}
-                  </div>
-                )
-              })()}
-
-              <div className={styles.PopupActions}>
-                <button className={styles.PopupCancel} onClick={() => setShowSubscribePopup(false)}>
-                  Cancel
-                </button>
-                <button onClick={handleSubscriptionCheckout} className={styles.PopupConfirm}>
-                  Confirm Subscription
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
