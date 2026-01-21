@@ -189,7 +189,7 @@
   max-width: 81px;
   height: 100%;
   max-height: 80px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .ProdNameAndweight h4 {

@@ -140,7 +140,7 @@ export default function SubscriptionPage() {
 
                       <div className={styles.ActiveSubLeftBottom}>
                         <div className={styles.ProdImge}>
-                          <Image src={sub.line_items?.[0]?.image?.src || "https://placehold.co/100x100"} alt="product image" width={80} height={80} style={{ objectFit: "cover" }} />
+                          <Image src={sub.line_items?.[0]?.image?.src || "https://placehold.co/100x100"} alt="product image" width={80} height={80} style={{ objectFit: "contain" }} />
                         </div>
 
                         <div className={styles.ProdDetails}>
@@ -255,7 +255,7 @@ export default function SubscriptionPage() {
                 <div className={styles.PastListBottom}>
                   <div className={styles.PastListBottomLeft}>
                     <div className={styles.pastProdImage}>
-                      <Image src={sub.line_items?.[0]?.image?.src || "https://placehold.co/100x100"} alt="product image" width={80} height={80} style={{ objectFit: "cover" }} />
+                      <Image src={sub.line_items?.[0]?.image?.src || "https://placehold.co/100x100"} alt="product image" width={80} height={80} style={{ objectFit: "contain" }} />
                     </div>
 
                     <div className={styles.pastProdDetails}>

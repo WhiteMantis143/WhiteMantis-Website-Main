@@ -1,216 +1,252 @@
-.Main{
-    display: flex;
-    justify-content: left;
-    background-color: #ffffff;
-    width: 100%;
-    height: 100%;
+.Main {
+  display: flex;
+  justify-content: left;
+  background-color: #ffffff;
+  width: 100%;
+  height: 100%;
   padding-left: clamp(24px, calc(24px + (26 * ((100vw - 320px) / 1120))), 50px);
-padding-right: clamp(24px, calc(24px + (76 * ((100vw - 320px) / 1120))), 100px);
-padding-bottom: clamp(80px, calc(80px + (120 * ((100vw - 320px) / 1120))), 200px);
+  padding-right: clamp(24px, calc(24px + (76 * ((100vw - 320px) / 1120))), 100px);
+  padding-bottom: clamp(80px, calc(80px + (120 * ((100vw - 320px) / 1120))), 200px);
 
 
 }
-.MainContainer{
-    display: flex;
-    justify-content: left;
-    width: 100%;
-    height: 100%;
-    gap: 32px;
-    max-width: 700px;
-    flex-direction: column;
+
+.MainContainer {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  height: 100%;
+  gap: 32px;
+  max-width: 700px;
+  flex-direction: column;
 }
-.ActiveSubscriptions{
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-   gap: 32px;
+
+.ActiveSubscriptions {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 32px;
 
 }
-.ActiveTop h3{
-    font-family: var(--lexend);
-    font-size: var(--fs-22);
-    font-weight: 500;
-    color: #2F362A;
-    text-transform: uppercase;
-}
-.ActiveList{
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-    border: 1px solid #2F362A;
-}
-.ActiveListTop{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 13px 28px 11px 28px;
-    width: 100%;
-    background-color: #6C7A5F;
-}
-.ActiveListTopLeft{
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-    gap: 11px;
-}
-.ActiveListTopLeftTop{
-    display: flex;
-    justify-content: left;
-    flex-direction: row;
-    gap: 5px;
-    align-items: center;
-}
-.ActiveListTopLeftTop p{
-    font-family: var(--lato);
-    font-size: 15px;
-    font-weight: 700;
-    color: #FFFFFF;
-}
-.ActiveListTopNextDevelivery{
-    display: flex;
-    justify-content: left;
-    flex-direction: row;
-    align-items: center;
-    gap: 5px;
-}
-.ActiveListTopNextDevelivery p, .ActiveListTopNextDevelivery h4{
-    font-family: var(--lato);
-    font-size: 15px;
-    font-weight: 400;
-    color: #FFFFFF;
-}
-.ActiveListTopRight{
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-    gap: 10px;
-   
-}
-.ActiveOrderDate, .ActiveSubId{
-    display: flex;
-    justify-content: left;
-    flex-direction: row;
-    gap: 8px;
-}
-.ActiveOrderDate p, .ActiveSubId p{
-    font-family: var(--lato);
-    font-size: 15px;
-    font-weight: 400;
-    color: #FFFFFF;
-}
-.ActiveListBottom{
-    display: flex;
-    justify-content: left;
-    padding: 30px 58px 30px 75px;
-    gap: 10px;
-    flex-direction: column;
-}
-.ActiveListBottomtOP{
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-}
-.ActiveSubLeft{
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-    gap: 16px;
-   
-}
-.ActiveSubLeftTop{
-    display: flex;
-    justify-content: left;
-}
-.ActiveSubLeftTop p{
-    font-family: var(--lato);
-    font-size: 15px;
-    font-weight: 400;
-    color: #2F362A;
-}
-.ActiveSubLeftBottom{
-    display: flex;
-    justify-content: left;
-    flex-direction: row;
-    gap: 15px;
-    align-items: center;
-}
-.ProdImge img{
-    width: 100%;
-    max-width: 82px;
-    height: 100%;
-    max-height: 80px;
-}
-.ProdDetails{
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-    gap: 8px;
-}
-.ProdTitle h3{
-    font-family: var(--lato);
-    font-size: 15px;
-    font-weight: 400;
-    color: #6E736A;
-}
-.ProdTooDetails{
-    display: flex;
-    justify-content: left;
-    flex-direction: row;
-    gap: 8px;
-    align-items: center;
-}
-.prodweight p, .prodQty p{
-    font-family: var(--lato);
-    font-size: 15px;
-    font-weight: 400;
-    color: #6E736A;
-}
-.ActiveSubRight{
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    max-width: 131px;
-    gap: 6px;
-}
-.ViewCta{
-    display: flex;
-    justify-content: right;
-    
-}
-.AtciveSubDeliveryTiming p{
-    font-family: var(--lato);
-    font-size: 15px;
-    font-weight: 400;
-    color: #2F362A;
-}
-.view{
-    font-family: var(--lato);
-    font-size: 15px;
-    font-weight: 500;
-    color: #6C7A5F;
-    background-color: transparent;
-    border: 1px solid #6C7A5F;
-    text-decoration: none;
-    padding: 13px 23px ;
 
-    cursor: pointer;
+.ActiveTop h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2F362A;
+  text-transform: uppercase;
 }
-.PastSubscriptions{
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-    gap: 24px;
+
+.ActiveList {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  border: 1px solid #2F362A;
 }
-.PastSubscriptionsTop{
-    display: flex;
-    justify-content: left;
+
+.ActiveListTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 28px 11px 28px;
+  width: 100%;
+  background-color: #6C7A5F;
 }
-.PastSubscriptionsTop h3{
-    font-family: var(--lexend);
-    font-size: var(--fs-22);
-    font-weight: 500;
-    color: #2F362A;
-    text-transform: uppercase;
+
+.ActiveListTopLeft {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.ActiveListTopLeftTop {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+}
+
+.ActiveListTopLeftTop p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.ActiveListTopNextDevelivery {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.ActiveListTopNextDevelivery p,
+.ActiveListTopNextDevelivery h4 {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+
+.ActiveListTopRight {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 10px;
+
+}
+
+.ActiveOrderDate,
+.ActiveSubId {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.ActiveOrderDate p,
+.ActiveSubId p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+
+.ActiveListBottom {
+  display: flex;
+  justify-content: left;
+  padding: 30px 58px 30px 75px;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.ActiveListBottomtOP {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.ActiveSubLeft {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 16px;
+
+}
+
+.ActiveSubLeftTop {
+  display: flex;
+  justify-content: left;
+}
+
+.ActiveSubLeftTop p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #2F362A;
+}
+
+.ActiveSubLeftBottom {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+}
+
+.ProdImge img {
+  width: 100%;
+  max-width: 82px;
+  height: 100%;
+  max-height: 80px;
+  object-fit: contain;
+}
+
+.ProdDetails {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ProdTitle h3 {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #6E736A;
+}
+
+.ProdTooDetails {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.prodweight p,
+.prodQty p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #6E736A;
+}
+
+.ActiveSubRight {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  max-width: 131px;
+  gap: 6px;
+}
+
+.ViewCta {
+  display: flex;
+  justify-content: right;
+
+}
+
+.AtciveSubDeliveryTiming p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #2F362A;
+}
+
+.view {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 500;
+  color: #6C7A5F;
+  background-color: transparent;
+  border: 1px solid #6C7A5F;
+  text-decoration: none;
+  padding: 13px 23px;
+
+  cursor: pointer;
+}
+
+.PastSubscriptions {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.PastSubscriptionsTop {
+  display: flex;
+  justify-content: left;
+}
+
+.PastSubscriptionsTop h3 {
+  font-family: var(--lexend);
+  font-size: var(--fs-22);
+  font-weight: 500;
+  color: #2F362A;
+  text-transform: uppercase;
 }
 
 
@@ -341,6 +377,7 @@ padding-bottom: clamp(80px, calc(80px + (120 * ((100vw - 320px) / 1120))), 200px
   text-decoration: underline;
   cursor: pointer;
 }
+
 /* =========================
    EMPTY STATE (ACTIVE / PAST)
 ========================= */
@@ -453,7 +490,7 @@ padding-bottom: clamp(80px, calc(80px + (120 * ((100vw - 320px) / 1120))), 200px
     justify-content: flex-start;
   }
 
- 
+
   .pastListTop {
     flex-direction: column;
     align-items: flex-start;
@@ -469,12 +506,15 @@ padding-bottom: clamp(80px, calc(80px + (120 * ((100vw - 320px) / 1120))), 200px
   .PastListBottomRight {
     align-self: flex-start;
   }
-   .ActiveMobileMeta,
+
+  .ActiveMobileMeta,
   .PastMobileMeta {
     display: flex;
     padding-bottom: 10px;
   }
-  .ActiveTop h3, .PastSubscriptionsTop h3 {
+
+  .ActiveTop h3,
+  .PastSubscriptionsTop h3 {
     font-size: 20px;
   }
 }

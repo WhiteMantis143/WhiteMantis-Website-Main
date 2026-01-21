@@ -477,9 +477,9 @@ function CheckoutForm({
           type: checkoutMode,
           ...(checkoutMode === "subscription"
             ? {
-                subscriptionProductId: subscriptionId,
-                subscriptionProductVariationId: variationId,
-              }
+              subscriptionProductId: subscriptionId,
+              subscriptionProductVariationId: variationId,
+            }
             : {}),
         },
         deliveryOption: delivery,
@@ -626,9 +626,8 @@ function CheckoutForm({
 
             <div className={styles.ThreeTwo}>
               <div
-                className={`${styles.ThreeRow} ${
-                  delivery === "ship" ? styles.Active : ""
-                }`}
+                className={`${styles.ThreeRow} ${delivery === "ship" ? styles.Active : ""
+                  }`}
                 onClick={() => setDelivery("ship")}
               >
                 <div className={styles.RowLeft}>
@@ -668,9 +667,8 @@ function CheckoutForm({
               </div>
 
               <div
-                className={`${styles.ThreeRow} ${
-                  delivery === "pickup" ? styles.Active : ""
-                }`}
+                className={`${styles.ThreeRow} ${delivery === "pickup" ? styles.Active : ""
+                  }`}
                 onClick={() => setDelivery("pickup")}
               >
                 <div className={styles.RowLeft}>
@@ -720,9 +718,8 @@ function CheckoutForm({
                       {savedAddresses.map((addr) => (
                         <div
                           key={addr.id}
-                          className={`${styles.AddressCard} ${
-                            selectedAddressId === addr.id ? styles.Selected : ""
-                          }`}
+                          className={`${styles.AddressCard} ${selectedAddressId === addr.id ? styles.Selected : ""
+                            }`}
                           onClick={() => {
                             setSelectedAddressId(addr.id);
                             setShowNewAddressForm(false);
@@ -1341,7 +1338,7 @@ function CheckoutForm({
                     alt="product image"
                     width={80}
                     height={80}
-                    style={{ objectFit: "cover" }}
+                    style={{ objectFit: "contain" }}
                   />
                 </div>
 
@@ -1660,12 +1657,7 @@ function CheckoutContent() {
       sub = product.reduce(
         (acc, item) =>
           acc +
-<<<<<<< HEAD
-          parseFloat(item.price?.final_price || item.price || 0) *
-            (item.quantity || 1),
-=======
           parseFloat(item.price?.final_price || item.price || 0),
->>>>>>> f025a6e (Add subscription success page with guest access, implement max quantity limits, and clean product names in account pages)
         0,
       );
     }

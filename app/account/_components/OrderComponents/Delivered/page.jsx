@@ -66,7 +66,7 @@ export default function Delivered({ order }) {
                   alt={item.name}
                   width={50}
                   height={50}
-                  style={{ objectFit: "cover" }}
+                  style={{ objectFit: "contain" }}
                 />
                 <div>
                   <p>{cleanProductName(item.name)}</p>

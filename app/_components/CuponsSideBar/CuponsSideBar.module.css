@@ -59,19 +59,19 @@
 .InputWrap input {
   flex: 1;
   border: none;
-    border: 1px solid #2F362A4D;
+  border: 1px solid #2F362A4D;
   padding: 13.5px 14px;
   /* max-width:    255px; */
   font-family: var(--lato);
   font-size: 15px;
   font-weight: 400;
-  color: #6E736A; 
+  color: #6E736A;
   outline: none;
 }
 
 
 .InputWrap input::placeholder {
-  color: #A8A8A8;     
+  color: #A8A8A8;
   font-size: 14px;
   font-weight: 400;
   font-family: var(--lato);
@@ -79,7 +79,7 @@
 
 
 .InputWrap input:focus {
-  color: #2F362A; 
+  color: #2F362A;
 }
 
 
@@ -98,102 +98,118 @@
   font-weight: 500;
   cursor: pointer;
 }
-.CouponsList{
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-    gap: 15px;
+
+.CouponsList {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 15px;
 }
-.CouponsHeader{
-    display: flex;
-    justify-content: left;
+
+.CouponsHeader {
+  display: flex;
+  justify-content: left;
 
 }
-.CouponsHeader h4{
-    font-family: var(--lato);
-    font-size: 15px;
-    font-weight: 400;
-    color: #2F362A;
+
+.CouponsHeader h4 {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #2F362A;
 }
-.CuponsCard{
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px 20px;
-    border: 1px solid #2F362A4D;
-    background-color: #ffffff;
+
+.CuponsCard {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px 20px;
+  border: 1px solid #2F362A4D;
+  background-color: #ffffff;
 }
-.CuponsCardTop{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+.CuponsCardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.CuponsCardLeft{
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-    gap: 5px;
+
+.CuponsCardLeft {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 5px;
 }
-.CuponsCode{
-    display: flex;
-    justify-content: left;
-    flex-direction: row;
-    gap: 5px;
+
+.CuponsCode {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  gap: 5px;
 }
-.CuponsCode h4{
-    font-family: var(--lato);
-    font-size: 15px;
-    font-weight: 700;
-    color: #2F362A;
+
+.CuponsCode h4 {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 700;
+  color: #2F362A;
 }
-.CuponsSave, .CuponsDesc{
-    display: flex;
-    justify-content: left;
+
+.CuponsSave,
+.CuponsDesc {
+  display: flex;
+  justify-content: left;
 }
-.CuponsSave h5{
-    font-family: var(--lato);
-    font-size: 15px;
-    font-weight: 400;
-    color: #227336;
+
+.CuponsSave h5 {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #227336;
 }
-.CuponsDesc p{
-    font-family: var(--lato);
-    font-size: 15px;
-    font-weight: 400;
-    max-width: 80%;
-    color: #6E736A;
+
+.CuponsDesc p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  max-width: 80%;
+  color: #6E736A;
 }
-.CuponsCardRight{
-    display: flex;
-    justify-content: right;
-    cursor: pointer;
-    
+
+.CuponsCardRight {
+  display: flex;
+  justify-content: right;
+  cursor: pointer;
+
 }
-.CuponsCardRight h5{
-    font-family: var(--lato);
-    font-size: 15px;
-    font-weight: 400;
-    color: #6E736A;
-    text-decoration: underline;
+
+.CuponsCardRight h5 {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  color: #6E736A;
+  text-decoration: underline;
 }
-.CuponsCardBottom{
-    display: flex;
-    justify-content: left;
+
+.CuponsCardBottom {
+  display: flex;
+  justify-content: left;
 }
-.CuponsCardBottom p{
-    font-family: var(--lato);
-    font-size: 15px;
-    font-weight: 400;
-    cursor: pointer;
-    color: #6E736A;
+
+.CuponsCardBottom p {
+  font-family: var(--lato);
+  font-size: 15px;
+  font-weight: 400;
+  cursor: pointer;
+  color: #6E736A;
 }
 
 .CouponError {
   font-family: var(--lato);
   font-size: 14px;
   font-weight: 400;
-  color: #dc2626; 
+  color: #dc2626;
   margin-top: 0px;
 }
 
@@ -203,33 +219,46 @@
     right: -100%;
     height: 100svh;
     overflow-y: auto;
-    
+
   }
+
   .open {
     right: 0;
   }
+
   .Main {
     padding: 50px 24px 50px 24px;
   }
+
   .Header h3 {
     font-size: 20px;
   }
-  .Header p, .CouponsHeader h4, .CuponsCode h4, .CuponsSave h5, .CuponsDesc p, .CuponsCardBottom p {
+
+  .Header p,
+  .CouponsHeader h4,
+  .CuponsCode h4,
+  .CuponsSave h5,
+  .CuponsDesc p,
+  .CuponsCardBottom p {
     font-size: 14px;
     max-width: 70%;
   }
+
   .InputWrap input {
     font-size: 14px;
     padding: 10.5px 14px;
   }
-  .CuponsCardRight h5{
+
+  .CuponsCardRight h5 {
     font-size: 14px;
     white-space: nowrap;
   }
-  .InputWrap{
+
+  .InputWrap {
     gap: 0px;
   }
-  .CuponsCard{
+
+  .CuponsCard {
     gap: 8px;
     padding: 12px 12px;
   }
@@ -240,19 +269,21 @@
     width: 60%;
     right: -60%;
     height: 100svh;
-    
+
   }
 
   .open {
     right: 0;
   }
-  .Main{
+
+  .Main {
     padding-top: 100px;
     padding-bottom: 50px;
   }
 }
+
 @media (min-width: 1201px) and (max-width:1900px) {
-  .Main{
+  .Main {
     padding-top: 100px;
     padding-bottom: 50px;
   }

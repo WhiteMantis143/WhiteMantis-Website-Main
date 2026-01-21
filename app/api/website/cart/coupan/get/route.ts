@@ -42,7 +42,13 @@ export async function GET() {
             const visibility = getMetaValue("coupon_visibility");
             const couponFor = getMetaValue("coupan_for");
 
+            // Check for expiry
+            const dateExpires = coupon.date_expires;
+            const now = new Date();
+            const isExpired = dateExpires ? new Date(dateExpires) < now : false;
+
             return (
+                !isExpired &&
                 visibility === "show" &&
                 (couponFor === "website" || couponFor === "both")
             );

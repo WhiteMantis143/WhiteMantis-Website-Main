@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./page.module.css";
-
+import { cleanProductName } from "../../../../lib/productUtils";
 
 export default function SubscriptionDetailPage({ params }) {
   // Handle params wrapping/unwrapping
@@ -89,7 +89,7 @@ export default function SubscriptionDetailPage({ params }) {
       </div>
 
       <div className={styles.Card}>
-        <h3 className={styles.CardTitle}>{product?.name || "Product Name"}</h3>
+        <h3 className={styles.CardTitle}>{cleanProductName(product?.name) || "Product Name"}</h3>
 
         <div className={styles.ProductRow}>
           <Image
@@ -97,11 +97,11 @@ export default function SubscriptionDetailPage({ params }) {
             alt="product"
             width={100}
             height={100}
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "contain" }}
           />
 
           <div className={styles.ProductInfo}>
-            <p className={styles.ProductName}>{product?.name}</p>
+            <p className={styles.ProductName}>{cleanProductName(product?.name)}</p>
             <p className={styles.ProductMeta}>
               {product?.meta_data?.find(m => m.key === "pa_weight")?.value || "N/A"} &nbsp;|&nbsp; Qty: {product?.quantity}
             </p>

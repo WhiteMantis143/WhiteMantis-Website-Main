@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
 
   if (!session?.user?.wpCustomerId) {
     return NextResponse.json(
-      { success: false, message: "Login to Use Coupans" },
+      { success: false, message: "Login to Use Coupons" },
       { status: 400 }
     );
   }
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
 
   if (!code || code.trim() === "") {
     return NextResponse.json(
-      { success: false, message: "Coupan code is required" },
+      { success: false, message: "Coupon code is required" },
       { status: 400 }
     );
   }
@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
 
     if (Array.isArray(coupanData) && coupanData.length === 0) {
       return NextResponse.json(
-        { success: false, message: "Inavalid Coupan Code" },
+        { success: false, message: "Inavalid Coupon Code" },
         { status: 404 }
       );
     }
@@ -80,7 +80,7 @@ export async function GET(request: NextRequest) {
 
     if (couponFor === "app") {
       return NextResponse.json(
-        { success: false, message: "Coupan is not valid for this platform" },
+        { success: false, message: "Coupon is not valid for this platform" },
         { status: 404 }
       );
     }
@@ -89,7 +89,7 @@ export async function GET(request: NextRequest) {
     // Expiry date validation
     if (now.getTime() > expiryDate.getTime()) {
       return NextResponse.json(
-        { success: false, message: "Coupan is expired" },
+        { success: false, message: "Coupon is expired" },
         { status: 404 }
       );
     }
@@ -99,7 +99,7 @@ export async function GET(request: NextRequest) {
     if (coupanData[0].usage_limit) {
       if (coupanData[0].usage_count >= coupanData[0].usage_limit) {
         return NextResponse.json(
-          { success: false, message: "Coupan is expired" },
+          { success: false, message: "Coupon is expired" },
           { status: 404 }
         );
       }
@@ -141,7 +141,7 @@ export async function GET(request: NextRequest) {
 
         if (ordersCount >= coupanData[0].usage_limit_per_user) {
           return NextResponse.json(
-            { success: false, message: "Coupan is already used" },
+            { success: false, message: "Coupon is already used" },
             { status: 404 }
           );
         }
@@ -178,7 +178,7 @@ export async function GET(request: NextRequest) {
 
     const coupon = coupanData[0];
     const apiResponse = NextResponse.json(
-      { success: true, message: "Coupan applied successfully", coupon },
+      { success: true, message: "Coupon applied successfully", coupon },
       { status: 200 }
     );
 
@@ -195,7 +195,7 @@ export async function GET(request: NextRequest) {
     return apiResponse;
 
   } catch (error) {
-    console.log("Error fetching coupan:", error);
+    console.log("Error fetching coupon:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }

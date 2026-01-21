@@ -165,13 +165,13 @@ export function CartProvider({ children }) {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        return { ok: false };
+        return { ok: false, message: data.message || "Failed to apply coupon" };
       }
 
       setAppliedCoupon(data.coupon);
       return { ok: true };
-    } catch {
-      return { ok: false };
+    } catch (error) {
+      return { ok: false, message: "Something went wrong" };
     }
   }, []);
 

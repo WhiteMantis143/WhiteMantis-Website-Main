@@ -74,7 +74,7 @@ gap: clamp(16px, calc(16px + (8 * ((100vw - 320px) / 1120))), 24px);
 .ProductImage img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 .RCardInfo{
     display: flex;
