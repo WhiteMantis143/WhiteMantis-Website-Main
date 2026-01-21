@@ -30,7 +30,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
 
     const category_id = searchParams.get("category_id");
-    const per_page = Number(searchParams.get("per_page") || 12);
+    const per_page = Number(searchParams.get("per_page") || 25);
     const page = Number(searchParams.get("page") || 1);
 
     if (category_id) {

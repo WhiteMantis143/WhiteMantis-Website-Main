@@ -27,7 +27,11 @@ const CartSideBar = () => {
   const router = useRouter();
   const isCartEmpty = products.length === 0;
 
-  const handleIncrease = async (product_id, variation_id) => {
+  const handleIncrease = async (product_id, variation_id, currentQty) => {
+    // Maximum quantity limit of 5 per product
+    if (currentQty >= 5) {
+      return; // Don't allow increasing beyond 5
+    }
     await addItem(product_id, 1, { variation_id, skipToast: true });
   };
 
@@ -189,8 +193,14 @@ const CartSideBar = () => {
                                 handleIncrease(
                                   item.product_id,
                                   item.variation_id,
+                                  item.quantity,
                                 )
                               }
+                              disabled={item.quantity >= 5}
+                              style={{
+                                opacity: item.quantity >= 5 ? 0.5 : 1,
+                                cursor: item.quantity >= 5 ? 'not-allowed' : 'pointer',
+                              }}
                             >
                               +
                             </button>

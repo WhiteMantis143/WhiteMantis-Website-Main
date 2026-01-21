@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 // import packet from "./image (16).png";
 import Image from "next/image";
 import Link from "next/link";
+import { cleanProductName } from "../../../../../lib/productUtils";
 
 export default function InProgress({ order }) {
   if (!order) return null;
@@ -68,7 +69,7 @@ export default function InProgress({ order }) {
                   style={{ objectFit: "cover" }}
                 />
                 <div>
-                  <p>{item.name}</p>
+                  <p>{cleanProductName(item.name)}</p>
                   <p>
                     {item.meta_data?.find(m => m.key === "pa_weight")?.value || ""} <span>|</span> Qty: {item.quantity}
                   </p>

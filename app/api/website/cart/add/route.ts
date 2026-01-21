@@ -131,6 +131,14 @@ export async function POST(req: NextRequest) {
             const totalQuantity = currentQuantity + quantity;
             const stockQuantity = selectedVariation?.stock_quantity || productResponse.stock_quantity;
 
+            // Maximum quantity limit of 5 per product
+            if (totalQuantity > 5) {
+                return NextResponse.json({
+                    ok: false,
+                    error: `Maximum 5 items allowed per product. You already have ${currentQuantity} in cart.`
+                }, { status: 400 });
+            }
+
             if (stockQuantity !== null && stockQuantity !== undefined && totalQuantity > stockQuantity) {
                 return NextResponse.json({
                     ok: false,
@@ -183,6 +191,14 @@ export async function POST(req: NextRequest) {
             const currentQuantity = guestCart.products[existingIndex].quantity;
             const totalQuantity = currentQuantity + quantity;
             const stockQuantity = selectedVariation?.stock_quantity || productResponse.stock_quantity;
+
+            // Maximum quantity limit of 5 per product
+            if (totalQuantity > 5) {
+                return NextResponse.json({
+                    ok: false,
+                    error: `Maximum 5 items allowed per product. You already have ${currentQuantity} in cart.`
+                }, { status: 400 });
+            }
 
             if (stockQuantity !== null && stockQuantity !== undefined && totalQuantity > stockQuantity) {
                 return NextResponse.json({

@@ -72,7 +72,6 @@ function SuccessContent() {
   }
 
   // Map Data based on type
-  // Assuming 'order' structure mostly for now as per checkout redirect
   const order = type === 'subscription' ? data.subscription : data.order;
 
   // Helpers
@@ -100,21 +99,14 @@ function SuccessContent() {
     return order.payment_method_title || "Credit Card";
   };
 
-  const items = type === 'subscription'
-    ? [{
-      id: order.product_id,
-      name: order.product_name,
-      quantity: order.quantity || 1,
-      price: order.total, // For sub, implies recurring? Or signup?
-      image: null // Sub object might not have image
-    }]
-    : order.line_items.map(item => ({
-      id: item.id,
-      name: cleanProductName(item.name),
-      quantity: item.quantity,
-      price: item.total, // Total for line
-      image: item.image?.src || null // Try to get image if available
-    }));
+  // Both orders and subscriptions use line_items array in WooCommerce
+  const items = order.line_items?.map(item => ({
+    id: item.id,
+    name: cleanProductName(item.name),
+    quantity: item.quantity,
+    price: item.total, // Total for line
+    image: item.image?.src || null // Try to get image if available
+  })) || [];
 
   const orderInfo = {
     orderId: order.id,
@@ -125,10 +117,10 @@ function SuccessContent() {
   };
 
   const totals = {
-    subtotal: parseFloat(order.total) - parseFloat(order.total_tax) - parseFloat(order.shipping_total), // Approx
-    shipping: parseFloat(order.shipping_total),
-    discount: parseFloat(order.discount_total),
-    tax: parseFloat(order.total_tax),
+    subtotal: parseFloat(order.total) - parseFloat(order.total_tax || 0) - parseFloat(order.shipping_total || 0),
+    shipping: parseFloat(order.shipping_total || 0),
+    discount: parseFloat(order.discount_total || 0),
+    tax: parseFloat(order.total_tax || 0),
     total: parseFloat(order.total)
   };
 
@@ -137,7 +129,7 @@ function SuccessContent() {
   // But strictly: order.total = (Subtotal - Discount) + Tax + Shipping
   // So Subtotal = Total - Tax - Shipping + Discount.
 
-  const calcSubtotal = (parseFloat(order.total) - parseFloat(order.total_tax) - parseFloat(order.shipping_total) + parseFloat(order.discount_total)).toFixed(2);
+  const calcSubtotal = (parseFloat(order.total) - parseFloat(order.total_tax || 0) - parseFloat(order.shipping_total || 0) + parseFloat(order.discount_total || 0)).toFixed(2);
 
   return (
     <div className={styles.Main}>
@@ -238,6 +230,21 @@ function SuccessContent() {
                   <p>{orderInfo.email}</p>
                 </div>
               </div>
+
+              {type === 'subscription' && order.next_payment_date && (
+                <div className={styles.Three}>
+                  <div className={styles.ThreeTop}>
+                    <p>Next Payment Date</p>
+                  </div>
+                  <div className={styles.ContactEmail}>
+                    <p>{new Date(order.next_payment_date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

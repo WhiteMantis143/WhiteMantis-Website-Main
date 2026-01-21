@@ -177,7 +177,7 @@ const StickyBar = ({ groupedChildren, product }) => {
 
           <div className={styles.Center}>
             {/* Weight Selection Buttons */}
-            {/* <div className={styles.WeightOptions}>
+            <div className={styles.WeightOptions}>
               {weightOptions.map((w) => (
                 <button
                   key={w.label}
@@ -191,14 +191,23 @@ const StickyBar = ({ groupedChildren, product }) => {
                   {w.label}
                 </button>
               ))}
-            </div> */}
+            </div>
 
             <div className={styles.CountIncDec}>
               <button onClick={() => setQty((q) => Math.max(1, q - 1))}>
                 −
               </button>
               <span>{String(qty).padStart(2, "0")}</span>
-              <button onClick={() => setQty((q) => q + 1)}>+</button>
+              <button
+                onClick={() => setQty((q) => Math.min(5, q + 1))}
+                disabled={qty >= 5}
+                style={{
+                  opacity: qty >= 5 ? 0.5 : 1,
+                  cursor: qty >= 5 ? 'not-allowed' : 'pointer',
+                }}
+              >
+                +
+              </button>
             </div>
           </div>
 
@@ -313,16 +322,22 @@ const StickyBar = ({ groupedChildren, product }) => {
             </div>
 
             {/* Price Display */}
-            {subscriptionVariation && (
-              <div className={styles.PopupPrice}>
-                <div>AED {subscriptionVariation.price.toFixed(2)} / delivery</div>
-                {subscriptionVariation.subscription_discount > 0 && (
-                  <div className={styles.Discount}>
-                    Save {subscriptionVariation.subscription_discount}%
-                  </div>
-                )}
-              </div>
-            )}
+            {subscriptionVariation && (() => {
+              const discount = subscriptionVariation.subscription_discount || 0;
+              const originalPrice = subscriptionVariation.price;
+              const discountedPrice = originalPrice - (originalPrice * discount / 100);
+
+              return (
+                <div className={styles.PopupPrice}>
+                  <div>AED {discountedPrice.toFixed(2)} / delivery</div>
+                  {discount > 0 && (
+                    <div className={styles.Discount}>
+                      Save {discount}% <span style={{ textDecoration: 'line-through', fontSize: '0.8em', marginLeft: '5px', color: '#999' }}>AED {originalPrice.toFixed(2)}</span>
+                    </div>
+                  )}
+                </div>
+              )
+            })()}
 
             <div className={styles.PopupActions}>
               <button

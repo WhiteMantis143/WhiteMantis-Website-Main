@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./Lisiting.module.css";
 import Image from "next/image";
 import Link from "next/link";
@@ -33,8 +34,16 @@ const Lisiting = () => {
   const [sortOpen, setSortOpen] = useState(false);
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
+  // Subscription Popup State
+  const [showSubscribePopup, setShowSubscribePopup] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedFrequency, setSelectedFrequency] = useState(null);
+  const [selectedQuantity, setSelectedQuantity] = useState(null);
+  const [selectedSubWeight, setSelectedSubWeight] = useState(null);
+
   // UI Ref for Mobile Filters
   const mobileFiltersRef = useRef(null);
+  const router = useRouter();
 
   // 3. Fetch Data Once on Mount (Functionality)
   useEffect(() => {
@@ -117,17 +126,17 @@ const Lisiting = () => {
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + ITEMS_PER_LOAD);
   };
-useEffect(() => {
-  if (isMobileFiltersOpen) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "";
-  }
+  useEffect(() => {
+    if (isMobileFiltersOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
 
-  return () => {
-    document.body.style.overflow = "";
-  };
-}, [isMobileFiltersOpen]);
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileFiltersOpen]);
 
   // Helper to get variation data (Functionality)
   const getDisplayData = (product) => {
@@ -163,6 +172,66 @@ useEffect(() => {
     };
   };
 
+  // Subscription Handlers
+  const handleOpenSubscribePopup = (product) => {
+    const subscriptionProduct = product.children
+      ? Object.values(product.children).find(child => child.type === 'variable-subscription')
+      : null;
+
+    if (!subscriptionProduct) {
+      console.error('No subscription product found');
+      return;
+    }
+
+    setSelectedProduct({ parent: product, subscription: subscriptionProduct });
+
+    const frequencies = new Set();
+    const quantities = new Set();
+
+    subscriptionProduct.variation_options?.forEach(variation => {
+      frequencies.add(variation.attributes['attribute_pa_simple-subscription-frequenc']);
+      quantities.add(variation.attributes['attribute_pa_simple-subscription-quantity']);
+    });
+
+    const freqArray = Array.from(frequencies).sort();
+    const qtyArray = Array.from(quantities).sort();
+
+    setSelectedFrequency(freqArray[0] || null);
+    setSelectedQuantity(qtyArray[0] || null);
+    setShowSubscribePopup(true);
+  };
+
+  const handleSubscriptionCheckout = () => {
+    if (!selectedProduct || !selectedFrequency || !selectedQuantity) {
+      console.error('Please select all subscription options');
+      return;
+    }
+
+    const variation = selectedProduct.subscription.variation_options?.find(v =>
+      v.attributes['attribute_pa_simple-subscription-frequenc'] === selectedFrequency &&
+      v.attributes['attribute_pa_simple-subscription-quantity'] === selectedQuantity
+    );
+
+    if (!variation) {
+      console.error('No matching variation found');
+      return;
+    }
+
+    const params = new URLSearchParams({
+      mode: 'subscription',
+      subscriptionId: selectedProduct.subscription.id.toString(),
+      variationId: variation.id.toString(),
+    });
+
+    router.push(`/checkout?${params.toString()}`);
+  };
+
+  const getFrequencyLabel = (freq) => {
+    if (freq === '2-week') return 'Every 2 weeks';
+    if (freq === '4-week') return 'Every 4 weeks';
+    return freq;
+  };
+
   // Render Categories Recursive Helper (UI - Preserved from Listing.jsx)
   function renderCategories(categories) {
     if (!categories || !Array.isArray(categories) || categories.length === 0)
@@ -182,9 +251,8 @@ useEffect(() => {
               {openMenus[cat.slug] ? <span>✕</span> : <span>▾</span>}
             </div>
             <div
-              className={`${styles.AnimatedBox} ${
-                openMenus[cat.slug] ? styles.open : ""
-              }`}
+              className={`${styles.AnimatedBox} ${openMenus[cat.slug] ? styles.open : ""
+                }`}
             >
               <div className={styles.FilterOptions}>
                 {renderCategories(cat.children)}
@@ -389,7 +457,7 @@ useEffect(() => {
                             <h4>AED {displayData.price}</h4>
                             {displayData.sale_price &&
                               displayData.sale_price !==
-                                displayData.regular_price && (
+                              displayData.regular_price && (
                                 <p className={styles.OldPrice}>
                                   AED {displayData.regular_price}
                                 </p>
@@ -404,8 +472,15 @@ useEffect(() => {
                       </Link>
                       <div className={styles.ProductActions}>
                         <AddToCart product={cartProduct} />
-                        {/* Preserving Subscribe button from UI */}
-                        {/* <button className={styles.Subscribe}>Subscribe</button> */}
+                        {/* Subscribe button with popup functionality - only show if subscription product exists */}
+                        {product.children && Object.values(product.children).some(child => child.type === 'variable-subscription') && (
+                          <button
+                            className={styles.Subscribe}
+                            onClick={() => handleOpenSubscribePopup(product)}
+                          >
+                            Subscribe
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -423,27 +498,102 @@ useEffect(() => {
           </div>
         </div>
 
-       {isMobileFiltersOpen && (
-  <>
-    {/* Background overlay */}
-    <div
-      className={styles.MobileFilterOverlay}
-      onClick={() => setIsMobileFiltersOpen(false)}
-    />
+        {isMobileFiltersOpen && (
+          <>
+            {/* Background overlay */}
+            <div
+              className={styles.MobileFilterOverlay}
+              onClick={() => setIsMobileFiltersOpen(false)}
+            />
 
-    {/* Filter drawer */}
-    <div className={styles.MobileFilters} ref={mobileFiltersRef}>
-      <div className={styles.MobileFilterHeader}>
-        <p>Filters</p>
-        <span onClick={() => setIsMobileFiltersOpen(false)}>✕</span>
-      </div>
+            {/* Filter drawer */}
+            <div className={styles.MobileFilters} ref={mobileFiltersRef}>
+              <div className={styles.MobileFilterHeader}>
+                <p>Filters</p>
+                <span onClick={() => setIsMobileFiltersOpen(false)}>✕</span>
+              </div>
 
-      <div className={styles.LeftBottom}>
-        {renderCategories(productsCategories)}
-      </div>
-    </div>
-  </>
-)}
+              <div className={styles.LeftBottom}>
+                {renderCategories(productsCategories)}
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* Subscription Popup */}
+        {showSubscribePopup && selectedProduct && (
+          <div className={styles.PopupOverlay}>
+            <div className={styles.Popup}>
+              <h3>Subscribe</h3>
+              <p>Choose your subscription preferences</p>
+
+              <div className={styles.SubscriptionSection}>
+                <h4>Delivery Frequency</h4>
+                <div className={styles.FrequencyOptions}>
+                  {selectedProduct.subscription.variation_options &&
+                    [...new Set(selectedProduct.subscription.variation_options.map(v => v.attributes['attribute_pa_simple-subscription-frequenc']))].sort().map((freq) => (
+                      <button
+                        key={freq}
+                        className={selectedFrequency === freq ? styles.ActiveFrequency : styles.FrequencyBtn}
+                        onClick={() => setSelectedFrequency(freq)}
+                      >
+                        {getFrequencyLabel(freq)}
+                      </button>
+                    ))}
+                </div>
+              </div>
+
+              <div className={styles.SubscriptionSection}>
+                <h4>Bags per Delivery</h4>
+                <div className={styles.FrequencyOptions}>
+                  {selectedProduct.subscription.variation_options &&
+                    [...new Set(selectedProduct.subscription.variation_options.map(v => v.attributes['attribute_pa_simple-subscription-quantity']))].sort().map((quantity) => (
+                      <button
+                        key={quantity}
+                        className={selectedQuantity === quantity ? styles.ActiveFrequency : styles.FrequencyBtn}
+                        onClick={() => setSelectedQuantity(quantity)}
+                      >
+                        {quantity} {quantity === '1' ? 'bag' : 'bags'}
+                      </button>
+                    ))}
+                </div>
+              </div>
+
+              {(() => {
+                const variation = selectedProduct.subscription.variation_options?.find(v =>
+                  v.attributes['attribute_pa_simple-subscription-frequenc'] === selectedFrequency &&
+                  v.attributes['attribute_pa_simple-subscription-quantity'] === selectedQuantity
+                );
+
+                if (!variation) return null;
+
+                const discount = variation.subscription_details?.subscription_discount || 0;
+                const originalPrice = variation.price;
+                const discountedPrice = originalPrice - (originalPrice * discount / 100);
+
+                return (
+                  <div className={styles.PopupPrice}>
+                    <div>AED {discountedPrice.toFixed(2)} / delivery</div>
+                    {discount > 0 && (
+                      <div className={styles.Discount}>
+                        Save {discount}% <span style={{ textDecoration: 'line-through', fontSize: '0.8em', marginLeft: '5px', color: '#999' }}>AED {originalPrice.toFixed(2)}</span>
+                      </div>
+                    )}
+                  </div>
+                )
+              })()}
+
+              <div className={styles.PopupActions}>
+                <button className={styles.PopupCancel} onClick={() => setShowSubscribePopup(false)}>
+                  Cancel
+                </button>
+                <button onClick={handleSubscriptionCheckout} className={styles.PopupConfirm}>
+                  Confirm Subscription
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

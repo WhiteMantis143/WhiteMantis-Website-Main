@@ -47,22 +47,19 @@ const StickyBar = ({ groupedChildren, product }) => {
 
   // Extract subscription options
   const subscriptionOptions = useMemo(() => {
-    if (!subscriptionProduct?.variation_options) return { frequencies: [], quantities: [], weights: [] };
+    if (!subscriptionProduct?.variation_options) return { frequencies: [], quantities: [] };
 
     const frequencies = new Set();
     const quantities = new Set();
-    const weights = new Set();
 
     subscriptionProduct.variation_options.forEach(variation => {
       frequencies.add(variation.attributes['attribute_pa_simple-subscription-frequenc']);
       quantities.add(variation.attributes['attribute_pa_simple-subscription-quantity']);
-      weights.add(variation.attributes.attribute_pa_weight);
     });
 
     return {
       frequencies: Array.from(frequencies).sort(),
-      quantities: Array.from(quantities).sort(),
-      weights: Array.from(weights).sort()
+      quantities: Array.from(quantities).sort()
     };
   }, [subscriptionProduct]);
 
@@ -77,10 +74,7 @@ const StickyBar = ({ groupedChildren, product }) => {
     if (subscriptionOptions.quantities.length > 0 && !selectedQuantity) {
       setSelectedQuantity(subscriptionOptions.quantities[0]);
     }
-    if (subscriptionOptions.weights.length > 0 && !selectedSubWeight) {
-      setSelectedSubWeight(subscriptionOptions.weights[0]);
-    }
-  }, [weightOptions, subscriptionOptions, selectedWeight, selectedFrequency, selectedQuantity, selectedSubWeight]);
+  }, [weightOptions, subscriptionOptions, selectedWeight, selectedFrequency, selectedQuantity]);
 
   // Update image when weight selection changes
   useEffect(() => {
@@ -99,16 +93,15 @@ const StickyBar = ({ groupedChildren, product }) => {
 
   // Find matching subscription variation
   const subscriptionVariation = useMemo(() => {
-    if (!subscriptionProduct?.variation_options || !selectedFrequency || !selectedQuantity || !selectedSubWeight) {
+    if (!subscriptionProduct?.variation_options || !selectedFrequency || !selectedQuantity) {
       return null;
     }
 
     return subscriptionProduct.variation_options.find(variation =>
-      variation.attributes['attribute_pa_simple-subscription-frequenc'] === selectedFrequency &&
-      variation.attributes['attribute_pa_simple-subscription-quantity'] === selectedQuantity &&
-      variation.attributes.attribute_pa_weight === selectedSubWeight
+      variation.attributes['attribute_pa-simple-subscription-frequenc'] === selectedFrequency &&
+      variation.attributes['attribute_pa_simple-subscription-quantity'] === selectedQuantity
     );
-  }, [subscriptionProduct, selectedFrequency, selectedQuantity, selectedSubWeight]);
+  }, [subscriptionProduct, selectedFrequency, selectedQuantity]);
 
   // Format frequency label
   const getFrequencyLabel = (freq) => {
@@ -198,7 +191,16 @@ const StickyBar = ({ groupedChildren, product }) => {
                 −
               </button>
               <span>{String(qty).padStart(2, "0")}</span>
-              <button onClick={() => setQty((q) => q + 1)}>+</button>
+              <button
+                onClick={() => setQty((q) => Math.min(5, q + 1))}
+                disabled={qty >= 5}
+                style={{
+                  opacity: qty >= 5 ? 0.5 : 1,
+                  cursor: qty >= 5 ? 'not-allowed' : 'pointer',
+                }}
+              >
+                +
+              </button>
             </div>
           </div>
 
@@ -251,26 +253,6 @@ const StickyBar = ({ groupedChildren, product }) => {
           <div className={styles.Popup}>
             <h3>Subscribe</h3>
             <p>Choose your subscription preferences</p>
-
-            {/* Weight Selection */}
-            <div className={styles.SubscriptionSection}>
-              <h4>Weight</h4>
-              <div className={styles.FrequencyOptions}>
-                {subscriptionOptions.weights.map((weight) => (
-                  <button
-                    key={weight}
-                    className={
-                      selectedSubWeight === weight
-                        ? styles.ActiveFrequency
-                        : styles.FrequencyBtn
-                    }
-                    onClick={() => setSelectedSubWeight(weight)}
-                  >
-                    {weight}
-                  </button>
-                ))}
-              </div>
-            </div>
 
             {/* Frequency Selection */}
             <div className={styles.SubscriptionSection}>

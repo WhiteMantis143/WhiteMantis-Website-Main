@@ -9,7 +9,6 @@ const EMAIL_COOKIE_MAX_AGE = 60 * 60 * 3;
 
 export async function POST(req: NextRequest) {
   try {
-    const session = (await getServerSession(authOptions)) as any;
     const body = await req.json();
 
     const { checkout, deliveryOption, address, paymentMethodId, email } = body;
@@ -60,7 +59,6 @@ export async function POST(req: NextRequest) {
           taxPercent = result.data.tax.percent || 0;
           taxLabel = result.data.tax.label || "";
         }
-        console.log("✅ Shipping/Tax loaded:", { shippingCost, shippingMethodId, taxRateId, taxPercent, taxLabel });
       } else {
         console.log("⚠️ Failed to load shipping/tax, using defaults");
       }
@@ -79,20 +77,23 @@ export async function POST(req: NextRequest) {
         // console.log(response)
         const data = await response.json();
 
-        if (data.type !== 'subscription' && data.type !== "variable-subscription") {
+        // Access the product from the API response
+        const product = data.product || data;
+
+        if (product.type !== 'subscription' && product.type !== "variable-subscription") {
           return NextResponse.json({ success: false, message: "Invalid Product Id" }, { status: 400 })
         }
 
         let productDetails = null;
-        if (data.type === "subscription") {
-          productDetails = data
+        if (product.type === "subscription") {
+          productDetails = product
         }
         else {
           if (!checkout.subscriptionProductVariationId) {
             return NextResponse.json({ success: false, message: "Invalid Product Id" }, { status: 400 })
           }
           productDetails =
-            data.variation_options.find(
+            product.variation_options?.find(
               (variation: any) => variation.id === Number(checkout.subscriptionProductVariationId)
             )
         }
@@ -156,6 +157,12 @@ export async function POST(req: NextRequest) {
           return NextResponse.json({ success: false, message: "Invalid Product Id" }, { status: 400 })
         }
 
+        // Capture guest access token if present
+        let guestAccessToken: string | null = null;
+        if (subscriptionData.guestAccessToken) {
+          guestAccessToken = subscriptionData.guestAccessToken;
+        }
+
         try {
           const existingCustomers = await stripe.customers.list({
             email: email,
@@ -192,8 +199,13 @@ export async function POST(req: NextRequest) {
           const frequencyInterval = Number(interval);
           const frequencyPeriod = period;
 
-          const discount = productDetails.subscription_details.subscription_discount;
-          const priceInAED = Number(productDetails.price) - ((productDetails.price * discount) / 100);
+          // Get discount from subscription_details (default to 0 if not present)
+          const discount = productDetails.subscription_details?.subscription_discount || 0;
+
+          // productDetails.price already includes the quantity (e.g., 3 bags × 150 = 450)
+          const basePrice = Number(productDetails.price);
+          const priceInAED = basePrice - ((basePrice * discount) / 100);
+
           const finalPriceInAED = Number(
             (priceInAED + (priceInAED * taxPercent) / 100).toFixed(2)
           );
@@ -218,6 +230,7 @@ export async function POST(req: NextRequest) {
             payment_settings: { save_default_payment_method: "on_subscription" },
             metadata: {
               wp_subscription_id: subscriptionData.id,
+              guest_access_token: guestAccessToken || "", // Store token in Stripe metadata
             },
             expand: [
               "latest_invoice.confirmation_secret"
@@ -226,12 +239,21 @@ export async function POST(req: NextRequest) {
 
           const clientSecret = subscription.latest_invoice?.confirmation_secret?.client_secret;
 
-          return NextResponse.json({
+          const responseData: any = {
             success: true,
             message: "Subscription created successfully",
             subscriptionId: subscription.id,
+            wpSubscriptionId: subscriptionData.id,
             clientSecret,
-          });
+          };
+
+          // Include guest access token for guest users
+          if (guestAccessToken) {
+            responseData.guestAccessToken = guestAccessToken;
+            console.log("✅ Returning guest access token in subscription response");
+          }
+
+          return NextResponse.json(responseData);
         } catch (error) {
           console.log("Stripe checkout error:", error.message);
           return NextResponse.json({ success: false, message: "Internal Server Error" }, { status: 500 })

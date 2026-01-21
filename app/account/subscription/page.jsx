@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 import Image from "next/image";
+import { cleanProductName } from "../../../lib/productUtils";
 
 
 export default function SubscriptionPage() {
@@ -134,7 +135,7 @@ export default function SubscriptionPage() {
                   <div className={styles.ActiveListBottomtOP}>
                     <div className={styles.ActiveSubLeft}>
                       <div className={styles.ActiveSubLeftTop}>
-                        <p>{sub.line_items?.[0]?.name || "Subscription Product"}</p>
+                        <p>{cleanProductName(sub.line_items?.[0]?.name || "Subscription Product")}</p>
                       </div>
 
                       <div className={styles.ActiveSubLeftBottom}>
@@ -144,7 +145,7 @@ export default function SubscriptionPage() {
 
                         <div className={styles.ProdDetails}>
                           <div className={styles.ProdTitle}>
-                            <h3>{sub.line_items?.[0]?.name}</h3>
+                            <h3>{cleanProductName(sub.line_items?.[0]?.name)}</h3>
                           </div>
 
                           <div className={styles.ProdTooDetails}>
@@ -259,12 +260,12 @@ export default function SubscriptionPage() {
 
                     <div className={styles.pastProdDetails}>
                       <div className={styles.pastProdTitle}>
-                        <h4>{sub.line_items?.[0]?.name}</h4>
+                        <h4>{cleanProductName(sub.line_items?.[0]?.name)}</h4>
                       </div>
 
                       <div className={styles.pastProdSubTitledetails}>
                         <div className={styles.pastprodTag}>
-                          <p>{sub.line_items?.[0]?.name}</p>
+                          <p>{cleanProductName(sub.line_items?.[0]?.name)}</p>
                         </div>
 
                         <div className={styles.pastprodQty}>

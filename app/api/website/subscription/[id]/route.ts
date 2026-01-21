@@ -12,6 +12,10 @@ export async function GET(
     let session = (await getServerSession(authOptions)) as any;
     const { id } = await params;
 
+    // Get token from query params for guest access
+    const { searchParams } = new URL(req.url);
+    const guestToken = searchParams.get('token');
+
     // if (!session) {
     //     session = {
     //         user: {
@@ -20,12 +24,6 @@ export async function GET(
     //         }
     //     }
     // }
-
-    if (!session?.user?.email) {
-        return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
-    }
-
-    const userId = session.user.wpCustomerId || session.user.id;
 
     if (!id) {
         return NextResponse.json({ success: false, message: "Subscription ID is required" }, { status: 400 });
@@ -58,9 +56,21 @@ export async function GET(
 
         const subscription = await response.json();
 
-        // 2. Validate Ownership
-        if (subscription.customer_id !== parseInt(userId) && subscription.customer_id !== userId) {
-            return NextResponse.json({ success: false, message: "Unauthorized access to subscription" }, { status: 403 });
+        // 2. Validate Access - Either authenticated user OR valid guest token
+        const isAuthenticatedUser = session?.user?.email &&
+            (subscription.customer_id === parseInt(session.user.wpCustomerId || session.user.id) ||
+                subscription.customer_id === (session.user.wpCustomerId || session.user.id));
+
+        const isGuestWithValidToken = !session?.user?.email && guestToken &&
+            subscription.meta_data?.find((m: any) =>
+                m.key === 'guest_access_token' && m.value === guestToken
+            );
+
+        if (!isAuthenticatedUser && !isGuestWithValidToken) {
+            return NextResponse.json({
+                success: false,
+                message: session?.user?.email ? "Unauthorized access to subscription" : "Unauthorized - Please log in or provide valid access token"
+            }, { status: 403 });
         }
 
         // 3. Fetch Stripe Data

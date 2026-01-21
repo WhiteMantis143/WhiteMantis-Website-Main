@@ -520,21 +520,34 @@ function CheckoutForm({
         }
 
         if (paymentIntent && paymentIntent.status === "succeeded") {
-          // Clear the cart after successful payment
-          try {
-            await fetch("/api/website/cart/clear", {
-              method: "DELETE",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ action: "clear" }),
-            });
-          } catch (clearError) {
-            console.error("Failed to clear cart:", clearError);
+          // Clear the cart after successful payment (only for cart mode)
+          if (checkoutMode === "cart") {
+            try {
+              await fetch("/api/website/cart/clear", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action: "clear" }),
+              });
+            } catch (clearError) {
+              console.error("Failed to clear cart:", clearError);
+            }
           }
 
-          // Build success URL with guest token if available
-          let successUrl = `/checkout/success?type=order&id=${data.orderId}&order_id=${data.orderId}`;
-          if (data.guestAccessToken) {
-            successUrl += `&token=${encodeURIComponent(data.guestAccessToken)}`;
+          // Build success URL based on checkout mode
+          let successUrl = "";
+
+          if (checkoutMode === "subscription") {
+            // Subscription success redirect
+            successUrl = `/checkout/success?type=subscription&id=${data.wpSubscriptionId}`;
+            if (data.guestAccessToken) {
+              successUrl += `&token=${encodeURIComponent(data.guestAccessToken)}`;
+            }
+          } else {
+            // Order success redirect
+            successUrl = `/checkout/success?type=order&id=${data.orderId}&order_id=${data.orderId}`;
+            if (data.guestAccessToken) {
+              successUrl += `&token=${encodeURIComponent(data.guestAccessToken)}`;
+            }
           }
 
           router.push(successUrl);
@@ -556,7 +569,14 @@ function CheckoutForm({
         <div className={styles.Left}>
           <div className={styles.One}>
             <p>Express Checkout</p>
-            <ExpressCheckoutElement />
+            <ExpressCheckoutElement
+              options={{
+                paymentMethods: {
+                  googlePay: 'always', // FORCE the button to show
+                  applePay: 'always'
+                }
+              }}
+            />
           </div>
 
           <div className={styles.Two}>
@@ -1480,46 +1500,88 @@ function CheckoutContent() {
           const data = await response.json();
 
           if (response.ok) {
+            // Check if valid subscription type
             if (data.product?.type !== "variable-subscription") {
               console.error("Invalid subscription checkout.");
               router.push("/");
               return;
             }
 
+            // Find the selected variation
+            const variation = data.product.variation_options?.find(
+              (v) => String(v.id) === String(variationId)
+            );
+
+            if (!variation) {
+              console.error("Variation not found");
+              toast.error("Subscription option not found");
+              // router.push("/");
+              // return;
+            }
+
+            // Extract attributes from the variation
+            const weight = variation?.attributes?.attribute_pa_weight ||
+              data.product.attributes.find((a) => a.name === "Weight")?.option || "";
+
+            const freqRaw = variation?.attributes?.["attribute_pa_simple-subscription-frequenc"] ||
+              data.product.meta_data.find((m) => m.key === "_subscription_period")?.value || "";
+
+            const quantityRaw = variation?.attributes?.["attribute_pa_simple-subscription-quantity"] || "1";
+
+            // Format frequency for display
+            let frequencyDisplay = freqRaw;
+            if (freqRaw === "2-week") frequencyDisplay = "Every 2 Weeks";
+            else if (freqRaw === "4-week") frequencyDisplay = "Every 4 Weeks";
+            else if (freqRaw === "month") frequencyDisplay = "Monthly";
+            else if (freqRaw === "7-day") frequencyDisplay = "Every 7 Days";
+            else if (freqRaw === "15-day") frequencyDisplay = "Every 15 Days";
+            else if (freqRaw === "30-day") frequencyDisplay = "Every 30 Days";
+
+            // Calculate discount first
+            const basePrice = parseFloat(variation?.price || data.product.price || 0);
+            const discountPercent = variation?.subscription_details?.subscription_discount || 0;
+            const discountedPricePerUnit = basePrice - (basePrice * discountPercent / 100);
+
             // Standardize subscription product structure to match cart
             setProducts([
               {
-                id: data.product.id,
-                image: data.product.images[0]?.src || one, // Fallback image
+                id: data.product.id, // Keep parent ID for product reference
+                variation_id: variation?.id, // Use variation ID if found
+                image: variation?.image || data.product.images?.[0]?.src || one,
                 title: data.product.name,
-                weight:
-                  data.product.attributes.find((a) => a.name === "Weight")
-                    ?.option || "",
-                quantityText: "1x", // basic assumption for sub
-                frequency:
-                  data.product.meta_data.find(
-                    (m) => m.key === "_subscription_period",
-                  )?.value || "Monthly",
-                price: data.variation?.price || data.product.price,
-                quantity: 1,
+                weight: weight,
+                quantityText: `${quantityRaw}x`,
+                frequency: frequencyDisplay,
+                price: discountedPricePerUnit, // Use discounted price per unit
+                // Use the subscription quantity from WordPress (bags per delivery)
+                quantity: parseInt(quantityRaw) || 1,
+                attributes: variation?.attributes,
+                subscription_details: variation?.subscription_details
               },
             ]);
-            // Calculate totals for subscription (simplified)
-            const price = parseFloat(
-              data.variation?.price || data.product.price || 0,
-            );
+
+            // Calculate totals for subscription with discount
+            const totalQuantity = parseInt(quantityRaw) || 1;
+            const subtotalBeforeDiscount = basePrice;
+            const subtotalAfterDiscount = discountedPricePerUnit;
+            const discountAmount = subtotalBeforeDiscount - subtotalAfterDiscount;
+
             setCartTotals({
-              subtotal: price,
+              subtotal: subtotalAfterDiscount,
               shipping: 0, // Placeholder
               tax: 0, // Placeholder
-              discount: 0,
-              total: price,
+              discount: discountAmount,
+              total: subtotalAfterDiscount,
             });
           } else {
-            return;
+            console.error("Failed to fetch subscription product:", data.message);
+            // router.push("/"); // Optional: stay on page to show error or redirect
+            toast.error("Failed to load subscription details");
+            // Don't return here, let it finish so loading state is cleared (though maybe we want to redirect)
           }
         } catch (error) {
-          return;
+          console.error("Error fetching subscription:", error);
+          toast.error("Something went wrong loading the subscription");
         }
       } else if (mode === "cart") {
         setCheckoutMode("cart");
@@ -1598,8 +1660,12 @@ function CheckoutContent() {
       sub = product.reduce(
         (acc, item) =>
           acc +
+<<<<<<< HEAD
           parseFloat(item.price?.final_price || item.price || 0) *
             (item.quantity || 1),
+=======
+          parseFloat(item.price?.final_price || item.price || 0),
+>>>>>>> f025a6e (Add subscription success page with guest access, implement max quantity limits, and clean product names in account pages)
         0,
       );
     }

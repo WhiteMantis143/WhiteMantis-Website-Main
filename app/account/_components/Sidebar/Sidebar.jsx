@@ -40,11 +40,10 @@ export default function Sidebar() {
           <div className={styles.Bottom}>
             <Link href="/account/profile" className={styles.Link}>
               <div
-                className={`${styles.Profile} ${
-                  pathname === "/account" || pathname === "/account/profile"
-                    ? styles.active
-                    : ""
-                }`}
+                className={`${styles.Profile} ${pathname === "/account" || pathname === "/account/profile"
+                  ? styles.active
+                  : ""
+                  }`}
               >
                 <svg
                   width="16"
@@ -63,9 +62,8 @@ export default function Sidebar() {
             </Link>
             <Link href="/account/orders" className={styles.Link}>
               <div
-                className={`${styles.Orders} ${
-                  pathname.startsWith("/account/orders") ? styles.active : ""
-                }`}
+                className={`${styles.Orders} ${pathname.startsWith("/account/orders") ? styles.active : ""
+                  }`}
               >
                 <svg
                   width="15"
@@ -82,7 +80,7 @@ export default function Sidebar() {
                 <p>Orders</p>
               </div>
             </Link>
-            {/* <Link href="/account/subscription" className={styles.Link}>
+            <Link href="/account/subscription" className={styles.Link}>
               <div
                 className={`${styles.Subscription} ${pathname.startsWith("/account/subscription")
                   ? styles.active
@@ -103,7 +101,7 @@ export default function Sidebar() {
                 </svg>
                 <p>Manage Subscription</p>
               </div>
-            </Link> */}
+            </Link>
             {/* <Link href="/account/wishlist" className={styles.Link}>
               <div
                 className={`${styles.Wishlist} ${pathname.startsWith("/account/wishlist") ? styles.active : ""

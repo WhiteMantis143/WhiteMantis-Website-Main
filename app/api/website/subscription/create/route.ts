@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../../../../lib/nextauth";
+import crypto from "crypto";
 
 const WP_URL = process.env.NEXT_PUBLIC_WP_URL || process.env.WP_URL;
 
@@ -132,6 +133,13 @@ export async function POST(req: NextRequest) {
                             label: taxLabel
                         }
                     ] : [],
+                    shipping_lines: shippingData?.shippingMethodId ? [
+                        {
+                            method_id: shippingData.shippingMethodId,
+                            method_title: "Shipping",
+                            total: String(shippingData.shippingCost || 0)
+                        }
+                    ] : [],
                     meta_data: [
                         {
                             key: "delivery_option",
@@ -198,6 +206,7 @@ export async function POST(req: NextRequest) {
                             label: taxLabel
                         }
                     ] : [],
+                    shipping_lines: [],
                     meta_data: [
                         {
                             key: "delivery_option",
@@ -264,6 +273,13 @@ export async function POST(req: NextRequest) {
                             label: taxLabel
                         }
                     ] : [],
+                    shipping_lines: shippingData?.shippingMethodId ? [
+                        {
+                            method_id: shippingData.shippingMethodId,
+                            method_title: "Shipping",
+                            total: String(shippingData.shippingCost || 0)
+                        }
+                    ] : [],
                     meta_data: [
                         {
                             key: "delivery_option",
@@ -327,6 +343,7 @@ export async function POST(req: NextRequest) {
                             label: taxLabel
                         }
                     ] : [],
+                    shipping_lines: [],
                     meta_data: [
                         {
                             key: "delivery_option",
@@ -345,6 +362,17 @@ export async function POST(req: NextRequest) {
             "Basic " +
             Buffer.from(`${process.env.WC_CONSUMER_KEY}:${process.env.WC_CONSUMER_SECRET}`).toString("base64");
 
+        // Generate guest access token for non-authenticated users
+        let guestAccessToken: string | null = null;
+        if (!session?.user) {
+            guestAccessToken = crypto.randomBytes(32).toString('hex');
+
+            // Add guest access token to metadata
+            payload.meta_data.push({
+                key: "guest_access_token",
+                value: guestAccessToken
+            });
+        }
 
         try {
             const res = await fetch(`${WP_URL}/wp-json/wc/v3/subscriptions`, {
@@ -365,10 +393,18 @@ export async function POST(req: NextRequest) {
                 }, { status: 400 });
             }
 
-            return NextResponse.json({
+            const responseData: any = {
                 success: true,
                 subscriptionData: data
-            }, { status: 200 });
+            };
+
+            // Include guest access token for guest users
+            if (guestAccessToken) {
+                responseData.guestAccessToken = guestAccessToken;
+                console.log("🔑 Guest access token generated for subscription:", data.id);
+            }
+
+            return NextResponse.json(responseData, { status: 200 });
 
         } catch (error) {
             console.log(error)
