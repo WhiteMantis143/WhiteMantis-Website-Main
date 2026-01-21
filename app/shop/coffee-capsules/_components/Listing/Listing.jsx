@@ -366,6 +366,13 @@ setShowSubscribePopup(true);
                   onClick={() => setSortOpen(!sortOpen)}
                 >
                   <p>{sortType}</p>
+                  <span
+    className={`${styles.SortArrow} ${
+      sortOpen ? styles.SortArrowOpen : ""
+    }`}
+  >
+    ▼
+  </span>
                 </div>
                 {sortOpen && (
                   <div className={styles.SortDropdown}>

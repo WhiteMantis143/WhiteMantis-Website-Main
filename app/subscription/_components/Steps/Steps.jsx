@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef } from "react";
+
 import styles from "./Steps.module.css";
 import TopImage1 from "./1.png";
 import TopImage2 from "./2.png";
@@ -21,11 +22,12 @@ export default function Steps() {
 
   const centersRef = useRef([]);
   const baselineWidthRef = useRef(0);
+  let isMounted = true;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!rootRef.current) return;
     const root = rootRef.current;
-    const isMobile = () => window.matchMedia("(max-width: 640px)").matches;
+    const isMobile = () => window.matchMedia("(max-width: 1240px)").matches;
     const DOT_RADIUS = 8;
     const DOT_RADIUS_MOBILE = 7;
 
@@ -51,22 +53,19 @@ export default function Steps() {
           centersRef.current = steps.map((step) => {
             const h3 = step.querySelector("h3");
             const r = h3.getBoundingClientRect();
-           return (
-  r.top +
-  window.scrollY -
-  firstTop +
-  r.height / 2 -
-  (isMobile() ? DOT_RADIUS_MOBILE : DOT_RADIUS)
-);
-
+            return (
+              r.top +
+              window.scrollY -
+              firstTop +
+              r.height / 2 -
+              (isMobile() ? DOT_RADIUS_MOBILE : DOT_RADIUS)
+            );
           });
 
-      
           const lastStepRect = steps[steps.length - 1].getBoundingClientRect();
           baselineWidthRef.current =
             lastStepRect.bottom + window.scrollY - firstTop;
         } else {
- 
           const baselineRect = baselineRef.current.getBoundingClientRect();
           const baselineLeft = baselineRect.left + window.scrollX;
           const baselineWidth = baselineRect.width;
@@ -147,24 +146,16 @@ export default function Steps() {
 
         const startPx = (centers[idx] ?? 0) + dotOffset;
 
-        const endPx =
-          typeof centers[idx + 1] !== "undefined"
-            ? centers[idx + 1] + dotOffset
-            : centers[centers.length - 1] + dotOffset;
+        const isLastStep = idx === centers.length - 1;
+
+        const endPx = isLastStep
+          ? baselineWidthRef.current
+          : centers[idx + 1] + dotOffset;
 
         const px = lerp(startPx, endPx, frac);
-     const lastCenter =
-  centers.length > 0 ? centers[centers.length - 1] : baselineW;
+        const maxPx = baselineWidthRef.current;
 
-const maxPx = lastCenter + dotOffset; 
-
-const pxClampedRaw = Math.max(dotOffset, Math.min(maxPx, px));
-
-const pxClamped =
-  progress >= 0.999 ? maxPx : pxClampedRaw;
-
-
-
+        const pxClamped = Math.max(dotOffset, Math.min(maxPx, px));
 
         if (activeLineRef.current)
           if (isMobile()) {
@@ -233,6 +224,7 @@ const pxClamped =
           pin: true,
           anticipatePin: 1,
           onUpdate(self) {
+            if (!isMounted) return;
             updateFromProgress(self.progress);
           },
           invalidateOnRefresh: true,
@@ -256,20 +248,14 @@ const pxClamped =
     }, root);
 
     return () => {
-      try {
-        window.removeEventListener("resize", onResize);
-        ScrollTrigger.removeEventListener("refreshInit", onRefreshInit);
-      } catch (e) {}
+      isMounted = false;
 
-      try {
-        if (st && typeof st.kill === "function") {
-          st.kill();
-        }
-      } catch (e) {}
+      ScrollTrigger.getAll().forEach((t) => t.kill());
 
-      try {
-        ctx.revert();
-      } catch (e) {}
+      window.removeEventListener("resize", onResize);
+      ScrollTrigger.removeEventListener("refreshInit", onRefreshInit);
+
+      ctx.revert();
     };
   }, []);
 

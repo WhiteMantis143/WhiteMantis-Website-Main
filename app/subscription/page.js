@@ -9,12 +9,12 @@ import SubToday from "./_components/SubToday/SubToday";
 export default function Subscription() {
   return (
     <>
-     {/* <div className="TopPaddingForMobile"></div>
+     <div className="TopPaddingForMobile"></div>
       <Landing />
       <div className="sectionPadding"></div>
       <Subscribe />
       <div className="sectionPadding"></div>
-      <StepsRender /> */}
+      <StepsRender />
       <div className="sectionPadding"></div>
       <SubToday />
       <div className="sectionPadding"></div>

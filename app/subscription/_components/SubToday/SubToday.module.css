@@ -228,12 +228,12 @@ padding-right: clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
 @media (max-width: 640px) {
     .MainContainer{
         flex-direction: column;
-        gap: 120px;
+        gap: 60px;
         align-items: baseline;
     }
     .right{
         flex-direction: column;
-        gap: 120px;
+        gap: 60px;
     }
     .main{
         padding-left: 24px;

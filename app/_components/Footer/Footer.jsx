@@ -45,11 +45,11 @@ const Footer = () => {
                     </Link>
                     {/* <Link href="/workshop">
                       <p>Workshop</p>
-                    </Link>
+                    </Link> */}
                     <Link href="/subscription">
                       <p>Subscription</p>
                     </Link>
-                    <Link href="/blogs">
+                    {/* <Link href="/blogs">
                       <p>Blogs</p>
                     </Link>
                     <Link href="/careers">
