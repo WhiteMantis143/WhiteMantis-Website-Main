@@ -19,7 +19,7 @@ const Landing = () => {
         <div className={styles.Right}>
           <div className={styles.RightTop}>
             <p>
-              veer Partner with White Mantis to serve exceptional coffee. We support
+              Partner with White Mantis to serve exceptional coffee. We support
               cafés, restaurants, and offices with thoughtfully sourced beans,
               consistent roasting, training, and long-term partnerships built
               around quality and craft.
