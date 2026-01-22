@@ -31,7 +31,21 @@ const Shop = () => {
                       clarity. Designed for consistent performance across
                       espresso and filter brewing.
                     </p>
-                    <h5>Shop now</h5>
+                    <div className={styles.arrowextra}>
+                      <h5>Shop now</h5>
+                      <svg
+                        width="13"
+                        height="14"
+                        viewBox="0 0 13 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12.9941 12.1425H10.9951V3.45074L1.40959 13.1543L0.000253677 11.7276L9.58574 2.02405H0.999784V0.000364304H12.9941V12.1425Z"
+                          fill="#6C7A5F"
+                        />
+                      </svg>
+                    </div>
                   </div>
                 </div>
                 <div className={styles.OneBottom}>
@@ -55,7 +69,21 @@ const Shop = () => {
                       brewing. Enjoy a balanced, clean cup anywhere, just add
                       hot water and brew with ease.
                     </p>
-                    <h5>Shop now</h5>
+                    <div className={styles.arrowextra}>
+                      <h5>Shop now</h5>
+                      <svg
+                        width="13"
+                        height="14"
+                        viewBox="0 0 13 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12.9941 12.1425H10.9951V3.45074L1.40959 13.1543L0.000253677 11.7276L9.58574 2.02405H0.999784V0.000364304H12.9941V12.1425Z"
+                          fill="#6C7A5F"
+                        />
+                      </svg>
+                    </div>
                   </div>
                 </div>
                 <div className={styles.OneBottom}>
@@ -79,7 +107,21 @@ const Shop = () => {
                       extraction and smooth flavor. Perfect for quick,
                       effortless coffee without compromising on quality.
                     </p>
-                    <h5>Shop now</h5>
+                    <div className={styles.arrowextra}>
+                      <h5>Shop now</h5>
+                      <svg
+                        width="13"
+                        height="14"
+                        viewBox="0 0 13 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12.9941 12.1425H10.9951V3.45074L1.40959 13.1543L0.000253677 11.7276L9.58574 2.02405H0.999784V0.000364304H12.9941V12.1425Z"
+                          fill="#6C7A5F"
+                        />
+                      </svg>
+                    </div>
                   </div>
                 </div>
 

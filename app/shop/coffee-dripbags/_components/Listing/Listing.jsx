@@ -41,8 +41,7 @@ const Lisiting = () => {
   const [selectedQuantity, setSelectedQuantity] = useState(null);
   const [selectedSubWeight, setSelectedSubWeight] = useState(null);
   const [frequencyArray, setFrequencyArray] = useState([]);
-const [quantityArray, setQuantityArray] = useState([]);
-
+  const [quantityArray, setQuantityArray] = useState([]);
 
   // UI Ref for Mobile Filters
   const mobileFiltersRef = useRef(null);
@@ -177,45 +176,45 @@ const [quantityArray, setQuantityArray] = useState([]);
 
   // Subscription Handlers
   const handleOpenSubscribePopup = (product) => {
-  const subscriptionProduct = product.children
-    ? Object.values(product.children).find(
-        (child) => child.type === "variable-subscription"
-      )
-    : null;
+    const subscriptionProduct = product.children
+      ? Object.values(product.children).find(
+          (child) => child.type === "variable-subscription",
+        )
+      : null;
 
-  if (!subscriptionProduct) {
-    console.error("No subscription product found");
-    return;
-  }
+    if (!subscriptionProduct) {
+      console.error("No subscription product found");
+      return;
+    }
 
-  setSelectedProduct({ parent: product, subscription: subscriptionProduct });
+    setSelectedProduct({ parent: product, subscription: subscriptionProduct });
 
-  const frequencies = new Set();
-  const quantities = new Set();
+    const frequencies = new Set();
+    const quantities = new Set();
 
-  subscriptionProduct.variation_options?.forEach((variation) => {
-    frequencies.add(
-      variation.attributes["attribute_pa_simple-subscription-frequenc"]
-    );
-    quantities.add(
-      variation.attributes["attribute_pa_simple-subscription-quantity"]
-    );
-  });
+    subscriptionProduct.variation_options?.forEach((variation) => {
+      frequencies.add(
+        variation.attributes["attribute_pa_simple-subscription-frequenc"],
+      );
+      quantities.add(
+        variation.attributes["attribute_pa_simple-subscription-quantity"],
+      );
+    });
 
-  const freqArray = Array.from(frequencies).sort();
-  const qtyArray = Array.from(quantities).sort();
+    const freqArray = Array.from(frequencies).sort();
+    const qtyArray = Array.from(quantities).sort();
 
-  setFrequencyArray(freqArray);
-  setQuantityArray(qtyArray);
+    setFrequencyArray(freqArray);
+    setQuantityArray(qtyArray);
 
-  setSelectedFrequency(freqArray[0] || null);
-  setSelectedQuantity(qtyArray[0] || null);
+    setSelectedFrequency(freqArray[0] || null);
+    setSelectedQuantity(qtyArray[0] || null);
 
-  // ⏳ IMPORTANT: wait for state to settle (same as Capsules)
-  requestAnimationFrame(() => {
-    setShowSubscribePopup(true);
-  });
-};
+    // ⏳ IMPORTANT: wait for state to settle (same as Capsules)
+    requestAnimationFrame(() => {
+      setShowSubscribePopup(true);
+    });
+  };
 
   const handleSubscriptionCheckout = () => {
     if (!selectedProduct || !selectedFrequency || !selectedQuantity) {
@@ -379,12 +378,12 @@ const [quantityArray, setQuantityArray] = useState([]);
                 >
                   <p>{sortType}</p>
                   <span
-    className={`${styles.SortArrow} ${
-      sortOpen ? styles.SortArrowOpen : ""
-    }`}
-  >
-    ▼
-  </span>
+                    className={`${styles.SortArrow} ${
+                      sortOpen ? styles.SortArrowOpen : ""
+                    }`}
+                  >
+                    ▼
+                  </span>
                 </div>
                 {sortOpen && (
                   <div className={styles.SortDropdown}>
@@ -550,22 +549,18 @@ const [quantityArray, setQuantityArray] = useState([]);
           </>
         )}
 
-   <SubscriptionPopupDrip
-  open={showSubscribePopup}
-  onClose={() => setShowSubscribePopup(false)}
-  subscriptionProduct={selectedProduct?.subscription}
-  frequencies={frequencyArray}
-  quantities={quantityArray}
-  selectedFrequency={selectedFrequency}
-  selectedQuantity={selectedQuantity}
-  onSelectFrequency={setSelectedFrequency}
-  onSelectQuantity={setSelectedQuantity}
-  onConfirm={handleSubscriptionCheckout}
-/>
-
-
-
-
+        <SubscriptionPopupDrip
+          open={showSubscribePopup}
+          onClose={() => setShowSubscribePopup(false)}
+          subscriptionProduct={selectedProduct?.subscription}
+          frequencies={frequencyArray}
+          quantities={quantityArray}
+          selectedFrequency={selectedFrequency}
+          selectedQuantity={selectedQuantity}
+          onSelectFrequency={setSelectedFrequency}
+          onSelectQuantity={setSelectedQuantity}
+          onConfirm={handleSubscriptionCheckout}
+        />
       </div>
     </div>
   );

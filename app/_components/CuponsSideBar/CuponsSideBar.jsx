@@ -58,7 +58,9 @@ const CuponsSideBar = ({ isOpen, onClose }) => {
       onClose();
       setInputCode("");
     } else {
-      setCouponError(res?.message || "Coupon code is invalid or not applicable");
+      setCouponError(
+        res?.message || "Coupon code is invalid or not applicable",
+      );
     }
   };
 
@@ -92,7 +94,16 @@ const CuponsSideBar = ({ isOpen, onClose }) => {
             value={inputCode}
             onChange={(e) => setInputCode(e.target.value)}
           />
-          <button onClick={() => handleApply(inputCode)}>Apply</button>
+          <button
+            onClick={() => handleApply(inputCode)}
+            disabled={!inputCode.trim()}
+            style={{
+              opacity: !inputCode.trim() ? 0.5 : 1,
+              cursor: !inputCode.trim() ? "not-allowed" : "pointer",
+            }}
+          >
+            Apply
+          </button>
         </div>
 
         <div className={styles.CouponsList}>
@@ -101,7 +112,9 @@ const CuponsSideBar = ({ isOpen, onClose }) => {
           </div>
 
           {loading ? (
-            <p style={{ padding: 20, textAlign: "center" }}>Loading coupons...</p>
+            <p style={{ padding: 20, textAlign: "center" }}>
+              Loading coupons...
+            </p>
           ) : (
             couponList.map((coupon, index) => {
               const eligible = isCouponEligible(coupon);
@@ -142,7 +155,10 @@ const CuponsSideBar = ({ isOpen, onClose }) => {
                       </div>
 
                       <div className={styles.CuponsDesc}>
-                        <p>{coupon.description || "Apply this coupon at checkout"}</p>
+                        <p>
+                          {coupon.description ||
+                            "Apply this coupon at checkout"}
+                        </p>
                       </div>
                     </div>
 

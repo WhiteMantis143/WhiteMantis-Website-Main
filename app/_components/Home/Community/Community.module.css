@@ -47,16 +47,32 @@
 }
 .knowMore {
   width: fit-content;
-  background-color: none;
-  border: none;
   background: none;
+  border: none;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; 
+
   font-family: var(--lato);
   font-weight: 400;
   font-size: 15px;
   color: #6e736a;
   text-decoration: underline;
   cursor: pointer;
+  padding: 0;
 }
+.knowMore svg{
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  margin-top: 2px;
+}
+
+.knowMore svg {
+  display: block;
+}
+
 .Bottom {
   display: flex;
   justify-content: left;

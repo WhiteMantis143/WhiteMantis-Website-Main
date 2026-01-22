@@ -27,7 +27,7 @@ const SubToday = () => {
                 </div>
                 <div className={styles.DealBadge}>
                   <h4>Save upto</h4>
-                  <h2>30%</h2>
+                  <h2>20%</h2>
                   <h5>On subscribing</h5>
                 </div>
               </div>
@@ -166,7 +166,7 @@ const SubToday = () => {
                           </defs>
                         </svg>
 
-                        <p>Pause, skip, or cancel at any time. </p>
+                        <p>cancel at any time. </p>
                       </div>
                     </div>
                   </div>
@@ -185,7 +185,7 @@ const SubToday = () => {
                 </div>
                 <div className={styles.DealBadge}>
                   <h4>Save upto</h4>
-                  <h2>30%</h2>
+                  <h2>20%</h2>
                   <h4>On subscribing</h4>
                 </div>
               </div>
@@ -324,7 +324,7 @@ const SubToday = () => {
                           </defs>
                         </svg>
 
-                        <p>Pause, skip, or cancel at any time. </p>
+                        <p>cancel at any time. </p>
                       </div>
                     </div>
                   </div>
@@ -343,7 +343,7 @@ const SubToday = () => {
                 </div>
                 <div className={styles.DealBadge}>
                   <h4>Save upto</h4>
-                  <h2>30%</h2>
+                  <h2>20%</h2>
                   <h4>On subscribing</h4>
                 </div>
               </div>
@@ -482,7 +482,7 @@ const SubToday = () => {
                           </defs>
                         </svg>
 
-                        <p>Pause, skip, or cancel at any time. </p>
+                        <p>cancel at any time. </p>
                       </div>
                     </div>
                   </div>
