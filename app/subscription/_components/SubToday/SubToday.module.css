@@ -285,6 +285,13 @@ padding-right: clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
     font-size: 14px;
     white-space: normal;
 }
+.CardContentTopTop{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.CardContentTopBottom{
+    padding: 20px 15px 20px 15px;
+}
 
 }
 @media (max-width: 1440px) and (min-width: 641px) {
