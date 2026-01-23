@@ -42,8 +42,7 @@ const Lisiting = () => {
   const [selectedQuantity, setSelectedQuantity] = useState(null);
   const [selectedSubWeight, setSelectedSubWeight] = useState(null);
   const [frequencyArray, setFrequencyArray] = useState([]);
-const [quantityArray, setQuantityArray] = useState([]);
-
+  const [quantityArray, setQuantityArray] = useState([]);
 
   // UI Ref for Mobile Filters
   const mobileFiltersRef = useRef(null);
@@ -179,11 +178,13 @@ const [quantityArray, setQuantityArray] = useState([]);
   // Subscription Handlers
   const handleOpenSubscribePopup = (product) => {
     const subscriptionProduct = product.children
-      ? Object.values(product.children).find(child => child.type === 'variable-subscription')
+      ? Object.values(product.children).find(
+          (child) => child.type === "variable-subscription",
+        )
       : null;
 
     if (!subscriptionProduct) {
-      console.error('No subscription product found');
+      console.error("No subscription product found");
       return;
     }
 
@@ -192,41 +193,47 @@ const [quantityArray, setQuantityArray] = useState([]);
     const frequencies = new Set();
     const quantities = new Set();
 
-    subscriptionProduct.variation_options?.forEach(variation => {
-      frequencies.add(variation.attributes['attribute_pa_simple-subscription-frequenc']);
-      quantities.add(variation.attributes['attribute_pa_simple-subscription-quantity']);
+    subscriptionProduct.variation_options?.forEach((variation) => {
+      frequencies.add(
+        variation.attributes["attribute_pa_simple-subscription-frequenc"],
+      );
+      quantities.add(
+        variation.attributes["attribute_pa_simple-subscription-quantity"],
+      );
     });
 
-  const freqArray = Array.from(frequencies).sort();
-const qtyArray = Array.from(quantities).sort();
+    const freqArray = Array.from(frequencies).sort();
+    const qtyArray = Array.from(quantities).sort();
 
-setFrequencyArray(freqArray);
-setQuantityArray(qtyArray);
+    setFrequencyArray(freqArray);
+    setQuantityArray(qtyArray);
 
-setSelectedFrequency(freqArray[0] || null);
-setSelectedQuantity(qtyArray[0] || null);
-setShowSubscribePopup(true);
-
+    setSelectedFrequency(freqArray[0] || null);
+    setSelectedQuantity(qtyArray[0] || null);
+    setShowSubscribePopup(true);
   };
 
   const handleSubscriptionCheckout = () => {
     if (!selectedProduct || !selectedFrequency || !selectedQuantity) {
-      console.error('Please select all subscription options');
+      console.error("Please select all subscription options");
       return;
     }
 
-    const variation = selectedProduct.subscription.variation_options?.find(v =>
-      v.attributes['attribute_pa_simple-subscription-frequenc'] === selectedFrequency &&
-      v.attributes['attribute_pa_simple-subscription-quantity'] === selectedQuantity
+    const variation = selectedProduct.subscription.variation_options?.find(
+      (v) =>
+        v.attributes["attribute_pa_simple-subscription-frequenc"] ===
+          selectedFrequency &&
+        v.attributes["attribute_pa_simple-subscription-quantity"] ===
+          selectedQuantity,
     );
 
     if (!variation) {
-      console.error('No matching variation found');
+      console.error("No matching variation found");
       return;
     }
 
     const params = new URLSearchParams({
-      mode: 'subscription',
+      mode: "subscription",
       subscriptionId: selectedProduct.subscription.id.toString(),
       variationId: variation.id.toString(),
     });
@@ -235,8 +242,8 @@ setShowSubscribePopup(true);
   };
 
   const getFrequencyLabel = (freq) => {
-    if (freq === '2-week') return 'Every 2 weeks';
-    if (freq === '4-week') return 'Every 4 weeks';
+    if (freq === "2-week") return "Every 2 weeks";
+    if (freq === "4-week") return "Every 4 weeks";
     return freq;
   };
 
@@ -259,8 +266,9 @@ setShowSubscribePopup(true);
               {openMenus[cat.slug] ? <span>✕</span> : <span>▾</span>}
             </div>
             <div
-              className={`${styles.AnimatedBox} ${openMenus[cat.slug] ? styles.open : ""
-                }`}
+              className={`${styles.AnimatedBox} ${
+                openMenus[cat.slug] ? styles.open : ""
+              }`}
             >
               <div className={styles.FilterOptions}>
                 {renderCategories(cat.children)}
@@ -367,12 +375,12 @@ setShowSubscribePopup(true);
                 >
                   <p>{sortType}</p>
                   <span
-    className={`${styles.SortArrow} ${
-      sortOpen ? styles.SortArrowOpen : ""
-    }`}
-  >
-    ▼
-  </span>
+                    className={`${styles.SortArrow} ${
+                      sortOpen ? styles.SortArrowOpen : ""
+                    }`}
+                  >
+                    ▼
+                  </span>
                 </div>
                 {sortOpen && (
                   <div className={styles.SortDropdown}>
@@ -472,7 +480,7 @@ setShowSubscribePopup(true);
                             <h4>AED {displayData.price}</h4>
                             {displayData.sale_price &&
                               displayData.sale_price !==
-                              displayData.regular_price && (
+                                displayData.regular_price && (
                                 <p className={styles.OldPrice}>
                                   AED {displayData.regular_price}
                                 </p>
@@ -488,14 +496,17 @@ setShowSubscribePopup(true);
                       <div className={styles.ProductActions}>
                         <AddToCart product={cartProduct} />
                         {/* Subscribe button with popup functionality - only show if subscription product exists */}
-                        {product.children && Object.values(product.children).some(child => child.type === 'variable-subscription') && (
-                          <button
-                            className={styles.Subscribe}
-                            onClick={() => handleOpenSubscribePopup(product)}
-                          >
-                            Subscribe
-                          </button>
-                        )}
+                        {product.children &&
+                          Object.values(product.children).some(
+                            (child) => child.type === "variable-subscription",
+                          ) && (
+                            <button
+                              className={styles.Subscribe}
+                              onClick={() => handleOpenSubscribePopup(product)}
+                            >
+                              Subscribe
+                            </button>
+                          )}
                       </div>
                     </div>
                   </div>
@@ -535,20 +546,18 @@ setShowSubscribePopup(true);
           </>
         )}
 
-    <SubscriptionPopupCapsules
-  open={showSubscribePopup}
-  onClose={() => setShowSubscribePopup(false)}
-  subscriptionProduct={selectedProduct?.subscription}
-  frequencies={frequencyArray}
-  quantities={quantityArray}
-  selectedFrequency={selectedFrequency}
-  selectedQuantity={selectedQuantity}
-  onSelectFrequency={setSelectedFrequency}
-  onSelectQuantity={setSelectedQuantity}
-   onConfirm={handleSubscriptionCheckout} 
-/>
-
-
+        <SubscriptionPopupCapsules
+          open={showSubscribePopup}
+          onClose={() => setShowSubscribePopup(false)}
+          subscriptionProduct={selectedProduct?.subscription}
+          frequencies={frequencyArray}
+          quantities={quantityArray}
+          selectedFrequency={selectedFrequency}
+          selectedQuantity={selectedQuantity}
+          onSelectFrequency={setSelectedFrequency}
+          onSelectQuantity={setSelectedQuantity}
+          onConfirm={handleSubscriptionCheckout}
+        />
       </div>
     </div>
   );

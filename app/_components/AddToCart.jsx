@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { useCart } from '../_context/CartContext';
 
 const AddToCart = ({ product }) => {
-  const { addItem, refresh } = useCart();
+  const { addItem } = useCart();
+
   const [loading, setLoading] = useState(false);
 
   const handleAddToCart = async (e) => {
@@ -26,7 +27,7 @@ const AddToCart = ({ product }) => {
         image: product.image,
         tagline: product.tagline,
       });
-      await refresh(); // Refresh cart to get updated data from server
+     
     } catch (err) {
       console.error('Add to cart error', err);
     } finally {

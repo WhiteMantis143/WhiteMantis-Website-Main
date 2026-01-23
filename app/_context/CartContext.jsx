@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useState,
   useCallback,
+   useRef,
   useMemo,
 } from "react";
 import { useAuth } from "./AuthContext";
@@ -16,6 +17,8 @@ const CartContext = createContext(null);
 export function CartProvider({ children }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const didInitialFetch = useRef(false);
+
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { user } = useAuth();
@@ -49,9 +52,12 @@ export function CartProvider({ children }) {
     }
   }, []);
 
-  useEffect(() => {
-    fetchCart();
-  }, [fetchCart]);
+useEffect(() => {
+  if (didInitialFetch.current) return;
+  didInitialFetch.current = true;
+  fetchCart();
+}, [fetchCart]);
+
 
   useEffect(() => {
     if (typeof user === "undefined") return;

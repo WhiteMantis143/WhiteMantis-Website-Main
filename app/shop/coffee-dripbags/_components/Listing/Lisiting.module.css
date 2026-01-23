@@ -158,11 +158,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
+   border: 1px solid transparent;
+  box-sizing: border-box;
+
+  overflow: hidden; 
+  transition: border 0.3s ease;
+  
+}
+.ProductImage:hover {
+  border: 1px solid #2f362a;
+  
+}
+.ProductImage img:hover {
+  transform: scale(1.05);
+
 }
 
 .ProductImage img {
   width: 100%;
   height: 100%;
+  transition: transform 0.35s ease-in-out; 
+  will-change: transform;
   max-width: 401px;
   max-height: 305px;
   object-fit: contain;
