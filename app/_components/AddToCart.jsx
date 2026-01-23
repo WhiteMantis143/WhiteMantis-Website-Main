@@ -39,7 +39,7 @@ const AddToCart = ({ product }) => {
       onClick={handleAddToCart}
       disabled={loading}
       style={{
-        width: "100%",
+        // width: "100%",
         backgroundColor: "#6C7A5F",
         color: "#ffffff",
         fontSize: "15px",

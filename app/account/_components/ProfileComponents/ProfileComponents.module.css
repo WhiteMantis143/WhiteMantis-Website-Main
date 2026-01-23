@@ -20,6 +20,7 @@
   max-width: 501px;
 }
 
+
 .Top {
   display: flex;
   justify-content: left;
@@ -303,7 +304,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  z-index: 10009;
 }
 
 .DeletePopupOverlay,
@@ -322,9 +323,11 @@
   width: 100%;
   max-width: 520px;
   padding: 32px;
+ 
   display: flex;
+  
   flex-direction: column;
-  /* gap: 18px; */
+  gap: 12px;
 }
 
 .PopupDeleteAddress,
@@ -358,6 +361,22 @@
   font-family: var(--lato);
   font-size: 14px;
   color: #6E736A;
+  margin: 0;
+}
+.Popup p[style*="color: red"] {
+  font-size: 12px;
+  line-height: 1.2;
+  margin-top: 6px;      
+  margin-bottom: 10px; 
+  font-family: var(--lato);
+  display: block;
+}
+.Popup p[style*="margin-top"] {
+  margin-top: 6px !important;
+}
+.Popup > div + p[style*="color: red"] {
+  margin-top: 6px;
+  margin-bottom: 12px;
 }
 
 .DeletePopup p,

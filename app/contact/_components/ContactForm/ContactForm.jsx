@@ -127,26 +127,26 @@ const ContactForm = () => {
                   />
                 </div>
 
-            <div
-  className={`${testStyles.selectWrap} ${
-    enquiryOpen ? testStyles.open : ""
-  }`}
->
-  <select
-    value={enquiryType}
-    onClick={() => setEnquiryOpen((prev) => !prev)}
-    onChange={(e) => {
-      setEnquiryType(e.target.value);
-      setEnquiryOpen(false);
-    }}
-  >
-    <option value="">Please select enquiry type</option>
-    <option value="General">General</option>
-    <option value="Support">Support</option>
-    <option value="Partnership">Partnership</option>
-    <option value="Careers">Careers</option>
-  </select>
-</div>
+                <div
+                  className={`${testStyles.selectWrap} ${
+                    enquiryOpen ? testStyles.open : ""
+                  }`}
+                >
+                  <select
+                    value={enquiryType}
+                    onClick={() => setEnquiryOpen((prev) => !prev)}
+                    onChange={(e) => {
+                      setEnquiryType(e.target.value);
+                      setEnquiryOpen(false);
+                    }}
+                  >
+                    <option value="">Please select enquiry type</option>
+                    <option value="General">General</option>
+                    <option value="Support">Support</option>
+                    <option value="Partnership">Partnership</option>
+                    <option value="Careers">Careers</option>
+                  </select>
+                </div>
 
                 <textarea
                   placeholder="Write your message here."
