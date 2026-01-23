@@ -72,6 +72,18 @@ padding-right: clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
     align-items: last baseline;
 
 }
+.CardTwoImageContainer{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    gap: 30px;
+    padding-left: 33px;
+    padding-right: 33px;
+    position: absolute;
+    top: -50px;
+    left: 0;
+    align-items: last baseline;
+}
 .CardThreeImageContainer{
     display: flex;
     justify-content: left;
@@ -89,6 +101,13 @@ padding-right: clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
     height: 100%;
     max-width: 143px;
     max-height: 282px;
+    object-fit: contain;
+}
+.CardImagetwo img{
+    width: 100%;
+    height: 100%;
+    max-width: 214px;
+    max-height: 152px;
     object-fit: contain;
 }
 .CardImageThree img{
@@ -247,6 +266,14 @@ padding-right: clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
     max-height: 230px;
     object-fit: contain;
 }
+.CardImagetwo img{
+    width: 100%;
+    height: 100%;
+    max-width: 130px;
+    max-height: 230px;
+    object-fit: contain;
+}
+
 .CardImageThree img{
     width: 100%;
     height: 100%;
@@ -254,6 +281,7 @@ padding-right: clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
     max-height: 230px;
     object-fit: contain;
 }
+
 .CardImageContainer{
     position: absolute;
     top: -30px;
@@ -261,10 +289,17 @@ padding-right: clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
    
 
 }
+.CardTwoImageContainer{
+   
+    position: absolute;
+    top:-40px;
+    left: 0;
+   
+}
 .CardThreeImageContainer{
    
     position: absolute;
-    top:0px;
+    top:-30px;
     left: 0;
    
 }
@@ -315,15 +350,22 @@ padding-right: clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
     }
     .CardImageContainer{
     position: absolute;
-    top: 0px;
+    top: -10px;
     left: 0;
    
 
 }
+.CardTwoImageContainer{
+   
+    position: absolute;
+    top:-20px;
+    left: 0;
+   
+}
 .CardThreeImageContainer{
    
     position: absolute;
-    top:40px;
+    top:-40px;
     left: 0;
    
 }
@@ -351,10 +393,17 @@ padding-right: clamp(24px, calc(24px + (101 * ((100vw - 320px) / 1120))), 125px)
    
 
 }
+.CardTwoImageContainer{
+   
+    position: absolute;
+    top:-40px;
+    left: 0;
+   
+}
 .CardThreeImageContainer{
    
     position: absolute;
-    top:10px;
+    top: -40px;
     left: 0;
    
 }

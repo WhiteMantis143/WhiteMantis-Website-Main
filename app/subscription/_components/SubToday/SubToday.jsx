@@ -71,7 +71,7 @@ const SubToday = () => {
                             strokeLinejoin="round"
                           />
                         </svg>
-                        <p>Always 15% off regular price.</p>
+                        <p>Always 20% off regular price.</p>
                       </div>
                       <div className={styles.line}></div>
                       <div className={styles.benefitItem}>
@@ -179,8 +179,8 @@ const SubToday = () => {
               </div>
             </div>
             <div className={styles.Card}>
-              <div className={styles.CardImageContainer}>
-                <div className={styles.CardImage}>
+              <div className={styles.CardTwoImageContainer}>
+                <div className={styles.CardImagetwo}>
                   <Image src={two} alt="Coffee Beans" />
                 </div>
                 <div className={styles.DealBadge}>
@@ -229,7 +229,7 @@ const SubToday = () => {
                             strokeLinejoin="round"
                           />
                         </svg>
-                        <p>Always 15% off regular price.</p>
+                        <p>Always 20% off regular price.</p>
                       </div>
                       <div className={styles.line}></div>
                       <div className={styles.benefitItem}>
@@ -387,7 +387,7 @@ const SubToday = () => {
                             strokeLinejoin="round"
                           />
                         </svg>
-                        <p>Always 15% off regular price.</p>
+                        <p>Always 20% off regular price.</p>
                       </div>
                       <div className={styles.line}></div>
                       <div className={styles.benefitItem}>
