@@ -3,7 +3,7 @@
 import React, { useCallback } from "react";
 import styles from "./Coffees.module.css";
 import Image from "next/image";
-import coffeImg from "./1.png";
+// import coffeImg from "./1.png";
 import useEmblaCarousel from "embla-carousel-react";
 import { useRouter } from "next/navigation";
 

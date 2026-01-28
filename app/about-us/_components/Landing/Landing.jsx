@@ -6,8 +6,9 @@ const Landing = () => {
   return (
     <>
       <div className={styles.Main}>
-        <video className={styles.Video} autoPlay muted loop playsInline>
-          <source src="/videos/test_about.mp4" type="video/mp4" />
+        <video className={styles.Video} autoPlay muted loop playsInline
+        >
+          <source src="/videos/yuviabout.mp4" type="video/mp4" />
         </video>
 
         <div className={styles.Overlay}>

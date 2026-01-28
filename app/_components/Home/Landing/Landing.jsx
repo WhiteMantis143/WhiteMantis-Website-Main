@@ -7,7 +7,7 @@ const Landing = () => {
     <>
       <div className={styles.Main}>
         <video className={styles.Video} autoPlay muted loop playsInline>
-          <source src="/videos/test_about.mp4" type="video/mp4" />
+          <source src="/videos/yuvilanding.mp4" type="video/mp4" />
         </video>
 
         <div className={styles.Overlay}>

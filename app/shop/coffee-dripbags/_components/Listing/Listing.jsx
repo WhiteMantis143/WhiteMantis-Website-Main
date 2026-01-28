@@ -19,7 +19,7 @@ const slugify = (text) =>
 
 const Lisiting = () => {
   const PARENT_ID = 217;
-  const ITEMS_PER_LOAD = 9;
+  const ITEMS_PER_LOAD = 3;
 
   // 1. Data State (Functionality)
   const [allProducts, setAllProducts] = useState([]);
