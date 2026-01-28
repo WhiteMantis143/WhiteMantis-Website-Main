@@ -11,9 +11,21 @@ const CommunityPopup = ({ isOpen, onClose }) => {
   const [error, setError] = useState("");
 
   if (!isOpen) return null;
+const isValidEmail = (email) => {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+};
 
-  const handleSubscribe = async () => {
-    if (!email) return;
+
+const handleSubscribe = async () => {
+  if (!email) {
+    setError("Email is required.");
+    return;
+  }
+
+  if (!isValidEmail(email)) {
+    setError("Please enter a valid email address.");
+    return;
+  }
 
     setLoading(true);
     setError("");
