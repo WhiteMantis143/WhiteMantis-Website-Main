@@ -126,7 +126,7 @@ const Footer = () => {
             </div>
 
             <div className={styles.TopRight}>
-            <div className={styles.TopRightTop} id="join-community">
+              <div className={styles.TopRightTop} id="join-community">
                 <div className={styles.NewslHeading}>
                   <h4>Join Our Community</h4>
                 </div>
@@ -147,7 +147,7 @@ const Footer = () => {
                         if (!email) {
                           setNewsletterError(true);
                           setNewsletterMsg(
-                            "Please enter a valid email address."
+                            "Please enter a valid email address.",
                           );
                           return;
                         }
@@ -176,7 +176,7 @@ const Footer = () => {
                           } else {
                             setNewsletterError(true);
                             setNewsletterMsg(
-                              data.message || "Subscription failed."
+                              data.message || "Subscription failed.",
                             );
                           }
                         } catch (err) {
@@ -210,7 +210,7 @@ const Footer = () => {
                 <div className={styles.Phone}>
                   <p style={{ fontWeight: "bold" }}>Phone</p>
                   <Link href="tel:+971589535337">
-                    <p>+971 - 05 8953 5337</p>
+                    <p>+971 58 953 5337</p>
                   </Link>
                 </div>
                 <div className={styles.Email}>
@@ -236,7 +236,7 @@ const Footer = () => {
                 <Link href="/privacy-policy">
                   <p>Privacy Policy</p>
                 </Link>
-                 <div className={styles.Socials}>
+                <div className={styles.Socials}>
                   <a
                     href="https://www.instagram.com/whitemantis.ae?igsh=cHl5NnQ3ZDY4OGNt"
                     target="_blank"

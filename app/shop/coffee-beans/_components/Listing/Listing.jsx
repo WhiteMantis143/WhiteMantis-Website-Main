@@ -25,6 +25,8 @@ const Lisiting = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [productsCategories, setProductsCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const popupRef = useRef(null);
+
 
   // 2. UI/Filter State
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_LOAD);
@@ -80,6 +82,21 @@ const Lisiting = () => {
     }
     fetchData();
   }, []);
+useEffect(() => {
+  if (!showSubscribePopup) return;
+
+  const handleClickOutside = (e) => {
+    if (popupRef.current && !popupRef.current.contains(e.target)) {
+      setShowSubscribePopup(false);
+    }
+  };
+
+  document.addEventListener("mousedown", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, [showSubscribePopup]);
 
   // 4. FRONTEND ONLY: Filter & Sort logic (Functionality)
   const filteredProducts = useMemo(() => {
@@ -544,7 +561,7 @@ const Lisiting = () => {
         {/* Subscription Popup */}
         {showSubscribePopup && selectedProduct && (
           <div className={styles.PopupOverlay}>
-            <div className={styles.Popup}>
+            <div className={styles.Popup}  ref={popupRef}>
               <button
                 className={styles.PopupClose}
                 onClick={() => setShowSubscribePopup(false)}

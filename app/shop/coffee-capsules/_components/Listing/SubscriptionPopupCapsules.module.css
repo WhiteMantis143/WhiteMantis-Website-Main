@@ -115,13 +115,26 @@
   height: 14px;
   border-radius: 50%;
   border: 1.5px solid #6e736a;
+  background: #ffffff;    
+  position: relative;     
   flex-shrink: 0;
 }
 
 
 .OptionActive .Radio {
-  background: #6c7a5f;
   border-color: #6c7a5f;
+  background: #ffffff;
+}
+.OptionActive .Radio::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: #6c7a5f;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
 }
 
 
@@ -139,4 +152,57 @@
   color: #ffffff;
 
   cursor: pointer;
+}
+@media (max-width: 640px) {
+
+  .Popup {
+    width: 92%;
+    padding: 24px 20px 28px;
+  }
+
+
+  .Close {
+    top: 14px;
+    right: 14px;
+    font-size: 20px;
+  }
+
+  .Title {
+    font-size: 18px;
+    margin-bottom: 24px;
+  }
+
+
+  .Section {
+    margin-bottom: 24px;
+  }
+
+  .Label {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+
+
+  .Row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+ 
+  .Option,
+  .OptionActive {
+    padding: 14px 14px;
+    font-size: 14px;
+  }
+
+  .Radio {
+    width: 12px;
+    height: 12px;
+  }
+
+
+  .Confirm {
+    padding: 14px;
+    font-size: 14px;
+  }
 }

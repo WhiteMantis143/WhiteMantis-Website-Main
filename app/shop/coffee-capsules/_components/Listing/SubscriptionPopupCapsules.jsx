@@ -1,5 +1,6 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useMemo, useRef, useEffect } from "react";
+
 import styles from "./SubscriptionPopupCapsules.module.css";
 
 const SubscriptionPopupCapsules = ({
@@ -46,10 +47,27 @@ const SubscriptionPopupCapsules = ({
       finalPrice,
     };
   }, [selectedVariation]);
+const popupRef = useRef(null);
+useEffect(() => {
+  if (!open) return;
+
+  const handleClickOutside = (e) => {
+    if (popupRef.current && !popupRef.current.contains(e.target)) {
+      onClose();
+    }
+  };
+
+  document.addEventListener("mousedown", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, [open, onClose]);
 
   return (
     <div className={styles.Overlay}>
-      <div className={styles.Popup}>
+    <div className={styles.Popup} ref={popupRef}>
+
         <button className={styles.Close} onClick={onClose}>
           ×
         </button>

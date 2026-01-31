@@ -1018,9 +1018,18 @@ font-size: 12px;
   height: 14px;
   border-radius: 50%;
   border: 1.5px solid #6e736a;
+  background: #ffffff;
 }
 
-.ActiveFrequency::after {
-  background: #6c7a5f;
+/* .ActiveFrequency::after {
   border-color: #6c7a5f;
+  background: #ffffff;
+} */
+.ActiveFrequency::after {
+  border-color: #6c7a5f;
+  background: radial-gradient(
+    circle,
+    #6c7a5f 0 3px,
+    transparent 4px
+  );
 }

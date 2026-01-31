@@ -1,15 +1,18 @@
 "use client";
-import React, { useState, useEffect, useMemo } from "react";
+
 import { useRouter } from "next/navigation";
 import styles from "./StickyBar.module.css";
 import { useCart } from "../../../../../_context/CartContext";
 import { useProductImage } from "../../_context/ProductImageContext";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 
 const StickyBar = ({ groupedChildren, product }) => {
   const router = useRouter();
   const { addItem, refresh } = useCart();
   const { setSelectedImage } = useProductImage();
   const [showWeightMenu, setShowWeightMenu] = useState(false);
+  const popupRef = useRef(null);
+
 
   // Parse simple and subscription products
   const simpleProduct = useMemo(
@@ -171,6 +174,18 @@ const StickyBar = ({ groupedChildren, product }) => {
       console.error("Failed to add to cart", error);
     }
   };
+useEffect(() => {
+  if (!showSubscribe) return;
+
+  const handleClickOutside = (e) => {
+    if (popupRef.current && !popupRef.current.contains(e.target)) {
+      setShowSubscribe(false);
+    }
+  };
+
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => document.removeEventListener("mousedown", handleClickOutside);
+}, [showSubscribe]);
 
   // Handle subscription checkout
   const handleSubscription = () => {
@@ -319,7 +334,8 @@ const StickyBar = ({ groupedChildren, product }) => {
 
       {showSubscribe && subscriptionProduct && (
         <div className={styles.PopupOverlay}>
-          <div className={styles.Popup}>
+      <div className={styles.Popup} ref={popupRef}>
+
             <button
               className={styles.PopupClose}
               onClick={() => setShowSubscribe(false)}

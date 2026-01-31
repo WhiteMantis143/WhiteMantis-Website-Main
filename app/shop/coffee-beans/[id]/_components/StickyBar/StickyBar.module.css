@@ -218,11 +218,60 @@
   }
 
   .Popup {
-    width: 90%;
+    width: 90% !important;
   }
-  .SubscribeCta {
-    display: none;
+  .SubscribeCta , .AddtoCartPriceCta{
+     padding: 9px 10px;
+     font-size: 14px;
   }
+    .Popup {
+    width: 80% !important;
+    padding: 20px !important;
+  }
+
+  
+  .Popup h3 {
+    font-size: 18px !important;
+    margin-bottom: 24px !important;
+  }
+
+ 
+  .SubscriptionSection {
+    margin-bottom: 20px !important;
+  }
+
+  .SubscriptionSection h4 {
+    font-size: 14px !important;
+    margin-bottom: 8px !important;
+  }
+
+  
+  .FrequencyOptions {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+
+  .FrequencyBtn{
+    padding: 10px 10px !important;
+    font-size: 14px;
+  }
+  .ActiveFrequency {
+    padding: 10px 10px !important;
+    font-size: 14px;
+  }
+
+  .PopupConfirm {
+    padding: 12px !important;
+    font-size: 14px !important;
+  }
+
+  
+  .PopupClose {
+    top: 14px;
+    right: 14px;
+    font-size: 18px;
+  }
+
 }
 
 @media (min-width: 641px) and (max-width: 1024px) {
@@ -392,12 +441,20 @@
   height: 14px;
   border-radius: 50%;
   border: 1.5px solid #6e736a;
+  background: #ffffff;
 }
 
+/* Active state: ring + centered dot */
 .ActiveFrequency::after {
-  background: #6c7a5f;
   border-color: #6c7a5f;
+  background: radial-gradient(
+    circle,
+    #6c7a5f 0 3px,
+    transparent 4px
+  );
 }
+
+
 
 .PopupActions {
   margin-top: 24px;
