@@ -143,18 +143,7 @@ const NavbarMobile = () => {
                 onClick={() => setShopOpen(!shopOpen)}
               >
                 Our Shop
-                {/* <Image
-                  src="/Icons/keyboard_arrow.svg"
-                  className={shopOpen ? styles.Rotate : ""}
-                  alt="Drop Icon"
-                  width={20}
-                  height={20}
-                  style={{
-                    width: "14px",
-                    height: "auto",
-                    transition: "all 0.2s ease-out",
-                  }}
-                /> */}
+         
                 <svg
                   className={shopOpen ? styles.Rotate : ""}
                   width="14"
@@ -194,12 +183,12 @@ const NavbarMobile = () => {
                       >
                         Coffee Capsules
                       </Link>
-                    </div>
+                    </div> 
                     {/* <div className={styles.Columnvee}>
                     <Link href="/shop/merchandise">Merchandise</Link>
                     <Link href="/shop/equipment">Equipments</Link>
                   </div> */}
-                  </div>
+                 </div>
                 </>
               )}
             </div>

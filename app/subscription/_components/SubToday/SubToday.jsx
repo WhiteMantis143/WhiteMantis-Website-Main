@@ -172,9 +172,9 @@ const SubToday = () => {
                   </div>
                 </div>
                 <div className={styles.CardContentBottom}>
-                    <Link href="/shop/coffee-beans">
+                    {/* <Link href="/shop/coffee-beans"> */}
                   <button>Subscribe now</button>
-                    </Link>
+                    {/* </Link> */}
                 </div>
               </div>
             </div>
@@ -330,9 +330,9 @@ const SubToday = () => {
                   </div>
                 </div>
                 <div className={styles.CardContentBottom}>
-                    <Link href="/shop/coffee-dripbags">
+                    {/* <Link href="/shop/coffee-dripbags"> */}
                   <button>Subscribe now</button>
-                    </Link>
+                    {/* </Link> */}
                 </div>
               </div>
             </div>
@@ -488,9 +488,9 @@ const SubToday = () => {
                   </div>
                 </div>
                 <div className={styles.CardContentBottom}>
-                    <Link href="/shop/coffee-capsules">
+                    {/* <Link href="/shop/coffee-capsules"> */}
                   <button>Subscribe now</button>
-                    </Link>
+                    {/* </Link> */}
                 </div>
               </div>
             </div>
