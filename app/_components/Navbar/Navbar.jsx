@@ -115,57 +115,46 @@ const Navbar = () => {
 
                     <div className={styles.DummyLeftTwo}>
                       <div className={styles.DummyLeftTwoLeft}>
-                        {/* <div className={styles.DummyLeftTwoLeftTop}>
+                        <div className={styles.DummyLeftTwoLeftTop}>
                           <h4>Coffee</h4>
                         </div>
                         <div className={styles.DummyLeftTwoLeftBottom}>
-                          <Link
-                            href="/shop/coffee-beans"
-                            onClick={closeShopDropdown}
-                          >
+                         
                             <p>Coffee Beans</p>
-                          </Link>
-                          <Link
-                            href="/shop/coffee-dripbags"
-                            onClick={closeShopDropdown}
-                          >
+                         
                             <p>Coffee Drip bags</p>
-                          </Link>
-                          <Link
-                            href="/shop/coffee-capsules"
-                            onClick={closeShopDropdown}
-                          >
+                         
+                       
                             <p>Coffee Capsules</p>
-                          </Link>
-                        </div> */}
+                        
+                        </div>
                       </div>
 
-                      {/* <div className={styles.DummyLeftTwoRight}>
+                      <div className={styles.DummyLeftTwoRight}>
                         <div className={styles.DummyLeftTwoRightTop}>
                           <h4>Essentials</h4>
                         </div>
                         <div className={styles.DummyLeftTwoRightBottom}>
-                          <Link href="/shop/merchandise"><p>Merchandise</p></Link>
-                          <Link href="/shop/equipment"><p>Equipments</p></Link>
+                         <p>Merchandise</p>
+                         <p>Equipments</p>
                         </div>
-                      </div> */}
+                      </div>
                     </div>
                   </div>
 
                   <div className={styles.DummyRight}>
                     <div className={styles.DummyRightOne}>
                       <div className={styles.DummyRightOneTop}>
-                        <h4>Seasonal Release</h4>
+                        <h4>coming soon !</h4>
                         <p>
-                          Indonesia Banner Mariah Triple Wet Hull Citrus, nutty,
-                          chocolate
+                          Our online store is currently brewing.A curated
+                          selection of White Mantis coffee and essentials will
+                          be available soon.
                         </p>
                       </div>
                       <div className={styles.DummyRightOneBottom}>
                         {/* <Link href="/shop/coffee-beans"> */}
-                          <button className={styles.DummyExplore}>
-                            Explore
-                          </button>
+                        {/* <button className={styles.DummyExplore}>Explore</button> */}
                         {/* </Link> */}
                       </div>
                     </div>
