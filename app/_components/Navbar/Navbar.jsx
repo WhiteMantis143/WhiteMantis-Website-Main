@@ -162,11 +162,11 @@ const Navbar = () => {
                         </p>
                       </div>
                       <div className={styles.DummyRightOneBottom}>
-                        <Link href="/shop/coffee-beans">
+                        {/* <Link href="/shop/coffee-beans"> */}
                           <button className={styles.DummyExplore}>
                             Explore
                           </button>
-                        </Link>
+                        {/* </Link> */}
                       </div>
                     </div>
 
