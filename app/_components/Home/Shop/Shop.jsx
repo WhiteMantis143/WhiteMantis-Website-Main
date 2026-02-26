@@ -15,10 +15,10 @@ const Shop = () => {
             <h3>Shop BY Category</h3>
           </div>
           <div className={styles.Botttom}>
-            <Link
+            {/* <Link
               href="/shop/coffee-beans"
               style={{ textDecoration: "none", color: "inherit" }}
-            >
+            > */}
               <div className={styles.One}>
                 <div className={styles.OneTop}>
                   <div className={styles.OneTopTop}>
@@ -52,11 +52,11 @@ const Shop = () => {
                   <Image src={one} alt="sample" />
                 </div>
               </div>
-            </Link>
-            <Link
+            {/* </Link> */}
+            {/* <Link
               href="/shop/coffee-dripbags"
               style={{ textDecoration: "none", color: "inherit" }}
-            >
+            > */}
               <div className={styles.One}>
                 <div className={styles.OneTop}>
                   <div className={styles.OneTopTop}>
@@ -90,11 +90,11 @@ const Shop = () => {
                   <Image src={two} alt="sample" />
                 </div>
               </div>
-            </Link>
-            <Link
+            {/* </Link> */}
+            {/* <Link
               href="/shop/coffee-capsules"
               style={{ textDecoration: "none", color: "inherit" }}
-            >
+            > */}
               <div className={styles.One}>
                 <div className={styles.OneTop}>
                   <div className={styles.OneTopTop}>
@@ -129,7 +129,7 @@ const Shop = () => {
                   <Image src={three} alt="sample" />
                 </div>
               </div>
-            </Link>
+            {/* </Link> */}
           </div>
         </div>
       </div>

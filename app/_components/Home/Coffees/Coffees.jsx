@@ -161,9 +161,9 @@ const Coffees = () => {
             >
               {coffeeData.map((item, index) => (
                 <div
-                  onClick={() =>
-                    router.push(`/shop/coffee-beans/${item.slug}-${item.id}`)
-                  }
+                  // onClick={() =>
+                  //   router.push(`/shop/coffee-beans/${item.slug}-${item.id}`)
+                  // }
                   className={styles.EmblaSlide}
                   key={`coffee-${item.title.replace(/\s+/g, "-").toLowerCase()}`}
                 >
