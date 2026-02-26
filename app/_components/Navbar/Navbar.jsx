@@ -104,7 +104,7 @@ const Navbar = () => {
                 <div className={styles.DummyMainCoantiner}>
                   <div className={styles.DummyLeft}>
                     <div className={styles.DummyLeftOne}>
-                      <h3>OUR Shop</h3>
+                      <h3>OUR Shop Coming Soon</h3>
                       <p>
                         From home brewing to bulk supply, discover coffee and
                         equipment made to perform.

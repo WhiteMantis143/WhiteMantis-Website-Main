@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 export default function Shop() {
   return (
     <>
-      {redirect("/shop/coffee-beans")}
+      {redirect("/")}
     </>
   );
 }
