@@ -64,7 +64,7 @@ const Footer = () => {
                   </div>
                 </div>
 
-                <div className={styles.TopMiddleTwo}>
+                {/* <div className={styles.TopMiddleTwo}>
                   <div className={styles.TopMiddleTwoTop}>
                     <h4>Shop</h4>
                   </div>
@@ -78,14 +78,14 @@ const Footer = () => {
                     <Link href="/shop/drip-bags">
                       <p>Coffee Drip Bags</p>
                     </Link>
-                    {/* <Link href="/shop/merchandise">
+                    <Link href="/shop/merchandise">
                       <p>Merchandise</p>
                     </Link>
                     <Link href="/shop/equipment">
                       <p>Equipment</p>
-                    </Link> */}
+                    </Link>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <div className={styles.MobTwo}>

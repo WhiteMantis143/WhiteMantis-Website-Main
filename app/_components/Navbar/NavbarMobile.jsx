@@ -137,7 +137,7 @@ const NavbarMobile = () => {
           </div>
 
           <div className={styles.MenuContent}>
-            <div className={styles.Section}>
+            {/* <div className={styles.Section}>
               <button
                 className={styles.SectionHeader}
                 onClick={() => setShopOpen(!shopOpen)}
@@ -184,15 +184,15 @@ const NavbarMobile = () => {
                         Coffee Capsules
                       </Link>
                     </div> 
-                    {/* <div className={styles.Columnvee}>
+                    <div className={styles.Columnvee}>
                     <Link href="/shop/merchandise">Merchandise</Link>
                     <Link href="/shop/equipment">Equipments</Link>
-                  </div> */}
+                  </div>
                  </div>
                 </>
               )}
-            </div>
-            <div className={styles.Line}></div>
+            </div> */}
+            {/* <div className={styles.Line}></div> */}
             <Link
               className={styles.SectionHeader}
               href="/about-us"

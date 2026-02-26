@@ -115,7 +115,7 @@ const Navbar = () => {
 
                     <div className={styles.DummyLeftTwo}>
                       <div className={styles.DummyLeftTwoLeft}>
-                        <div className={styles.DummyLeftTwoLeftTop}>
+                        {/* <div className={styles.DummyLeftTwoLeftTop}>
                           <h4>Coffee</h4>
                         </div>
                         <div className={styles.DummyLeftTwoLeftBottom}>
@@ -137,7 +137,7 @@ const Navbar = () => {
                           >
                             <p>Coffee Capsules</p>
                           </Link>
-                        </div>
+                        </div> */}
                       </div>
 
                       {/* <div className={styles.DummyLeftTwoRight}>
