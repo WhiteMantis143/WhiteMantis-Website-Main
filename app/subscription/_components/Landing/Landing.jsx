@@ -9,11 +9,11 @@ const Landing = () => {
     <div className={styles.Main}>
       <div className={styles.MainContainer}>
         <div className={styles.MarqueeWrapper}>
-          <div className={styles.Marquee}>
+          {/* <div className={styles.Marquee}>
             <span>FROM THE FARM – THROUGH US – TO EVERYONE • </span>
             <span>FROM THE FARM – THROUGH US – TO EVERYONE • </span>
             <span>FROM THE FARM – THROUGH US – TO EVERYONE • </span>
-          </div>
+          </div> */}
         </div>
 
         <div className={styles.Left}></div>

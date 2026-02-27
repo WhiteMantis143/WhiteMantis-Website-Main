@@ -11,6 +11,7 @@ import { CartProvider } from "./_context/CartContext";
 import GlobalLoader from "./_components/GlobalLoader/GlobalLoader";
 import { Toaster } from "react-hot-toast";
 import SmoothScrollProvider from "./_providers/SmoothScrollProvider";
+import WhatsAppSticky from "./_components/WhatsAppSticky/WhatsAppSticky";
 
 
 const geistSans = Geist({
@@ -76,6 +77,7 @@ export default function RootLayout({ children }) {
             <Footer />
             <CartSideBar />
             <NewsLetter />
+            <WhatsAppSticky />
           </CartProvider>
           </SmoothScrollProvider>
         </Providers>

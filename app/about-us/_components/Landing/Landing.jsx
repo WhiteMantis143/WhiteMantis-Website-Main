@@ -13,10 +13,10 @@ const Landing = () => {
 
         <div className={styles.Overlay}>
           <div className={styles.Marquee}>
-            <h2>
+            {/* <h2>
               WHERE COFFEE MEETS CRAFT • WHERE COFFEE MEETS CRAFT • WHERE COFFEE
               MEETS CRAFT •
-            </h2>
+            </h2> */}
           </div>
           <div className={styles.Content}>
             <div className={styles.BottomText}>

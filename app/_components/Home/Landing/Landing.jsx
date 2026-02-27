@@ -12,9 +12,9 @@ const Landing = () => {
 
         <div className={styles.Overlay}>
           <div className={styles.Marquee}>
-            <h2>
+            {/* <h2>
              From the farm - through us - to everyone  •  From the farm - through us -  to everyone
-            </h2>
+            </h2> */}
           </div>
           <div className={styles.Content}>
             <div className={styles.BottomText}>
