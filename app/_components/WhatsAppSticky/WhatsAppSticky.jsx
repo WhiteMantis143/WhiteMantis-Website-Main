@@ -1,7 +1,7 @@
 "use client";
 import "./WhatsAppSticky.css";
 export default function WhatsAppSticky() {
- const phoneNumber = "971589535337";
+ const phoneNumber = "971501261243";
 
   return (
     <a
